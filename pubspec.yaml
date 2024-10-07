@@ -1,0 +1,41 @@
+name: appbdp
+description: "App Mobil for BDP"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  get: ^4.6.6
+  nb_utils: ^7.0.4
+  flutter_localization: ^0.2.2
+  url_launcher: ^6.3.0
+  intl: ^0.19.0
+  get_storage: ^2.1.1
+  cached_network_image: ^3.4.1
+  carousel_slider_plus: ^7.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - fonts/
+  fonts:
+    - family: exo2
+      fonts:
+        - asset: fonts/exo2/Exo2-Bold.ttf
+        - asset: fonts/exo2/Exo2-Regular.ttf
+        - asset: fonts/exo2/Exo2-Light.ttf
+    - family: helvetica
+      fonts:
+        - asset: fonts/helvetica/Helvetica-Bold.ttf
+        - asset: fonts/helvetica/Helvetica.ttf
+        - asset: fonts/helvetica/Helvetica-Light.ttf

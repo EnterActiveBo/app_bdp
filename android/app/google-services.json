@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "862698320738",
+    "project_id": "appbdp",
+    "storage_bucket": "appbdp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862698320738:android:a7af016f59fdd175b4323b",
+        "android_client_info": {
+          "package_name": "com.enteractive.appbdp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_KZVQBPSOIdfhBaoOKQ-fSq84T-HJ5Kk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
