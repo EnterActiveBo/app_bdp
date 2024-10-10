@@ -1,4 +1,5 @@
 import 'package:appbdp/app/models/banner_model.dart';
+import 'package:appbdp/app/models/notification_model.dart';
 import 'package:appbdp/app/models/user_model.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -18,6 +19,20 @@ List<BannerModel> bannersStored(GetStorage box) {
       box.read(key).map(
         (f) {
           return f is BannerModel ? f : BannerModel.fromJson(f);
+        },
+      ),
+    );
+  }
+  return [];
+}
+
+List<NotificationModel> notificationsStored(GetStorage box) {
+  String key = "notifications";
+  if (box.hasData(key)) {
+    return List<NotificationModel>.from(
+      box.read(key).map(
+        (f) {
+          return f is NotificationModel ? f : NotificationModel.fromJson(f);
         },
       ),
     );

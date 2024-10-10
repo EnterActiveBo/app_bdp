@@ -1,25 +1,25 @@
 import 'package:appbdp/app/common/http_config.dart';
 import 'package:appbdp/app/constants/api.const.dart';
-import 'package:appbdp/app/models/user_model.dart';
+import 'package:appbdp/app/models/notification_model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class UserProvider extends GetConnect {
+class NotificationProvider extends GetConnect {
   GetStorage box = GetStorage('App');
 
   @override
   void onInit() {
-    httpClient.baseUrl = urlV1;
+    httpClient.baseUrl = "${urlV1}notifications";
     httpDefaultConfiguration(httpClient, box);
     httpClient.defaultDecoder = (map) {
       if (map['data'] is Map<String, dynamic> && map['data']['id'] is String) {
-        return UserModel.fromJson(map['data']);
+        return NotificationModel.fromJson(map['data']);
       }
       if (map['data'] is List) {
-        return List<UserModel>.from(
+        return List<NotificationModel>.from(
           map['data'].map(
             (item) {
-              return UserModel.fromJson(item);
+              return NotificationModel.fromJson(item);
             },
           ).toList(),
         );
@@ -27,14 +27,11 @@ class UserProvider extends GetConnect {
     };
   }
 
-  Future<UserModel?> getProfile() async {
-    final response = await get('profile');
+  Future<List<NotificationModel>?> getNotifications() async {
+    final response = await get('/');
     return response.body;
   }
 
-  Future<Response> logout() async => await delete('auth-user/logout');
-
-  Future<Response> destroy() async => await delete('destroy');
-
-  Future<Response> device(Map data) async => await post('device', data);
+  Future<Response> view(String notificationId) async =>
+      await post("/$notificationId/view", {});
 }

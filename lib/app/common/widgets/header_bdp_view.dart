@@ -61,7 +61,9 @@ class HeaderBdpView extends GetView<NotificationsController>
       ),
       actions: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            controller.goToNotifications();
+          },
           child: Stack(
             children: [
               Padding(
@@ -79,7 +81,11 @@ class HeaderBdpView extends GetView<NotificationsController>
                 right: 4,
                 child: Obx(
                   () => Visibility(
-                    visible: true,
+                    visible: controller.notifications
+                        .where(
+                          (n) => !n.view,
+                        )
+                        .isNotEmpty,
                     child: Container(
                       padding: const EdgeInsets.all(6),
                       decoration: const BoxDecoration(
@@ -87,7 +93,9 @@ class HeaderBdpView extends GetView<NotificationsController>
                         color: appColorThird,
                       ),
                       child: Text(
-                        controller.count.value.toString(),
+                        "${controller.notifications.where(
+                              (n) => !n.view,
+                            ).length}",
                         style: const TextStyle(
                           color: appColorWhite,
                         ),

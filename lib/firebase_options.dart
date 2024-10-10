@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'appbdp.appspot.com',
     iosBundleId: 'com.enteractive.appbdp',
   );
+
 }
