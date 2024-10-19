@@ -18,6 +18,7 @@ class LoginView extends GetView<LoginController> {
     FocusNode userFocusNode = FocusNode();
     FocusNode passwordFocusNode = FocusNode();
     FocusNode submitFocusNode = FocusNode();
+    passwordLengthGlobal = 5;
     return Scaffold(
       body: GestureDetector(
         onTap: () {

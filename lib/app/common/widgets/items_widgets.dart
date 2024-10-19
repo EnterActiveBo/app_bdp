@@ -3,6 +3,7 @@ import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/banner_model.dart';
+import 'package:appbdp/app/models/course_bdp_model.dart';
 import 'package:appbdp/app/models/course_model.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -375,6 +376,115 @@ Widget imageDetailItem({
                   ),
                 ],
               ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget courseItem({
+  CourseModel? course,
+  CourseBdpModel? courseBdp,
+  Color? backgroundColor,
+  Color? titleColor,
+  Color? superTitleColor,
+  double? mt,
+  double? mb,
+  double? imageW,
+  double? imageH,
+  int? radius,
+  Function? action,
+}) {
+  String superTitle = "${courseBdp is CourseBdpModel ? "AULA " : ""}BDP";
+  String title = course?.title ?? courseBdp?.title ?? "N/T";
+  String dates = "";
+  if (course is CourseModel) {
+    dates = "${dateBdp(course.startAt)} - ${dateBdp(course.endAt)}";
+  } else {
+    dates = "${dateBdp(courseBdp?.startAt)} - ${dateBdp(courseBdp?.endAt)}";
+  }
+  return GestureDetector(
+    onTap: () {
+      if (action != null) {
+        action();
+      }
+    },
+    child: Container(
+      width: Get.width,
+      clipBehavior: Clip.antiAlias,
+      margin: EdgeInsets.only(
+        top: mt ?? 0,
+        bottom: mb ?? 0,
+      ),
+      decoration: boxDecorationRoundedWithShadow(
+        radius ?? 20,
+        backgroundColor: backgroundColor ?? appBackgroundOpacity,
+        shadowColor: appColorTransparent,
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Flexible(
+              flex: 0,
+              child: imageOrIcon(
+                imageUrl: course?.image?.url,
+                w: imageW ?? 80,
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 15,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    titleBdp(
+                      superTitle,
+                      color: superTitleColor ?? appColorThird,
+                      size: 14,
+                      align: TextAlign.left,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    titleBdp(
+                      title,
+                      size: 17,
+                      color: titleColor ?? appColorPrimary,
+                      max: 2,
+                      overflow: TextOverflow.ellipsis,
+                      align: TextAlign.left,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    iconTextActionBdp(
+                      icon: Icons.calendar_month_outlined,
+                      title: dates,
+                      space: 5,
+                    ),
+                    const SizedBox(
+                      height: 0,
+                    ),
+                    iconTextActionBdp(
+                      icon: Icons.schedule_outlined,
+                      title: course?.schedule,
+                      space: 5,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Icon(
+              Icons.arrow_forward_ios_outlined,
+              color: appColorThird,
             ),
           ],
         ),

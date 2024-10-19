@@ -247,3 +247,34 @@ Widget searchFilter(
     ),
   );
 }
+
+Widget imageOrIcon({
+  String? imageUrl,
+  IconData? icon,
+  double? iconSize,
+  Color? iconColor,
+  Color? backgroundColor,
+  double? w,
+  double? h,
+}) {
+  if (imageUrl is String) {
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      width: w ?? 60,
+      height: h,
+      fit: BoxFit.cover,
+    );
+  }
+  return Container(
+    width: w ?? 60,
+    height: h ?? 75,
+    decoration: BoxDecoration(
+      color: backgroundColor ?? appColorThird,
+    ),
+    child: Icon(
+      icon ?? Icons.school_outlined,
+      color: iconColor ?? appColorWhite,
+      size: iconSize ?? 50,
+    ),
+  );
+}

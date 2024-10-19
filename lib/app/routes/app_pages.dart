@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/courses/bindings/courses_binding.dart';
+import '../modules/courses/views/courses_view.dart';
 import '../modules/faq/bindings/faq_binding.dart';
 import '../modules/faq/views/faq_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -84,6 +86,11 @@ class AppPages {
       name: _Paths.SUPPLIER,
       page: () => const SupplierView(),
       binding: SupplierBinding(),
+    ),
+    GetPage(
+      name: _Paths.COURSES,
+      page: () => const CoursesView(),
+      binding: CoursesBinding(),
     ),
   ];
 }

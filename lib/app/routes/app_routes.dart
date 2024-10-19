@@ -11,6 +11,7 @@ abstract class Routes {
   static const FAQ = _Paths.FAQ;
   static const SUPPLIERS = _Paths.SUPPLIERS;
   static const SUPPLIER = _Paths.SUPPLIER;
+  static const COURSES = _Paths.COURSES;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const FAQ = '/faq';
   static const SUPPLIERS = '/suppliers';
   static const SUPPLIER = '/supplier';
+  static const COURSES = '/courses';
 }

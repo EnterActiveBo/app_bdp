@@ -1,4 +1,6 @@
 import 'package:appbdp/app/models/banner_model.dart';
+import 'package:appbdp/app/models/course_bdp_model.dart';
+import 'package:appbdp/app/models/course_model.dart';
 import 'package:appbdp/app/models/faq_model.dart';
 import 'package:appbdp/app/models/notification_model.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
@@ -68,6 +70,40 @@ List<SupplierModel> suppliersStored(GetStorage box) {
         value.map(
           (f) {
             return f is SupplierModel ? f : SupplierModel.fromJson(f);
+          },
+        ),
+      );
+    }
+  }
+  return [];
+}
+
+List<CourseModel> coursesStored(GetStorage box) {
+  String key = "courses";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    if (value is List) {
+      return List<CourseModel>.from(
+        value.map(
+          (f) {
+            return f is CourseModel ? f : CourseModel.fromJson(f);
+          },
+        ),
+      );
+    }
+  }
+  return [];
+}
+
+List<CourseBdpModel> coursesBdpStored(GetStorage box) {
+  String key = "coursesBdp";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    if (value is List) {
+      return List<CourseBdpModel>.from(
+        value.map(
+          (f) {
+            return f is CourseBdpModel ? f : CourseBdpModel.fromJson(f);
           },
         ),
       );

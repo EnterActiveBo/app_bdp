@@ -16,6 +16,7 @@ class MainController extends SuperController {
     Routes.HOME,
     Routes.PROFILE,
     Routes.SUPPLIERS,
+    Routes.COURSES,
   ];
   final NotificationsController notificationsController =
       Get.put<NotificationsController>(
