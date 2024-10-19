@@ -45,7 +45,7 @@ class ProfileView extends GetView<ProfileController> {
                   child: Column(
                     children: [
                       textBdp(
-                        controller.user.value?.profile?.fullName ?? "",
+                        controller.showName.value ?? "",
                         color: appColorPrimary,
                         weight: FontWeight.bold,
                       ),

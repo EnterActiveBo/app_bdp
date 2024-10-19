@@ -35,7 +35,7 @@ class HomeView extends GetView<HomeController> {
                         top: 5,
                       ),
                       child: textBdp(
-                        controller.user.value?.profile?.fullName ?? "",
+                        controller.showName.value ?? "",
                         color: appColorPrimary,
                         align: TextAlign.left,
                       ),

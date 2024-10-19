@@ -27,6 +27,7 @@ class HomeController extends GetxController {
   final UserProvider userProvider = Get.find();
   String userKey = 'user';
   final Rx<UserModel?> user = (null as UserModel?).obs;
+  final Rx<String?> showName = (null as String?).obs;
 
   @override
   void onInit() {
@@ -143,6 +144,12 @@ class HomeController extends GetxController {
   initUser() {
     user.value = userStored(box);
     getUser();
+    if (user.value is UserModel && user.value?.role.name == 'manager') {
+      showName.value =
+          "${user.value?.name} ${user.value?.firstLastName} ${user.value?.secondLastName}";
+    } else {
+      showName.value = user.value?.profile?.fullName;
+    }
   }
 
   getUser() async {
