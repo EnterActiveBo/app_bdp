@@ -24,6 +24,8 @@ class HeaderBdpView extends GetView<NotificationsController>
           ? titleBdp(
               "$title",
               color: primary == true ? appColorWhite : appColorPrimary,
+              max: 1,
+              overflow: TextOverflow.ellipsis,
             )
           : null,
       backgroundColor: primary == true ? appColorPrimary : appColorWhite,

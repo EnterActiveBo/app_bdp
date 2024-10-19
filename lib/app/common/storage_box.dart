@@ -1,5 +1,7 @@
 import 'package:appbdp/app/models/banner_model.dart';
+import 'package:appbdp/app/models/faq_model.dart';
 import 'package:appbdp/app/models/notification_model.dart';
+import 'package:appbdp/app/models/supplier_model.dart';
 import 'package:appbdp/app/models/user_model.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -36,6 +38,40 @@ List<NotificationModel> notificationsStored(GetStorage box) {
         },
       ),
     );
+  }
+  return [];
+}
+
+List<FaqModel> faqStored(GetStorage box) {
+  String key = "faq";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    if (value is List) {
+      return List<FaqModel>.from(
+        value.map(
+          (f) {
+            return f is FaqModel ? f : FaqModel.fromJson(f);
+          },
+        ),
+      );
+    }
+  }
+  return [];
+}
+
+List<SupplierModel> suppliersStored(GetStorage box) {
+  String key = "suppliers";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    if (value is List) {
+      return List<SupplierModel>.from(
+        value.map(
+          (f) {
+            return f is SupplierModel ? f : SupplierModel.fromJson(f);
+          },
+        ),
+      );
+    }
   }
   return [];
 }

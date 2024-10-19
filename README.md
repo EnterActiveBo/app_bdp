@@ -1,6 +1,6 @@
 # appbdp
 
-A new Flutter project.
+A new Flutter 3.22.2 project.
 
 ## Getting Started
 

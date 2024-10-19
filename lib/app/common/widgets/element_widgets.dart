@@ -148,3 +148,102 @@ Widget profileItem(
     ),
   );
 }
+
+Widget dividerBdp({
+  double? width,
+  double? height,
+  double? margin,
+  Color? color,
+}) {
+  return Container(
+    width: width ?? Get.width,
+    height: height ?? 1,
+    margin: EdgeInsets.symmetric(
+      vertical: margin ?? 10,
+    ),
+    color: color ?? appDivider,
+  );
+}
+
+Widget iconButton(
+  IconData icon, {
+  Function? action,
+  Color? color,
+  Color? iconColor,
+  double? ml,
+  double? mr,
+}) {
+  return GestureDetector(
+    onTap: () {
+      if (action != null) {
+        action();
+      }
+    },
+    child: Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: color ?? appColorThird,
+        shape: BoxShape.circle,
+      ),
+      margin: EdgeInsets.only(
+        left: ml ?? 0,
+        right: mr ?? 0,
+      ),
+      child: Icon(
+        icon,
+        color: iconColor ?? appColorWhite,
+      ),
+    ),
+  );
+}
+
+Widget searchFilter(
+  Key key, {
+  TextEditingController? search,
+  FocusNode? searchFocusNode,
+  bool? isFilter,
+  Function(String value)? searchAction,
+  Function? action,
+  Widget? filterWidget,
+}) {
+  return Form(
+    key: key,
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        textFieldBdp(
+          hintText: "Buscar",
+          textEditingController: search,
+          textType: TextFieldType.OTHER,
+          focusNode: searchFocusNode,
+          margin: const EdgeInsets.symmetric(
+            vertical: 5,
+          ),
+          suffixIcon: GestureDetector(
+            onTap: () {
+              if (action != null) {
+                action();
+              }
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: Icon(
+              (isFilter == true) ? Icons.close : Icons.search_outlined,
+              color: appColorThird,
+            ),
+          ),
+          fillColor: appColorWhite,
+          borderColor: appColorPrimary,
+          borderRadius: 30,
+          vertical: 0,
+          horizontal: 20,
+          onChanged: (search) {
+            if (searchAction != null) {
+              searchAction(search);
+            }
+          },
+        ).expand(),
+        filterWidget ?? const SizedBox(),
+      ],
+    ),
+  );
+}

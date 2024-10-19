@@ -1,4 +1,5 @@
 import 'package:appbdp/app/common/widgets/loader_widgets.dart';
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -54,4 +55,18 @@ String? dateBdp(DateTime? date, {String? format}) {
     ).format(date);
   }
   return null;
+}
+
+bool searchString(String value, String? search) {
+  return removeDiacritics(value).isCaseInsensitiveContains(
+    removeDiacritics("$search"),
+  );
+}
+
+String addTextExtra(String value, {String? extra, String? separator}) {
+  String result = value;
+  if (extra is String) {
+    result += " ${separator is String ? separator : "|"} $extra";
+  }
+  return result;
 }
