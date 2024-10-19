@@ -47,6 +47,16 @@ class UserModel {
     data['role'] = role.toJson();
     return data;
   }
+
+  String getName() {
+    String result = "$name $firstLastName $secondLastName";
+    if (role.name == "client" &&
+        profile is ProfileModel &&
+        profile?.fullName is String) {
+      result = profile!.fullName!;
+    }
+    return result;
+  }
 }
 
 class ProfileModel {
