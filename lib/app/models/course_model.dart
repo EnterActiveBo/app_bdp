@@ -1,3 +1,4 @@
+import 'package:appbdp/app/common/utils.dart';
 import 'package:appbdp/app/models/banner_model.dart';
 
 class CourseModel {
@@ -93,6 +94,27 @@ class CourseModel {
         )
         .toList();
     return data;
+  }
+
+  String getDate() {
+    return "${dateBdp(startAt)} - ${dateBdp(endAt)} ";
+  }
+
+  String getAttrs() {
+    List<String> attrs = [];
+    attrs.addAll(
+      economicActivities.map((x) => x.name),
+    );
+    if (department is TargetModel) {
+      attrs.add(department!.name);
+    }
+    if (gender is String) {
+      attrs.add(gender!);
+    }
+    if (attrs.isNotEmpty) {
+      return attrs.join(" | ");
+    }
+    return "Abierto a todo cliente";
   }
 }
 

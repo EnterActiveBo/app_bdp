@@ -122,9 +122,12 @@ Widget buttonBdp(
     onPressed: onClick,
     child: Text(
       text,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
+        fontFamily: 'exo2',
         color: textColor ?? appColorWhite,
-        fontSize: textSize ?? 17,
+        fontSize: textSize ?? 18,
         fontWeight: textWeight ?? FontWeight.bold,
       ),
     ),

@@ -54,6 +54,9 @@ class CourseBdpListView extends GetView<CoursesController> {
                           imageW: 75,
                           radius: 15,
                           mt: course.key == 0 ? 0 : 15,
+                          action: () {
+                            controller.setCourseBdp(course.value);
+                          },
                         );
                       },
                     ).toList(),

@@ -4,8 +4,11 @@ import 'package:appbdp/app/models/course_bdp_model.dart';
 import 'package:appbdp/app/models/course_model.dart';
 import 'package:appbdp/app/models/providers/course_bdp_provider.dart';
 import 'package:appbdp/app/models/providers/course_provider.dart';
+import 'package:appbdp/app/modules/courses/courseBdpDetail/controllers/course_bdp_detail_controller.dart';
+import 'package:appbdp/app/modules/courses/courseDetail/controllers/course_detail_controller.dart';
 import 'package:appbdp/app/modules/courses/views/course_bdp_list_view.dart';
 import 'package:appbdp/app/modules/courses/views/course_list_view.dart';
+import 'package:appbdp/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,11 +18,13 @@ class CoursesController extends GetxController
   GetStorage box = GetStorage('App');
   String courseKey = 'courses';
   final CourseProvider courseProvider = Get.find();
+  final CourseDetailController courseDetailController = Get.find();
   final RxList<CourseModel> courses = (List<CourseModel>.of([])).obs;
   final Rx<String?> searchCourse = (null as String?).obs;
   final loadingCourse = true.obs;
   String courseBdpKey = 'coursesBdp';
   final CourseBdpProvider courseBdpProvider = Get.find();
+  final CourseBdpDetailController courseBdpDetailController = Get.find();
   final RxList<CourseBdpModel> coursesBdp = (List<CourseBdpModel>.of([])).obs;
   final Rx<String?> searchCourseBdp = (null as String?).obs;
   final loadingCourseBdp = true.obs;
@@ -99,6 +104,11 @@ class CoursesController extends GetxController
     searchCourse.value = value == "" ? null : value;
   }
 
+  setCourse(CourseModel value) {
+    courseDetailController.setCourse(value);
+    Get.toNamed(Routes.COURSE_DETAIL);
+  }
+
   getCoursesBdp() async {
     List<CourseBdpModel>? coursesResponse =
         await courseBdpProvider.getCourses();
@@ -124,5 +134,10 @@ class CoursesController extends GetxController
 
   setSearchCourseBdp(String? value) {
     searchCourseBdp.value = value == "" ? null : value;
+  }
+
+  setCourseBdp(CourseBdpModel value) {
+    courseBdpDetailController.setCourse(value);
+    Get.toNamed(Routes.COURSE_BDP_DETAIL);
   }
 }

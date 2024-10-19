@@ -278,3 +278,37 @@ Widget imageOrIcon({
     ),
   );
 }
+
+Widget containerBdp(
+    {Widget? child,
+    double? width,
+    double? mt,
+    double? mb,
+    double? pv,
+    double? ph,
+    double? radius,
+    Color? backgroundColor,
+    BoxBorder? border}) {
+  return Visibility(
+    visible: child is Widget,
+    child: Container(
+      width: width ?? Get.width,
+      margin: EdgeInsets.only(
+        top: mt ?? 0,
+        bottom: mb ?? 0,
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: pv ?? 20,
+        horizontal: ph ?? 20,
+      ),
+      decoration: BoxDecoration(
+        color: backgroundColor ?? appBackgroundOpacity,
+        borderRadius: BorderRadius.circular(
+          radius ?? 10,
+        ),
+        border: border,
+      ),
+      child: child,
+    ),
+  );
+}

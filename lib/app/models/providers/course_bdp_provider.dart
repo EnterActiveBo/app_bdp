@@ -62,7 +62,7 @@ class TopicBdpProvider extends GetConnect {
   }
 
   Future<List<TopicBdpModel>?> getTopics(num courseId) async {
-    final response = await get("/$courseId/topics");
+    final response = await get("$courseId/topics");
     return response.body;
   }
 }

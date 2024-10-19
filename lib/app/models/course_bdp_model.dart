@@ -1,3 +1,5 @@
+import 'package:appbdp/app/common/utils.dart';
+
 class CourseBdpModel {
   num id;
   String title;
@@ -43,6 +45,10 @@ class CourseBdpModel {
     data['horas'] = hours;
     data['requerimientos'] = requirements;
     return data;
+  }
+
+  String getDate() {
+    return "${dateBdp(startAt)} - ${dateBdp(endAt)} ";
   }
 }
 

@@ -53,6 +53,9 @@ class CourseListView extends GetView<CoursesController> {
                           course: course.value,
                           radius: 15,
                           mt: course.key == 0 ? 0 : 15,
+                          action: () {
+                            controller.setCourse(course.value);
+                          },
                         );
                       },
                     ).toList(),

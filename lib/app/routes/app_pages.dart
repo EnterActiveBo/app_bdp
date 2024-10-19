@@ -1,6 +1,10 @@
 import 'package:get/get.dart';
 
 import '../modules/courses/bindings/courses_binding.dart';
+import '../modules/courses/courseBdpDetail/bindings/course_bdp_detail_binding.dart';
+import '../modules/courses/courseBdpDetail/views/course_bdp_detail_view.dart';
+import '../modules/courses/courseDetail/bindings/course_detail_binding.dart';
+import '../modules/courses/courseDetail/views/course_detail_view.dart';
 import '../modules/courses/views/courses_view.dart';
 import '../modules/faq/bindings/faq_binding.dart';
 import '../modules/faq/views/faq_view.dart';
@@ -91,6 +95,18 @@ class AppPages {
       name: _Paths.COURSES,
       page: () => const CoursesView(),
       binding: CoursesBinding(),
+      children: [
+        GetPage(
+          name: _Paths.COURSE_DETAIL,
+          page: () => const CourseDetailView(),
+          binding: CourseDetailBinding(),
+        ),
+        GetPage(
+          name: _Paths.COURSE_BDP_DETAIL,
+          page: () => const CourseBdpDetailView(),
+          binding: CourseBdpDetailBinding(),
+        ),
+      ],
     ),
   ];
 }

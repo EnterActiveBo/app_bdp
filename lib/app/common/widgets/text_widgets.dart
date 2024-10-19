@@ -35,6 +35,7 @@ Widget textBdp(
   TextOverflow? overflow,
   int? max,
   TextAlign? align,
+  double? textHeight,
 }) {
   return Visibility(
     visible: title is String,
@@ -47,7 +48,7 @@ Widget textBdp(
         fontSize: size ?? 15,
         fontWeight: weight ?? FontWeight.normal,
         overflow: overflow,
-        height: 1,
+        height: textHeight,
       ),
     ),
   );

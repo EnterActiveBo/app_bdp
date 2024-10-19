@@ -12,6 +12,8 @@ abstract class Routes {
   static const SUPPLIERS = _Paths.SUPPLIERS;
   static const SUPPLIER = _Paths.SUPPLIER;
   static const COURSES = _Paths.COURSES;
+  static const COURSE_DETAIL = _Paths.COURSES + _Paths.COURSE_DETAIL;
+  static const COURSE_BDP_DETAIL = _Paths.COURSES + _Paths.COURSE_BDP_DETAIL;
 }
 
 abstract class _Paths {
@@ -25,4 +27,6 @@ abstract class _Paths {
   static const SUPPLIERS = '/suppliers';
   static const SUPPLIER = '/supplier';
   static const COURSES = '/courses';
+  static const COURSE_DETAIL = '/course-detail';
+  static const COURSE_BDP_DETAIL = '/course-bdp-detail';
 }
