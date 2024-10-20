@@ -60,6 +60,13 @@ class ProfileView extends GetView<ProfileController> {
                         height: 10,
                       ),
                       profileItem(
+                        Icons.person_outline,
+                        title: controller.user.value?.role.name == 'manager'
+                            ? "Gestor BDP"
+                            : null,
+                        color: appColorPrimary,
+                      ),
+                      profileItem(
                         Icons.map_outlined,
                         title: controller.user.value?.profile?.department?.name,
                         color: appColorPrimary,
