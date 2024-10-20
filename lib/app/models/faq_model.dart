@@ -25,12 +25,12 @@ class FaqModel {
     data['id'] = id;
     data['title'] = title;
     final meta = <String, dynamic>{};
-    final question = <String, dynamic>{};
-    question['content'] = question;
-    meta['question'] = question;
-    final answer = <String, dynamic>{};
-    answer['content'] = answer;
-    meta['answer'] = answer;
+    final questionMeta = <String, dynamic>{};
+    questionMeta['content'] = question;
+    meta['question'] = questionMeta;
+    final answerMeta = <String, dynamic>{};
+    answerMeta['content'] = answer;
+    meta['answer'] = answerMeta;
     data['meta'] = meta;
     return data;
   }

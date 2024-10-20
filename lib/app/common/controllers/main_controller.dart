@@ -12,7 +12,7 @@ import 'package:path_provider/path_provider.dart';
 class MainController extends SuperController {
   final current = 2.obs;
   final List<String> routes = [
-    Routes.NOTIFICATIONS,
+    Routes.FAQ,
     Routes.HOME,
     Routes.PROFILE,
     Routes.SUPPLIERS,
