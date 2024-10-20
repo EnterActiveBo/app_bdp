@@ -38,7 +38,8 @@ class SuppliersView extends GetView<SuppliersController> {
                 formKey,
                 search: search,
                 searchFocusNode: searchFocusNode,
-                isFilter: controller.search.value is String,
+                isFilter: controller.search.value is String ||
+                    controller.technology.value is TechnologyModel,
                 searchAction: (value) {
                   controller.setSearch(value);
                 },
@@ -47,10 +48,13 @@ class SuppliersView extends GetView<SuppliersController> {
                     controller.setSearch(null);
                     search.text = "";
                   }
+                  if (controller.technology.value is TechnologyModel) {
+                    controller.setTechnology(null);
+                  }
                 },
                 filterWidget: PopupMenuButton(
                   tooltip: "Seleccionar Tecnología",
-                  icon: iconButton(
+                  icon: iconRounded(
                     Icons.tune_outlined,
                   ),
                   onSelected: (TechnologyModel? value) {

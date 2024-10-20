@@ -50,7 +50,7 @@ Widget supplierItem(
             child: CachedNetworkImage(
               imageUrl: "${supplier.image?.url}",
               width: Get.width,
-              height: Get.width / 1.8,
+              height: Get.width / 2.5,
               fit: BoxFit.cover,
             ),
           ),
@@ -81,7 +81,7 @@ Widget supplierItem(
                   supplier.title,
                 ),
                 SizedBox(
-                  height: supplier.detail is String ? 10 : 0,
+                  height: supplier.detail is String ? 5 : 0,
                 ),
                 textBdp(
                   supplier.detail,
@@ -92,7 +92,7 @@ Widget supplierItem(
                   title: central.address,
                 ),
                 SizedBox(
-                  height: phones.isNotEmpty ? 10 : 0,
+                  height: phones.isNotEmpty ? 5 : 0,
                 ),
                 Visibility(
                   visible: phones.isNotEmpty,
@@ -104,7 +104,7 @@ Widget supplierItem(
                   ),
                 ),
                 SizedBox(
-                  height: emails.isNotEmpty ? 10 : 0,
+                  height: emails.isNotEmpty ? 5 : 0,
                 ),
                 Visibility(
                   visible: emails.isNotEmpty,
@@ -116,7 +116,7 @@ Widget supplierItem(
                   ),
                 ),
                 SizedBox(
-                  height: schedules.isNotEmpty ? 10 : 0,
+                  height: schedules.isNotEmpty ? 5 : 0,
                 ),
                 Visibility(
                   visible: schedules.isNotEmpty,
@@ -138,6 +138,7 @@ Widget supplierItem(
 
 List<Widget> officeExtra(OfficeModel office, String type) {
   List<Widget> extra = [];
+  double mt = 5;
   switch (type) {
     case 'phones':
       extra.addAll(
@@ -149,7 +150,7 @@ List<Widget> officeExtra(OfficeModel office, String type) {
                 phone.value.phone,
                 extra: phone.value.detail,
               ),
-              mt: phone.key == 0 ? 0 : 8,
+              mt: phone.key == 0 ? 0 : mt,
               action: () {
                 openUrl("tel://${phone.value.phone}");
               },
@@ -168,7 +169,7 @@ List<Widget> officeExtra(OfficeModel office, String type) {
                 email.value.email,
                 extra: email.value.detail,
               ),
-              mt: email.key == 0 ? 0 : 8,
+              mt: email.key == 0 ? 0 : mt,
               action: () {
                 openUrl("mailto://${email.value.email}");
               },
@@ -187,7 +188,7 @@ List<Widget> officeExtra(OfficeModel office, String type) {
                 schedule.value.schedule,
                 extra: schedule.value.detail,
               ),
-              mt: schedule.key == 0 ? 0 : 8,
+              mt: schedule.key == 0 ? 0 : mt,
             );
           },
         ),

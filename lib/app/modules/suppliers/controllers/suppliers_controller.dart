@@ -1,6 +1,7 @@
 import 'package:appbdp/app/common/storage_box.dart';
 import 'package:appbdp/app/common/utils.dart';
 import 'package:appbdp/app/models/providers/supplier_provider.dart';
+import 'package:appbdp/app/models/providers/technology_provider.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
 import 'package:appbdp/app/modules/supplier/controllers/supplier_controller.dart';
 import 'package:appbdp/app/routes/app_pages.dart';
@@ -9,6 +10,8 @@ import 'package:get_storage/get_storage.dart';
 
 class SuppliersController extends GetxController {
   GetStorage box = GetStorage('App');
+  final TechnologyProvider technologyProvider = Get.find();
+  String technologyKey = 'technologies';
   final SupplierProvider supplierProvider = Get.find();
   final SupplierController supplierController = Get.find();
   String supplierKey = 'suppliers';
@@ -38,9 +41,13 @@ class SuppliersController extends GetxController {
   }
 
   initData() {
+    initSuppliers();
+    initTechnologies();
+  }
+
+  initSuppliers() {
     suppliers.value = suppliersStored(box);
     getSuppliers();
-    getTechnologies();
   }
 
   getSuppliers() async {
@@ -54,12 +61,18 @@ class SuppliersController extends GetxController {
     }
   }
 
-  getTechnologies() {
-    List<TechnologyModel> tech = [];
-    suppliers.forEach((supplier) {
-      tech.addAll(supplier.technologies);
-    });
-    technologies.value = tech;
+  initTechnologies() {
+    technologies.value = technologiesStored(box);
+    getTechnologies();
+  }
+
+  getTechnologies() async {
+    List<TechnologyModel>? technologiesResponse =
+        await technologyProvider.getTechnologies();
+    if (technologiesResponse is List<TechnologyModel>) {
+      technologies.value = technologiesResponse;
+      box.write(technologyKey, technologiesResponse);
+    }
   }
 
   List<SupplierModel> filterSuppliers() {

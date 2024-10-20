@@ -165,6 +165,30 @@ Widget dividerBdp({
   );
 }
 
+Widget iconRounded(
+  IconData icon, {
+  Color? color,
+  Color? iconColor,
+  double? ml,
+  double? mr,
+}) {
+  return Container(
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      color: color ?? appColorThird,
+      shape: BoxShape.circle,
+    ),
+    margin: EdgeInsets.only(
+      left: ml ?? 0,
+      right: mr ?? 0,
+    ),
+    child: Icon(
+      icon,
+      color: iconColor ?? appColorWhite,
+    ),
+  );
+}
+
 Widget iconButton(
   IconData icon, {
   Function? action,
@@ -179,20 +203,12 @@ Widget iconButton(
         action();
       }
     },
-    child: Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: color ?? appColorThird,
-        shape: BoxShape.circle,
-      ),
-      margin: EdgeInsets.only(
-        left: ml ?? 0,
-        right: mr ?? 0,
-      ),
-      child: Icon(
-        icon,
-        color: iconColor ?? appColorWhite,
-      ),
+    child: iconRounded(
+      icon,
+      color: color,
+      iconColor: iconColor,
+      ml: ml,
+      mr: mr,
     ),
   );
 }
