@@ -8,6 +8,8 @@ import '../modules/courses/courseDetail/views/course_detail_view.dart';
 import '../modules/courses/views/courses_view.dart';
 import '../modules/faq/bindings/faq_binding.dart';
 import '../modules/faq/views/faq_view.dart';
+import '../modules/goodPractices/bindings/good_practices_binding.dart';
+import '../modules/goodPractices/views/good_practices_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -107,6 +109,11 @@ class AppPages {
           binding: CourseBdpDetailBinding(),
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.GOOD_PRACTICES,
+      page: () => const GoodPracticesView(),
+      binding: GoodPracticesBinding(),
     ),
   ];
 }

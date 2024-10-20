@@ -3,6 +3,7 @@ import 'package:appbdp/app/models/course_bdp_model.dart';
 import 'package:appbdp/app/models/course_model.dart';
 import 'package:appbdp/app/models/faq_model.dart';
 import 'package:appbdp/app/models/notification_model.dart';
+import 'package:appbdp/app/models/resource_model.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
 import 'package:appbdp/app/models/user_model.dart';
 import 'package:get_storage/get_storage.dart';
@@ -121,6 +122,25 @@ List<TechnologyModel> technologiesStored(GetStorage box) {
         value.map(
           (f) {
             return f is TechnologyModel ? f : TechnologyModel.fromJson(f);
+          },
+        ),
+      );
+    }
+  }
+  return [];
+}
+
+List<CategoryResourceModel> categoriesStored(GetStorage box) {
+  String key = "categories";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    if (value is List) {
+      return List<CategoryResourceModel>.from(
+        value.map(
+          (f) {
+            return f is CategoryResourceModel
+                ? f
+                : CategoryResourceModel.fromJson(f);
           },
         ),
       );

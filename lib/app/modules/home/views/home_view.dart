@@ -3,6 +3,7 @@ import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/header_bdp_view.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
+import 'package:appbdp/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -46,6 +47,15 @@ class HomeView extends GetView<HomeController> {
               bannerSliderBdp(
                 controller.banners,
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              iconTextActionBdp(
+                title: "Buenas practicas",
+                action: () {
+                  Get.toNamed(Routes.GOOD_PRACTICES);
+                },
+              )
             ],
           ),
         ),
