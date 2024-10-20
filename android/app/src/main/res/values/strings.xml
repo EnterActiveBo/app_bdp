@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="flutter_downloader_notification_started">comenzó</string>
+    <string name="flutter_downloader_notification_in_progress">en curso</string>
+    <string name="flutter_downloader_notification_canceled">cancelada</string>
+    <string name="flutter_downloader_notification_failed">fallida</string>
+    <string name="flutter_downloader_notification_complete">completa</string>
+    <string name="flutter_downloader_notification_paused">pausada</string>
+    <string name="flutter_downloader_notification_channel_name">Descargador</string>
+    <string name="flutter_downloader_notification_channel_description">Mostrar progreso de descarga</string>
+</resources>
