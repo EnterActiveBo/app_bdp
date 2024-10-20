@@ -12,10 +12,12 @@ import 'package:nb_utils/nb_utils.dart';
 class NotificationItemView extends StatefulWidget {
   final NotificationModel notification;
   final void Function() openNotification;
+  final double? mt;
   const NotificationItemView({
     super.key,
     required this.notification,
     required this.openNotification,
+    this.mt,
   });
 
   @override
@@ -28,7 +30,9 @@ class _NotifyState extends State<NotificationItemView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: EdgeInsets.only(
+        top: widget.mt ?? 0,
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: appBackground,
@@ -67,17 +71,11 @@ class _NotifyState extends State<NotificationItemView> {
           align: TextAlign.left,
           max: 3,
         ),
-        trailing: isExpanded
-            ? const Icon(
-                Icons.keyboard_arrow_up,
-                color: appColorSecondary,
-                size: 30,
-              )
-            : const Icon(
-                Icons.keyboard_arrow_down,
-                color: appColorSecondary,
-                size: 30,
-              ),
+        trailing: Icon(
+          isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+          color: appColorSecondary,
+          size: 30,
+        ),
         onExpansionChanged: (t) {
           setState(
             () {
@@ -88,7 +86,7 @@ class _NotifyState extends State<NotificationItemView> {
         },
         children: [
           Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -132,7 +130,7 @@ class _NotifyState extends State<NotificationItemView> {
                   ),
                 ),
               ],
-            ).paddingAll(8),
+            ),
           )
         ],
       ),

@@ -28,24 +28,21 @@ class NotificationsView extends GetView<NotificationsController> {
                 horizontal: 15,
               ),
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: controller.notifications.length,
-                      itemBuilder: (context, index) {
-                        NotificationModel notification =
-                            controller.notifications[index];
-                        return NotificationItemView(
-                          notification: notification,
-                          openNotification: () {
-                            controller.view(index);
-                          },
-                        );
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: controller.notifications.length,
+                  itemBuilder: (context, index) {
+                    NotificationModel notification =
+                        controller.notifications[index];
+                    return NotificationItemView(
+                      notification: notification,
+                      mt: index == 0 ? 0 : 15,
+                      openNotification: () {
+                        controller.view(index);
                       },
-                    ),
-                  ],
+                    );
+                  },
                 ),
               ),
             ),
