@@ -1,3 +1,4 @@
+import 'package:appbdp/app/common/utils.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/modules/notifications/controllers/notifications_controller.dart';
@@ -62,6 +63,18 @@ class HeaderBdpView extends GetView<NotificationsController>
         color: primary == true ? appColorWhite : appColorPrimary,
       ),
       actions: [
+        Visibility(
+          visible: url is String,
+          child: IconButton(
+            icon: const Icon(
+              Icons.download_outlined,
+              color: appColorWhite,
+            ),
+            onPressed: () {
+              downloadFile("$url");
+            },
+          ),
+        ),
         GestureDetector(
           onTap: () {
             controller.goToNotifications();

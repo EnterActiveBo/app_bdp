@@ -62,7 +62,9 @@ class GoodPracticesView extends GetView<GoodPracticesController> {
                         (category) {
                           return containerBdp(
                             mt: category.key == 0 ? 0 : 15,
-                            action: () {},
+                            action: () {
+                              controller.setCategory(category.value);
+                            },
                             child: Row(
                               children: [
                                 Column(

@@ -11,6 +11,7 @@ Widget titleBdp(
   TextOverflow? overflow,
   int? max,
   TextAlign? align,
+  double? textHeight,
 }) {
   return Text(
     title,
@@ -22,7 +23,7 @@ Widget titleBdp(
       fontSize: size ?? 17,
       fontWeight: weight ?? FontWeight.bold,
       overflow: overflow,
-      height: 1,
+      height: textHeight,
     ),
   );
 }

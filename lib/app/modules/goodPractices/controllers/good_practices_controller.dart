@@ -2,12 +2,15 @@ import 'package:appbdp/app/common/storage_box.dart';
 import 'package:appbdp/app/common/utils.dart';
 import 'package:appbdp/app/models/providers/category_provider.dart';
 import 'package:appbdp/app/models/resource_model.dart';
+import 'package:appbdp/app/modules/goodPractices/resources/controllers/resources_controller.dart';
+import 'package:appbdp/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class GoodPracticesController extends GetxController {
   GetStorage box = GetStorage('App');
   String categoriesKey = 'categories';
+  ResourcesController resourcesController = Get.find();
   CategoryProvider categoryProvider = Get.find();
   final RxList<CategoryResourceModel> categories =
       (List<CategoryResourceModel>.of([])).obs;
@@ -66,5 +69,10 @@ class GoodPracticesController extends GetxController {
       }
       return filter;
     }).toList();
+  }
+
+  setCategory(CategoryResourceModel value) {
+    resourcesController.setCategory(value);
+    Get.toNamed(Routes.RESOURCES);
   }
 }

@@ -307,33 +307,80 @@ Widget containerBdp({
   BoxBorder? border,
   Function? action,
 }) {
+  Widget content = Container(
+    width: width ?? Get.width,
+    margin: EdgeInsets.only(
+      top: mt ?? 0,
+      bottom: mb ?? 0,
+    ),
+    padding: EdgeInsets.symmetric(
+      vertical: pv ?? 20,
+      horizontal: ph ?? 20,
+    ),
+    decoration: BoxDecoration(
+      color: backgroundColor ?? appBackgroundOpacity,
+      borderRadius: BorderRadius.circular(
+        radius ?? 10,
+      ),
+      border: border,
+    ),
+    clipBehavior: Clip.antiAlias,
+    child: child,
+  );
   return Visibility(
     visible: child is Widget,
-    child: GestureDetector(
-      onTap: () {
-        if (action != null) {
-          action();
-        }
-      },
-      child: Container(
-        width: width ?? Get.width,
-        margin: EdgeInsets.only(
-          top: mt ?? 0,
-          bottom: mb ?? 0,
-        ),
-        padding: EdgeInsets.symmetric(
-          vertical: pv ?? 20,
-          horizontal: ph ?? 20,
-        ),
-        decoration: BoxDecoration(
-          color: backgroundColor ?? appBackgroundOpacity,
-          borderRadius: BorderRadius.circular(
-            radius ?? 10,
-          ),
-          border: border,
-        ),
-        child: child,
+    child: () {
+      if (action != null) {
+        return GestureDetector(
+          onTap: () {
+            action();
+          },
+          child: content,
+        );
+      }
+      return content;
+    }(),
+  );
+}
+
+Widget textRichBdp(
+  String title,
+  String detail, {
+  Color? titleColor,
+  Color? detailColor,
+  double? titleSize,
+  double? detailSize,
+  FontWeight? titleWeight,
+  FontWeight? detailWeight,
+  TextOverflow? titleOverflow,
+  TextOverflow? detailOverflow,
+  TextAlign? align,
+  bool? normalHeight,
+}) {
+  return RichText(
+    textAlign: align ?? TextAlign.center,
+    text: TextSpan(
+      text: title,
+      style: TextStyle(
+        fontFamily: "exo2",
+        color: titleColor ?? appColorPrimary,
+        fontSize: titleSize ?? 14,
+        fontWeight: titleWeight ?? FontWeight.bold,
+        overflow: titleOverflow,
+        height: normalHeight == true ? null : 1,
       ),
+      children: <TextSpan>[
+        TextSpan(
+          text: detail,
+          style: TextStyle(
+            color: detailColor ?? appTextNormal,
+            fontSize: detailSize ?? 12,
+            fontWeight: detailWeight ?? FontWeight.normal,
+            overflow: detailOverflow,
+            height: normalHeight == true ? null : 1,
+          ),
+        ),
+      ],
     ),
   );
 }

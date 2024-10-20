@@ -9,6 +9,12 @@ import '../modules/courses/views/courses_view.dart';
 import '../modules/faq/bindings/faq_binding.dart';
 import '../modules/faq/views/faq_view.dart';
 import '../modules/goodPractices/bindings/good_practices_binding.dart';
+import '../modules/goodPractices/resources/bindings/resources_binding.dart';
+import '../modules/goodPractices/resources/document/bindings/document_binding.dart';
+import '../modules/goodPractices/resources/document/views/document_view.dart';
+import '../modules/goodPractices/resources/video/bindings/video_binding.dart';
+import '../modules/goodPractices/resources/video/views/video_view.dart';
+import '../modules/goodPractices/resources/views/resources_view.dart';
 import '../modules/goodPractices/views/good_practices_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
@@ -114,6 +120,25 @@ class AppPages {
       name: _Paths.GOOD_PRACTICES,
       page: () => const GoodPracticesView(),
       binding: GoodPracticesBinding(),
+      children: [
+        GetPage(
+          name: _Paths.RESOURCES,
+          page: () => const ResourcesView(),
+          binding: ResourcesBinding(),
+          children: [
+            GetPage(
+              name: _Paths.VIDEO,
+              page: () => const VideoView(),
+              binding: VideoBinding(),
+            ),
+            GetPage(
+              name: _Paths.DOCUMENT,
+              page: () => const DocumentView(),
+              binding: DocumentBinding(),
+            ),
+          ],
+        ),
+      ],
     ),
   ];
 }

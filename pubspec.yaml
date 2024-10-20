@@ -27,7 +27,15 @@ dependencies:
   flutter_app_badge_control: ^0.0.1
   flutter_widget_from_html: ^0.15.2
   diacritic: ^0.1.6
+  youtube_player_flutter: 9.0.1
+  video_player: ^2.9.2
+  chewie: ^1.8.5
+  flutter_cached_pdfview: ^0.4.2
+  flutter_downloader: ^1.11.8
 
+dependency_overrides:
+  webview_flutter_android: 3.16.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

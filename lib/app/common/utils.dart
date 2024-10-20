@@ -1,8 +1,13 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:appbdp/app/common/widgets/loader_widgets.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 errorBdp(Response response) {
@@ -78,4 +83,48 @@ String removeAllHtmlTags(String htmlText) {
     caseSensitive: true,
   );
   return htmlText.replaceAll(exp, '');
+}
+
+Future<void> downloadFile(String url) async {
+  await FlutterDownloader.enqueue(
+    url: url,
+    savedDir: await _prepareSaveDir(),
+    saveInPublicStorage: true,
+  );
+}
+
+Future<String> _prepareSaveDir() async {
+  final localPath = (await _getSavedDir())!;
+  final savedDir = Directory(localPath);
+  if (!savedDir.existsSync()) {
+    await savedDir.create();
+  }
+  return localPath;
+}
+
+Future<String?> _getSavedDir() async {
+  String? externalStorageDirPath;
+
+  if (Platform.isAndroid) {
+    try {
+      final download = await getDownloadsDirectory();
+      externalStorageDirPath = download?.path;
+    } catch (err, st) {
+      debugPrint('failed to get downloads path: $err, $st');
+      final directory = await getExternalStorageDirectory();
+      externalStorageDirPath = directory?.path;
+    }
+  }
+
+  return externalStorageDirPath;
+}
+
+String getFileSize(
+  num bytes, {
+  int? decimals,
+}) {
+  if (bytes <= 0) return "0 B";
+  const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  var i = (log(bytes) / log(1024)).floor();
+  return "${(bytes / pow(1024, i)).toStringAsFixed(decimals ?? 2)} ${suffixes[i]}";
 }

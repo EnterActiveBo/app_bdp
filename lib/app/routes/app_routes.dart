@@ -15,6 +15,10 @@ abstract class Routes {
   static const COURSE_DETAIL = _Paths.COURSES + _Paths.COURSE_DETAIL;
   static const COURSE_BDP_DETAIL = _Paths.COURSES + _Paths.COURSE_BDP_DETAIL;
   static const GOOD_PRACTICES = _Paths.GOOD_PRACTICES;
+  static const RESOURCES = _Paths.GOOD_PRACTICES + _Paths.RESOURCES;
+  static const VIDEO = _Paths.GOOD_PRACTICES + _Paths.RESOURCES + _Paths.VIDEO;
+  static const DOCUMENT =
+      _Paths.GOOD_PRACTICES + _Paths.RESOURCES + _Paths.DOCUMENT;
 }
 
 abstract class _Paths {
@@ -31,4 +35,7 @@ abstract class _Paths {
   static const COURSE_DETAIL = '/course-detail';
   static const COURSE_BDP_DETAIL = '/course-bdp-detail';
   static const GOOD_PRACTICES = '/good-practices';
+  static const RESOURCES = '/resources';
+  static const VIDEO = '/video';
+  static const DOCUMENT = '/document';
 }

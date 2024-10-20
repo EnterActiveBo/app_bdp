@@ -7,11 +7,13 @@ class ResourceModel {
   String? detail;
   String? url;
   String type;
+  String? videoType;
   List<String> tags;
-  FileModel? resource;
+  FileModel? source;
   FileModel? preview;
   CategoryResourceModel? category;
   CategoryResourceModel? categoryManager;
+  DateTime updatedAt;
 
   ResourceModel({
     required this.id,
@@ -19,11 +21,13 @@ class ResourceModel {
     this.detail,
     this.url,
     required this.type,
+    this.videoType,
     required this.tags,
-    this.resource,
+    this.source,
     this.preview,
     this.category,
     this.categoryManager,
+    required this.updatedAt,
   });
 
   factory ResourceModel.fromJson(Map<String, dynamic> json) {
@@ -33,10 +37,10 @@ class ResourceModel {
       detail: json['detail'],
       url: json['url'],
       type: json['type'],
+      videoType: json['videoType'],
       tags: json['tags'] != null ? List<String>.from(json['tags']) : [],
-      resource: json['resource'] != null
-          ? FileModel.fromJson(json['resource'])
-          : null,
+      source:
+          json['source'] != null ? FileModel.fromJson(json['source']) : null,
       preview:
           json['preview'] != null ? FileModel.fromJson(json['preview']) : null,
       category: json['category'] != null
@@ -45,6 +49,7 @@ class ResourceModel {
       categoryManager: json['categoryManager'] != null
           ? CategoryResourceModel.fromJson(json['categoryManager'])
           : null,
+      updatedAt: DateTime.parse(json['updatedAt']).toLocal(),
     );
   }
 
@@ -55,12 +60,31 @@ class ResourceModel {
     data['detail'] = detail;
     data['url'] = url;
     data['type'] = type;
+    data['videoType'] = videoType;
     data['tags'] = tags;
-    data['resource'] = resource?.toJson();
+    data['source'] = source?.toJson();
     data['preview'] = preview?.toJson();
     data['category'] = category?.toJson();
     data['categoryManager'] = categoryManager?.toJson();
+    data['updatedAt'] = updatedAt.toString();
     return data;
+  }
+
+  String getCategory() {
+    if (category is CategoryResourceModel) {
+      return category?.title ?? "BDP";
+    }
+    if (categoryManager is CategoryResourceModel) {
+      return categoryManager?.title ?? "BDP";
+    }
+    return "BDP";
+  }
+
+  String? getTagsString() {
+    if (tags.isNotEmpty) {
+      return tags.map((tag) => tag.toString()).toList().join(" | ");
+    }
+    return null;
   }
 }
 
