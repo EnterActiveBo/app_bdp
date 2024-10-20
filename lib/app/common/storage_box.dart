@@ -111,3 +111,20 @@ List<CourseBdpModel> coursesBdpStored(GetStorage box) {
   }
   return [];
 }
+
+List<TechnologyModel> technologiesStored(GetStorage box) {
+  String key = "technologies";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    if (value is List) {
+      return List<TechnologyModel>.from(
+        value.map(
+          (f) {
+            return f is TechnologyModel ? f : TechnologyModel.fromJson(f);
+          },
+        ),
+      );
+    }
+  }
+  return [];
+}
