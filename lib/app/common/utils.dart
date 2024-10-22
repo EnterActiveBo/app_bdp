@@ -85,9 +85,17 @@ String removeAllHtmlTags(String htmlText) {
   return htmlText.replaceAll(exp, '');
 }
 
-Future<void> downloadFile(String url) async {
+Future<void> downloadFile(
+  String url, {
+  String? token,
+}) async {
   await FlutterDownloader.enqueue(
     url: url,
+    headers: token is String
+        ? {
+            'Authorization': "Bearer $token",
+          }
+        : {},
     savedDir: await _prepareSaveDir(),
     saveInPublicStorage: true,
   );
@@ -127,4 +135,14 @@ String getFileSize(
   const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   var i = (log(bytes) / log(1024)).floor();
   return "${(bytes / pow(1024, i)).toStringAsFixed(decimals ?? 2)} ${suffixes[i]}";
+}
+
+String priceFormat(
+  double price, {
+  String? name,
+}) {
+  return NumberFormat.currency(
+    locale: Intl.getCurrentLocale(),
+    name: name ?? '',
+  ).format(price);
 }

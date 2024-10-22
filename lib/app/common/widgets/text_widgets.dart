@@ -12,13 +12,14 @@ Widget titleBdp(
   int? max,
   TextAlign? align,
   double? textHeight,
+  String? family,
 }) {
   return Text(
     title,
     maxLines: max,
     textAlign: align ?? TextAlign.center,
     style: TextStyle(
-      fontFamily: "exo2",
+      fontFamily: family ?? "exo2",
       color: color ?? appColorPrimary,
       fontSize: size ?? 17,
       fontWeight: weight ?? FontWeight.bold,

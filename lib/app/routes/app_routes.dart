@@ -19,6 +19,7 @@ abstract class Routes {
   static const VIDEO = _Paths.GOOD_PRACTICES + _Paths.RESOURCES + _Paths.VIDEO;
   static const DOCUMENT =
       _Paths.GOOD_PRACTICES + _Paths.RESOURCES + _Paths.DOCUMENT;
+  static const QUOTES = _Paths.QUOTES;
 }
 
 abstract class _Paths {
@@ -38,4 +39,5 @@ abstract class _Paths {
   static const RESOURCES = '/resources';
   static const VIDEO = '/video';
   static const DOCUMENT = '/document';
+  static const QUOTES = '/quotes';
 }

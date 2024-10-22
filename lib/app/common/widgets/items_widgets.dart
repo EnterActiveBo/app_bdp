@@ -5,6 +5,7 @@ import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/banner_model.dart';
 import 'package:appbdp/app/models/course_bdp_model.dart';
 import 'package:appbdp/app/models/course_model.dart';
+import 'package:appbdp/app/models/quote_model.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -490,6 +491,65 @@ Widget courseItem({
           ],
         ),
       ),
+    ),
+  );
+}
+
+Widget newItemQuote(
+  ItemQuoteModel quote, {
+  double? mt,
+  Function? edit,
+  Function? delete,
+}) {
+  return Container(
+    width: Get.width,
+    margin: EdgeInsets.only(
+      top: mt ?? 0,
+    ),
+    child: Row(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                textBdp(
+                  quote.item,
+                  align: TextAlign.left,
+                ),
+                iconButton(Icons.edit_outlined,
+                    color: appColorYellow, ml: 10, pd: 5, size: 15, action: () {
+                  if (edit != null) {
+                    edit();
+                  }
+                }),
+                iconButton(Icons.delete_outline,
+                    color: appErrorColor, ml: 10, pd: 5, size: 15, action: () {
+                  if (delete != null) {
+                    delete();
+                  }
+                }),
+              ],
+            ),
+            textBdp(
+              "Cantidad ${quote.quantity} unidades",
+              color: appTextLight,
+              size: 12,
+            ),
+            textBdp(
+              "Bs ${priceFormat(quote.price)}",
+              color: appColorPrimary,
+              size: 12,
+            ),
+          ],
+        ).expand(),
+        textBdp(
+          "Bs ${priceFormat(quote.total())}",
+          align: TextAlign.right,
+          color: appTextNormal,
+          weight: FontWeight.bold,
+        ),
+      ],
     ),
   );
 }

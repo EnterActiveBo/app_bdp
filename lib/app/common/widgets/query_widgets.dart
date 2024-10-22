@@ -10,6 +10,8 @@ Widget queryBdpWidget(
   Color? textColor,
   Color? progressColor,
   bool? loading,
+  FontWeight? textWeight,
+  String? textFamily,
 }) {
   if (condition) {
     return mainWidget;
@@ -27,6 +29,8 @@ Widget queryBdpWidget(
       message ?? "No existe información para mostrar.",
       size: size ?? 16,
       color: textColor,
+      weight: textWeight,
+      family: textFamily,
     ),
   );
 }

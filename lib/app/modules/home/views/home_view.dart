@@ -1,6 +1,7 @@
 import 'package:appbdp/app/common/widgets/bottom_bdp_view.dart';
 import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/header_bdp_view.dart';
+import 'package:appbdp/app/common/widgets/input_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/routes/app_pages.dart';
@@ -50,12 +51,30 @@ class HomeView extends GetView<HomeController> {
               const SizedBox(
                 height: 20,
               ),
-              iconTextActionBdp(
-                title: "Buenas practicas",
-                action: () {
-                  Get.toNamed(Routes.GOOD_PRACTICES);
-                },
-              )
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 15,
+                ),
+                child: buttonBdp(
+                  "Buenas practicas",
+                  () {
+                    Get.toNamed(Routes.GOOD_PRACTICES);
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 15,
+                ),
+                child: buttonBdp(
+                  "Cotizaciones",
+                  () {
+                    Get.toNamed(Routes.QUOTES);
+                  },
+                ),
+              ),
             ],
           ),
         ),

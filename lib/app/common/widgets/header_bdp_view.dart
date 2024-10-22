@@ -3,6 +3,7 @@ import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/modules/notifications/controllers/notifications_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class HeaderBdpView extends GetView<NotificationsController>
@@ -51,9 +52,8 @@ class HeaderBdpView extends GetView<NotificationsController>
                 left: 10,
               ),
               padding: const EdgeInsets.all(0),
-              child: Image.asset(
-                "assets/images/header_logo.png",
-                filterQuality: FilterQuality.high,
+              child: SvgPicture.asset(
+                "assets/images/header_logo.svg",
               ),
             ),
       iconTheme: IconThemeData(

@@ -3,6 +3,7 @@ import 'package:appbdp/app/models/course_bdp_model.dart';
 import 'package:appbdp/app/models/course_model.dart';
 import 'package:appbdp/app/models/faq_model.dart';
 import 'package:appbdp/app/models/notification_model.dart';
+import 'package:appbdp/app/models/quote_model.dart';
 import 'package:appbdp/app/models/resource_model.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
 import 'package:appbdp/app/models/user_model.dart';
@@ -147,4 +148,30 @@ List<CategoryResourceModel> categoriesStored(GetStorage box) {
     }
   }
   return [];
+}
+
+List<QuoteModel> quotesStored(GetStorage box) {
+  String key = "quotes";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    if (value is List) {
+      return List<QuoteModel>.from(
+        value.map(
+          (f) {
+            return f is QuoteModel ? f : QuoteModel.fromJson(f);
+          },
+        ),
+      );
+    }
+  }
+  return [];
+}
+
+QuoteModel newQuoteStored(GetStorage box) {
+  String key = "newQuote";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    return value is QuoteModel ? value : QuoteModel.fromJson(value);
+  }
+  return QuoteModel(items: []);
 }

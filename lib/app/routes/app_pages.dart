@@ -24,6 +24,8 @@ import '../modules/notifications/bindings/notifications_binding.dart';
 import '../modules/notifications/views/notifications_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/quotes/bindings/quotes_binding.dart';
+import '../modules/quotes/views/quotes_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/supplier/bindings/supplier_binding.dart';
@@ -139,6 +141,11 @@ class AppPages {
           ],
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.QUOTES,
+      page: () => const QuotesView(),
+      binding: QuotesBinding(),
     ),
   ];
 }

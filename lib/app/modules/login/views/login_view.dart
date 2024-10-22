@@ -2,6 +2,7 @@ import 'package:appbdp/app/common/widgets/input_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -35,9 +36,8 @@ class LoginView extends GetView<LoginController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    'assets/images/login.png',
-                    filterQuality: FilterQuality.high,
+                  SvgPicture.asset(
+                    'assets/images/header_logo.svg',
                     width: Get.width * 0.6,
                   ),
                   const SizedBox(

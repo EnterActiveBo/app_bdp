@@ -171,9 +171,11 @@ Widget iconRounded(
   Color? iconColor,
   double? ml,
   double? mr,
+  double? pd,
+  double? size,
 }) {
   return Container(
-    padding: const EdgeInsets.all(10),
+    padding: EdgeInsets.all(pd ?? 10),
     decoration: BoxDecoration(
       color: color ?? appColorThird,
       shape: BoxShape.circle,
@@ -185,6 +187,7 @@ Widget iconRounded(
     child: Icon(
       icon,
       color: iconColor ?? appColorWhite,
+      size: size,
     ),
   );
 }
@@ -196,6 +199,8 @@ Widget iconButton(
   Color? iconColor,
   double? ml,
   double? mr,
+  double? pd,
+  double? size,
 }) {
   return GestureDetector(
     onTap: () {
@@ -209,6 +214,8 @@ Widget iconButton(
       iconColor: iconColor,
       ml: ml,
       mr: mr,
+      pd: pd,
+      size: size,
     ),
   );
 }

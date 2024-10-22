@@ -28,6 +28,7 @@ Widget textFieldBdp({
   TextInputType? keyboardType,
   bool? readOnly,
   void Function()? onTap,
+  String? Function(String?)? validator,
 }) {
   return Container(
     margin: margin,
@@ -42,6 +43,7 @@ Widget textFieldBdp({
       focus: focusNode,
       nextFocus: nextNode,
       textFieldType: textType ?? TextFieldType.NAME,
+      validator: validator,
       inputFormatters: inputFormatters,
       maxLength: max,
       keyboardType: keyboardType,
