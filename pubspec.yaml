@@ -32,6 +32,7 @@ dependencies:
   chewie: ^1.8.5
   flutter_cached_pdfview: ^0.4.2
   flutter_downloader: ^1.11.8
+  flutter_svg: ^2.0.10+1
 
 dependency_overrides:
   webview_flutter_android: 3.16.1
