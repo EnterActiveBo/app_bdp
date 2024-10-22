@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:appbdp/app/common/widgets/loader_widgets.dart';
 import 'package:diacritic/diacritic.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 errorBdp(Response response) {
@@ -145,4 +147,25 @@ String priceFormat(
     locale: Intl.getCurrentLocale(),
     name: name ?? '',
   ).format(price);
+}
+
+Future<void> shareImage(
+  Uint8List image, {
+  String? title,
+  String? detail,
+}) async {
+  String text = title ?? "GESTOR DIGITAL BDP";
+  text += detail ?? "";
+  DateTime now = DateTime.now();
+  await Share.shareXFiles(
+    [
+      XFile.fromData(
+        image,
+        mimeType: "image/png",
+        name: "BDP_${now.day}_${now.month}_${now.year}",
+      ),
+    ],
+    text: text,
+    subject: "GESTOR DIGITAL BDP",
+  );
 }

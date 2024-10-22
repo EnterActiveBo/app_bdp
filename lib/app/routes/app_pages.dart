@@ -22,6 +22,10 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
 import '../modules/notifications/views/notifications_view.dart';
+import '../modules/pathologies/bindings/pathologies_binding.dart';
+import '../modules/pathologies/pathology/bindings/pathology_binding.dart';
+import '../modules/pathologies/pathology/views/pathology_view.dart';
+import '../modules/pathologies/views/pathologies_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/quotes/bindings/quotes_binding.dart';
@@ -146,6 +150,18 @@ class AppPages {
       name: _Paths.QUOTES,
       page: () => const QuotesView(),
       binding: QuotesBinding(),
+    ),
+    GetPage(
+      name: _Paths.PATHOLOGIES,
+      page: () => const PathologiesView(),
+      binding: PathologiesBinding(),
+      children: [
+        GetPage(
+          name: _Paths.PATHOLOGY,
+          page: () => const PathologyView(),
+          binding: PathologyBinding(),
+        ),
+      ],
     ),
   ];
 }

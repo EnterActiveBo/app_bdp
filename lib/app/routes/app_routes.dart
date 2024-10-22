@@ -20,6 +20,8 @@ abstract class Routes {
   static const DOCUMENT =
       _Paths.GOOD_PRACTICES + _Paths.RESOURCES + _Paths.DOCUMENT;
   static const QUOTES = _Paths.QUOTES;
+  static const PATHOLOGIES = _Paths.PATHOLOGIES;
+  static const PATHOLOGY = _Paths.PATHOLOGIES + _Paths.PATHOLOGY;
 }
 
 abstract class _Paths {
@@ -40,4 +42,6 @@ abstract class _Paths {
   static const VIDEO = '/video';
   static const DOCUMENT = '/document';
   static const QUOTES = '/quotes';
+  static const PATHOLOGIES = '/pathologies';
+  static const PATHOLOGY = '/pathology';
 }

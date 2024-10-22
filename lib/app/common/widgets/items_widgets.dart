@@ -5,6 +5,7 @@ import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/banner_model.dart';
 import 'package:appbdp/app/models/course_bdp_model.dart';
 import 'package:appbdp/app/models/course_model.dart';
+import 'package:appbdp/app/models/pathology_model.dart';
 import 'package:appbdp/app/models/quote_model.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -325,6 +326,8 @@ Widget imageDetailItem({
   Color? titleColor,
   Color? detailColor,
   Function? action,
+  double? pv,
+  double? ph,
 }) {
   return Visibility(
     visible: title is String,
@@ -355,9 +358,9 @@ Widget imageDetailItem({
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 20,
-                horizontal: 20,
+              padding: EdgeInsets.symmetric(
+                vertical: pv ?? 20,
+                horizontal: ph ?? 20,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -548,6 +551,193 @@ Widget newItemQuote(
           align: TextAlign.right,
           color: appTextNormal,
           weight: FontWeight.bold,
+        ),
+      ],
+    ),
+  );
+}
+
+Widget resourceItem(
+  ResourcePathologyModel resource, {
+  CourseModel? course,
+  Color? backgroundColor,
+  Color? titleColor,
+  Color? superTitleColor,
+  double? mt,
+  double? mb,
+  double? imageW,
+  double? imageH,
+  int? radius,
+  Function? action,
+}) {
+  return GestureDetector(
+    onTap: () {
+      downloadFile(
+        resource.source.url,
+      );
+    },
+    child: Container(
+      width: Get.width,
+      clipBehavior: Clip.antiAlias,
+      margin: EdgeInsets.only(
+        top: mt ?? 0,
+        bottom: mb ?? 0,
+      ),
+      padding: const EdgeInsets.only(
+        right: 10,
+      ),
+      decoration: boxDecorationRoundedWithShadow(
+        radius ?? 10,
+        backgroundColor: backgroundColor ?? appBackgroundOpacity,
+        shadowColor: appColorTransparent,
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Flexible(
+              flex: 0,
+              child: imageOrIcon(
+                imageUrl: resource.preview?.url,
+                icon: Icons.file_copy_outlined,
+                iconSize: 30,
+                w: 55,
+                h: 60,
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Container(
+                width: Get.width,
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 15,
+                ),
+                child: titleBdp(
+                  resource.title,
+                  size: 15,
+                  color: titleColor ?? appColorPrimary,
+                  max: 2,
+                  overflow: TextOverflow.ellipsis,
+                  align: TextAlign.left,
+                ),
+              ),
+            ),
+            const Icon(
+              Icons.arrow_forward_ios_outlined,
+              color: appColorThird,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Widget pathologyShare(
+  PathologyModel pathology,
+) {
+  ResourcePathologyModel? image = pathology.getImageFeatured();
+  List<ResourcePathologyModel> files = pathology.getResourcesByType("file");
+  return Padding(
+    padding: const EdgeInsets.symmetric(
+      vertical: 20,
+      horizontal: 15,
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Visibility(
+          visible: image is ResourcePathologyModel,
+          child: Container(
+            decoration: boxDecorationRoundedWithShadow(
+              20,
+              shadowColor: appColorTransparent,
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: CachedNetworkImage(
+              imageUrl: image?.source.url ?? "",
+              fit: BoxFit.fill,
+              width: Get.width,
+              height: Get.width / 1.8,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: image is ResourcePathologyModel ? 20 : 0,
+        ),
+        Visibility(
+          visible: pathology.tags.isNotEmpty == true,
+          child: titleBdp(
+            pathology.getTagsString() ?? "",
+            color: appColorThird,
+            size: 14,
+          ),
+        ),
+        titleBdp(
+          pathology.title,
+        ),
+        dividerBdp(),
+        titleBdp(
+          "Problema",
+          size: 15,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        textBdp(
+          pathology.problem,
+          size: 14,
+          align: TextAlign.left,
+        ),
+        dividerBdp(),
+        titleBdp(
+          "Información",
+          size: 15,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        textBdp(
+          pathology.information,
+          size: 14,
+          align: TextAlign.left,
+        ),
+        dividerBdp(),
+        titleBdp(
+          "Manejo",
+          size: 15,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        textBdp(
+          pathology.handling,
+          size: 14,
+          align: TextAlign.left,
+        ),
+        dividerBdp(),
+        Visibility(
+          visible: files.isNotEmpty,
+          child: titleBdp(
+            "Más Información",
+            size: 15,
+          ),
+        ),
+        SizedBox(
+          height: files.isNotEmpty ? 10 : 0,
+        ),
+        Column(
+          children: files.asMap().entries.map(
+            (resource) {
+              return resourceItem(
+                resource.value,
+                mt: resource.key == 0 ? 0 : 15,
+              );
+            },
+          ).toList(),
         ),
       ],
     ),

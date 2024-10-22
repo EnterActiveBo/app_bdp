@@ -3,6 +3,7 @@ import 'package:appbdp/app/models/course_bdp_model.dart';
 import 'package:appbdp/app/models/course_model.dart';
 import 'package:appbdp/app/models/faq_model.dart';
 import 'package:appbdp/app/models/notification_model.dart';
+import 'package:appbdp/app/models/pathology_model.dart';
 import 'package:appbdp/app/models/quote_model.dart';
 import 'package:appbdp/app/models/resource_model.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
@@ -174,4 +175,38 @@ QuoteModel newQuoteStored(GetStorage box) {
     return value is QuoteModel ? value : QuoteModel.fromJson(value);
   }
   return QuoteModel(items: []);
+}
+
+List<TagPathologyModel> tagsPathologyStored(GetStorage box) {
+  String key = "tagsPathology";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    if (value is List) {
+      return List<TagPathologyModel>.from(
+        value.map(
+          (f) {
+            return f is TagPathologyModel ? f : TagPathologyModel.fromJson(f);
+          },
+        ),
+      );
+    }
+  }
+  return [];
+}
+
+List<PathologyModel> pathologiesStored(GetStorage box) {
+  String key = "pathologies";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    if (value is List) {
+      return List<PathologyModel>.from(
+        value.map(
+          (f) {
+            return f is PathologyModel ? f : PathologyModel.fromJson(f);
+          },
+        ),
+      );
+    }
+  }
+  return [];
 }

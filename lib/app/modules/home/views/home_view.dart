@@ -75,6 +75,18 @@ class HomeView extends GetView<HomeController> {
                   },
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 15,
+                ),
+                child: buttonBdp(
+                  "Enfermedades",
+                  () {
+                    Get.toNamed(Routes.PATHOLOGIES);
+                  },
+                ),
+              ),
             ],
           ),
         ),

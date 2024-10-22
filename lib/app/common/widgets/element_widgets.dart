@@ -4,6 +4,7 @@ import 'package:appbdp/app/common/widgets/input_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/banner_model.dart';
+import 'package:appbdp/app/models/pathology_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -389,5 +390,161 @@ Widget textRichBdp(
         ),
       ],
     ),
+  );
+}
+
+Widget tagContainer({
+  Widget? child,
+  double? width,
+  double? mt,
+  double? mb,
+  double? ml,
+  double? pv,
+  double? ph,
+  double? radius,
+  Color? backgroundColor,
+  BoxBorder? border,
+  Function? action,
+}) {
+  Widget content = Container(
+    width: width,
+    margin: EdgeInsets.only(
+      left: ml ?? 0,
+      top: mt ?? 0,
+      bottom: mb ?? 0,
+    ),
+    padding: EdgeInsets.symmetric(
+      vertical: pv ?? 10,
+      horizontal: ph ?? 10,
+    ),
+    decoration: BoxDecoration(
+      color: backgroundColor ?? appBackgroundOpacity,
+      borderRadius: BorderRadius.circular(
+        radius ?? 10,
+      ),
+      border: border,
+    ),
+    clipBehavior: Clip.antiAlias,
+    child: child,
+  );
+  return Visibility(
+    visible: child is Widget,
+    child: () {
+      if (action != null) {
+        return GestureDetector(
+          onTap: () {
+            action();
+          },
+          child: content,
+        );
+      }
+      return content;
+    }(),
+  );
+}
+
+Widget pathologyItem(
+  PathologyModel pathology, {
+  Color? backgroundColor,
+  Function? action,
+}) {
+  ResourcePathologyModel? imageFeatured = pathology.getImageFeatured();
+  return GestureDetector(
+    onTap: () {
+      if (action != null) {
+        action();
+      }
+    },
+    child: Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: boxDecorationRoundedWithShadow(
+        20,
+        backgroundColor: backgroundColor ?? appBackgroundOpacity,
+        shadowColor: appColorTransparent,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Visibility(
+            visible: imageFeatured is ResourcePathologyModel,
+            child: CachedNetworkImage(
+              imageUrl: "${imageFeatured?.source.url}",
+              width: Get.width,
+              height: 120,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 15,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Visibility(
+                  visible: pathology.tags.isNotEmpty,
+                  child: titleBdp(
+                    "${pathology.getTagsString()}",
+                    color: appColorThird,
+                    size: 12,
+                    max: imageFeatured is ResourcePathologyModel ? 1 : null,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                titleBdp(
+                  pathology.title,
+                  color: appColorPrimary,
+                  align: TextAlign.left,
+                  size: 13,
+                  max: imageFeatured is ResourcePathologyModel ? 2 : null,
+                  textHeight: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget pathologyBanner(
+  List<ResourcePathologyModel> items,
+) {
+  var width = Get.width;
+  final Size cardSize = Size(width, width / 1.8);
+  return BannerView(
+    viewportFraction: 0.9,
+    height: cardSize.height,
+    enlargeCenterPage: true,
+    scrollDirection: Axis.horizontal,
+    items: items.map(
+      (slider) {
+        return SizedBox(
+          width: cardSize.width,
+          height: cardSize.height,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                decoration: boxDecorationRoundedWithShadow(
+                  20,
+                  shadowColor: appColorTransparent,
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: CachedNetworkImage(
+                  imageUrl: slider.source.url,
+                  fit: BoxFit.fill,
+                  width: cardSize.width,
+                  height: cardSize.height,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    ).toList(),
   );
 }
