@@ -136,6 +136,9 @@ class PathologyView extends GetView<PathologyController> {
                             return resourceItem(
                               resource.value,
                               mt: resource.key == 0 ? 0 : 15,
+                              action: () {
+                                controller.setDocument(resource.value);
+                              },
                             );
                           },
                         ).toList(),

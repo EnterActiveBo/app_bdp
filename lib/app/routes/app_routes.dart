@@ -22,6 +22,8 @@ abstract class Routes {
   static const QUOTES = _Paths.QUOTES;
   static const PATHOLOGIES = _Paths.PATHOLOGIES;
   static const PATHOLOGY = _Paths.PATHOLOGIES + _Paths.PATHOLOGY;
+  static const DOCUMENT_PATHOLOGY =
+      _Paths.PATHOLOGIES + _Paths.DOCUMENT_PATHOLOGY;
 }
 
 abstract class _Paths {
@@ -44,4 +46,5 @@ abstract class _Paths {
   static const QUOTES = '/quotes';
   static const PATHOLOGIES = '/pathologies';
   static const PATHOLOGY = '/pathology';
+  static const DOCUMENT_PATHOLOGY = '/document-pathology';
 }

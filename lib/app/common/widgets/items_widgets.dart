@@ -572,9 +572,9 @@ Widget resourceItem(
 }) {
   return GestureDetector(
     onTap: () {
-      downloadFile(
-        resource.source.url,
-      );
+      if (action != null) {
+        action();
+      }
     },
     child: Container(
       width: Get.width,

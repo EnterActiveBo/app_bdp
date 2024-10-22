@@ -23,6 +23,8 @@ import '../modules/login/views/login_view.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
 import '../modules/notifications/views/notifications_view.dart';
 import '../modules/pathologies/bindings/pathologies_binding.dart';
+import '../modules/pathologies/documentPathology/bindings/document_pathology_binding.dart';
+import '../modules/pathologies/documentPathology/views/document_pathology_view.dart';
 import '../modules/pathologies/pathology/bindings/pathology_binding.dart';
 import '../modules/pathologies/pathology/views/pathology_view.dart';
 import '../modules/pathologies/views/pathologies_view.dart';
@@ -160,6 +162,11 @@ class AppPages {
           name: _Paths.PATHOLOGY,
           page: () => const PathologyView(),
           binding: PathologyBinding(),
+        ),
+        GetPage(
+          name: _Paths.DOCUMENT_PATHOLOGY,
+          page: () => const DocumentPathologyView(),
+          binding: DocumentPathologyBinding(),
         ),
       ],
     ),
