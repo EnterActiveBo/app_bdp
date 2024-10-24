@@ -1,14 +1,11 @@
 import 'package:appbdp/app/common/widgets/bottom_bdp_view.dart';
 import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/header_bdp_view.dart';
-import 'package:appbdp/app/common/widgets/input_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
-import 'package:appbdp/app/routes/app_pages.dart';
+import 'package:appbdp/app/models/menu_model.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -25,7 +22,7 @@ class HomeView extends GetView<HomeController> {
               Container(
                 margin: const EdgeInsets.symmetric(
                   horizontal: 15,
-                  vertical: 20,
+                  vertical: 10,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,45 +45,48 @@ class HomeView extends GetView<HomeController> {
               bannerSliderBdp(
                 controller.banners,
               ),
-              const SizedBox(
-                height: 20,
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 10,
                   horizontal: 15,
                 ),
-                child: buttonBdp(
-                  "Buenas practicas",
-                  () {
-                    Get.toNamed(Routes.GOOD_PRACTICES);
-                  },
+                child: Column(
+                  children: [
+                    titleBdp(
+                      "Herramientas",
+                    ),
+                  ],
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 10,
                   horizontal: 15,
                 ),
-                child: buttonBdp(
-                  "Cotizaciones",
-                  () {
-                    Get.toNamed(Routes.QUOTES);
-                  },
-                ),
+                child: () {
+                  List<MenuModel> items = controller.menu.where(
+                    (m) {
+                      return (m.disabled ?? false) == false;
+                    },
+                  ).toList();
+                  return GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 15,
+                    ),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: const ScrollPhysics(),
+                    itemCount: items.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      MenuModel item = items[index];
+                      return menuHome(item);
+                    },
+                  );
+                }(),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 15,
-                ),
-                child: buttonBdp(
-                  "Enfermedades",
-                  () {
-                    Get.toNamed(Routes.PATHOLOGIES);
-                  },
-                ),
-              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

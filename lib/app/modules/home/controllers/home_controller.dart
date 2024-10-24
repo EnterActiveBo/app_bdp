@@ -6,9 +6,11 @@ import 'package:appbdp/app/common/controllers/main_controller.dart';
 import 'package:appbdp/app/common/storage_box.dart';
 import 'package:appbdp/app/common/utils.dart';
 import 'package:appbdp/app/models/banner_model.dart';
+import 'package:appbdp/app/models/menu_model.dart';
 import 'package:appbdp/app/models/providers/banner_provider.dart';
 import 'package:appbdp/app/models/providers/user_provider.dart';
 import 'package:appbdp/app/models/user_model.dart';
+import 'package:appbdp/app/routes/app_pages.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:appbdp/app/common/widgets/loader_widgets.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,7 @@ class HomeController extends GetxController {
   final UserProvider userProvider = Get.find();
   String userKey = 'user';
   final Rx<UserModel?> user = (null as UserModel?).obs;
+  final RxList<MenuModel> menu = (List<MenuModel>.of([])).obs;
 
   @override
   void onInit() {
@@ -142,6 +145,7 @@ class HomeController extends GetxController {
 
   initUser() {
     user.value = userStored(box);
+    setMenuHome();
     getUser();
   }
 
@@ -150,6 +154,74 @@ class HomeController extends GetxController {
     if (userResponse is UserModel) {
       user.value = userResponse;
       box.write(userKey, userResponse);
+      setMenuHome();
+    }
+  }
+
+  setMenuHome() {
+    if (user.value is UserModel && menu.isEmpty) {
+      menu.clear();
+      menu.addAll([
+        MenuModel(
+          title: "Clima",
+          page: Routes.WEATHER,
+          svg: "clima",
+          isPrimary: true,
+          // disabled: user.value?.role.name != 'client',
+        ),
+        MenuModel(
+          title: "Enfermedades y Plagas",
+          page: Routes.PATHOLOGIES,
+          svg: "planta",
+          isPrimary: true,
+          // disabled: user.value?.role.name != 'client',
+        ),
+        MenuModel(
+          title: "Precios",
+          page: Routes.PRICES,
+          svg: "precios",
+          isPrimary: true,
+          // disabled: user.value?.role.name != 'client',
+        ),
+        MenuModel(
+          title: "Buenas Prácticas",
+          page: Routes.GOOD_PRACTICES,
+          svg: "practicas",
+          isPrimary: false,
+        ),
+        MenuModel(
+          title: "Proveedores",
+          page: Routes.SUPPLIERS,
+          svg: "proveedores",
+          isPrimary: false,
+        ),
+        MenuModel(
+          title: "Cursos",
+          page: Routes.COURSES,
+          svg: "cursos",
+          isPrimary: false,
+        ),
+        MenuModel(
+          title: "Preguntas Frecuentes",
+          page: Routes.FAQ,
+          svg: "faq",
+          isPrimary: false,
+        ),
+        MenuModel(
+          title: "Cotizador",
+          page: Routes.QUOTES,
+          svg: "cotizador",
+          isPrimary: false,
+          // disabled: user.value?.role.name != 'client',
+        ),
+        MenuModel(
+          title: "Comunidad",
+          page: Routes.COMMUNITY,
+          svg: "comunidad",
+          isPrimary: false,
+        ),
+      ]);
+      menu.refresh();
     }
   }
 }
