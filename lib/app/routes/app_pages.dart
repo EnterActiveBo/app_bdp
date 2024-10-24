@@ -1,5 +1,13 @@
 import 'package:get/get.dart';
 
+import '../modules/community/bindings/community_binding.dart';
+import '../modules/community/detailCommunity/bindings/detail_community_binding.dart';
+import '../modules/community/detailCommunity/views/detail_community_view.dart';
+import '../modules/community/documentsCommunity/bindings/documents_community_binding.dart';
+import '../modules/community/documentsCommunity/views/documents_community_view.dart';
+import '../modules/community/formCommunity/bindings/form_community_binding.dart';
+import '../modules/community/formCommunity/views/form_community_view.dart';
+import '../modules/community/views/community_view.dart';
 import '../modules/courses/bindings/courses_binding.dart';
 import '../modules/courses/courseBdpDetail/bindings/course_bdp_detail_binding.dart';
 import '../modules/courses/courseBdpDetail/views/course_bdp_detail_view.dart';
@@ -28,6 +36,8 @@ import '../modules/pathologies/documentPathology/views/document_pathology_view.d
 import '../modules/pathologies/pathology/bindings/pathology_binding.dart';
 import '../modules/pathologies/pathology/views/pathology_view.dart';
 import '../modules/pathologies/views/pathologies_view.dart';
+import '../modules/prices/bindings/prices_binding.dart';
+import '../modules/prices/views/prices_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/quotes/bindings/quotes_binding.dart';
@@ -38,6 +48,8 @@ import '../modules/supplier/bindings/supplier_binding.dart';
 import '../modules/supplier/views/supplier_view.dart';
 import '../modules/suppliers/bindings/suppliers_binding.dart';
 import '../modules/suppliers/views/suppliers_view.dart';
+import '../modules/weather/bindings/weather_binding.dart';
+import '../modules/weather/views/weather_view.dart';
 import 'middlewares/auth_middleware.dart';
 import 'middlewares/no_auth_middleware.dart';
 
@@ -169,6 +181,38 @@ class AppPages {
           binding: DocumentPathologyBinding(),
         ),
       ],
+    ),
+    GetPage(
+      name: _Paths.COMMUNITY,
+      page: () => const CommunityView(),
+      binding: CommunityBinding(),
+      children: [
+        GetPage(
+          name: _Paths.DETAIL_COMMUNITY,
+          page: () => const DetailCommunityView(),
+          binding: DetailCommunityBinding(),
+        ),
+        GetPage(
+          name: _Paths.FORM_COMMUNITY,
+          page: () => const FormCommunityView(),
+          binding: FormCommunityBinding(),
+        ),
+        GetPage(
+          name: _Paths.DOCUMENTS_COMMUNITY,
+          page: () => const DocumentsCommunityView(),
+          binding: DocumentsCommunityBinding(),
+        ),
+      ],
+    ),
+    GetPage(
+      name: _Paths.WEATHER,
+      page: () => const WeatherView(),
+      binding: WeatherBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRICES,
+      page: () => const PricesView(),
+      binding: PricesBinding(),
     ),
   ];
 }

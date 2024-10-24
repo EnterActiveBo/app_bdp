@@ -24,6 +24,13 @@ abstract class Routes {
   static const PATHOLOGY = _Paths.PATHOLOGIES + _Paths.PATHOLOGY;
   static const DOCUMENT_PATHOLOGY =
       _Paths.PATHOLOGIES + _Paths.DOCUMENT_PATHOLOGY;
+  static const COMMUNITY = _Paths.COMMUNITY;
+  static const DETAIL_COMMUNITY = _Paths.COMMUNITY + _Paths.DETAIL_COMMUNITY;
+  static const FORM_COMMUNITY = _Paths.COMMUNITY + _Paths.FORM_COMMUNITY;
+  static const DOCUMENTS_COMMUNITY =
+      _Paths.COMMUNITY + _Paths.DOCUMENTS_COMMUNITY;
+  static const WEATHER = _Paths.WEATHER;
+  static const PRICES = _Paths.PRICES;
 }
 
 abstract class _Paths {
@@ -47,4 +54,10 @@ abstract class _Paths {
   static const PATHOLOGIES = '/pathologies';
   static const PATHOLOGY = '/pathology';
   static const DOCUMENT_PATHOLOGY = '/document-pathology';
+  static const COMMUNITY = '/community';
+  static const DETAIL_COMMUNITY = '/detail-community';
+  static const FORM_COMMUNITY = '/form-community';
+  static const DOCUMENTS_COMMUNITY = '/documents-community';
+  static const WEATHER = '/weather';
+  static const PRICES = '/prices';
 }

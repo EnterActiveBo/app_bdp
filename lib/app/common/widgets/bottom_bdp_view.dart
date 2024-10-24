@@ -20,20 +20,37 @@ class BottomBdpView extends GetView<MainController> {
           controller.goTo(index);
         },
         items: [
-          bottomNavigationItem(Icons.notification_important_outlined),
-          bottomNavigationItem(Icons.home_outlined),
-          bottomNavigationItem(Icons.person_outline),
-          bottomNavigationItem(Icons.phone_outlined),
-          bottomNavigationItem(Icons.menu),
+          bottomNavigationItem(
+            Icons.notification_important_outlined,
+            svg: "assets/images/icons/practicas.svg",
+          ),
+          bottomNavigationItem(
+            Icons.home_outlined,
+            svg: "assets/images/icons/comunidad.svg",
+          ),
+          bottomNavigationItem(
+            Icons.home_outlined,
+          ),
+          bottomNavigationItem(
+            Icons.phone_outlined,
+            svg: "assets/images/icons/cursos.svg",
+          ),
+          bottomNavigationItem(
+            Icons.person_outline,
+          ),
         ],
       ),
     );
   }
 
-  bottomNavigationItem(IconData icon) {
+  bottomNavigationItem(
+    IconData icon, {
+    String? svg,
+  }) {
     return BottomNavigationBarItem(
       icon: iconWeightBdp(
         icon,
+        svg: svg,
         size: 30,
         weight: FontWeight.w100,
       ),
@@ -41,11 +58,12 @@ class BottomBdpView extends GetView<MainController> {
       activeIcon: Container(
         padding: const EdgeInsets.all(10.0),
         decoration: const BoxDecoration(
-          color: appColorSecondary,
+          color: appColorThird,
           shape: BoxShape.circle,
         ),
         child: iconWeightBdp(
           icon,
+          svg: svg,
           size: 25,
           color: appColorWhite,
           weight: FontWeight.w100,

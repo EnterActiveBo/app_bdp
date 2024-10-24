@@ -12,11 +12,11 @@ import 'package:path_provider/path_provider.dart';
 class MainController extends SuperController {
   final current = 2.obs;
   final List<String> routes = [
-    Routes.FAQ,
+    Routes.GOOD_PRACTICES,
+    Routes.COMMUNITY,
     Routes.HOME,
-    Routes.PROFILE,
-    Routes.SUPPLIERS,
     Routes.COURSES,
+    Routes.PROFILE,
   ];
   final NotificationsController notificationsController =
       Get.put<NotificationsController>(
