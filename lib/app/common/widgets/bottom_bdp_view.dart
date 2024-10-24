@@ -22,21 +22,23 @@ class BottomBdpView extends GetView<MainController> {
         items: [
           bottomNavigationItem(
             Icons.notification_important_outlined,
-            svg: "assets/images/icons/practicas.svg",
+            svg: "assets/images/icons/practicas_bottom.svg",
           ),
           bottomNavigationItem(
             Icons.home_outlined,
-            svg: "assets/images/icons/comunidad.svg",
+            svg: "assets/images/icons/comunidad_bottom.svg",
           ),
           bottomNavigationItem(
             Icons.home_outlined,
+            svg: "assets/images/icons/home.svg",
           ),
           bottomNavigationItem(
             Icons.phone_outlined,
-            svg: "assets/images/icons/cursos.svg",
+            svg: "assets/images/icons/cursos_bottom.svg",
           ),
           bottomNavigationItem(
             Icons.person_outline,
+            svg: "assets/images/icons/user.svg",
           ),
         ],
       ),

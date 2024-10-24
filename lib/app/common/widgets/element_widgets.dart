@@ -4,18 +4,32 @@ import 'package:appbdp/app/common/widgets/input_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/banner_model.dart';
+import 'package:appbdp/app/models/menu_model.dart';
 import 'package:appbdp/app/models/pathology_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 Widget iconWeightBdp(
   IconData icon, {
+  String? svg,
   double? size,
   FontWeight? weight,
   Color? color,
 }) {
+  if (svg is String) {
+    return SvgPicture.asset(
+      svg,
+      width: size,
+      height: size,
+      colorFilter: ColorFilter.mode(
+        color ?? appColorPrimary,
+        BlendMode.srcIn,
+      ),
+    );
+  }
   return Text(
     String.fromCharCode(icon.codePoint),
     style: TextStyle(
@@ -24,6 +38,61 @@ Widget iconWeightBdp(
       fontWeight: weight ?? FontWeight.w800,
       fontFamily: icon.fontFamily,
       color: color ?? appColorPrimary,
+    ),
+  );
+}
+
+Widget menuHome(
+  MenuModel menu, {
+  double? mt,
+  double? mb,
+  double? pv,
+  double? ph,
+  double? radius,
+}) {
+  return GestureDetector(
+    onTap: () {
+      Get.toNamed(menu.page);
+    },
+    child: Container(
+      margin: EdgeInsets.only(
+        top: mt ?? 0,
+        bottom: mb ?? 0,
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: pv ?? 5,
+        horizontal: ph ?? 5,
+      ),
+      decoration: BoxDecoration(
+        color: menu.isPrimary ? appColorPrimary : appBackground,
+        borderRadius: BorderRadius.circular(
+          radius ?? 10,
+        ),
+      ),
+      clipBehavior: Clip.antiAlias,
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            menu.getSvgAsset(),
+            colorFilter: ColorFilter.mode(
+              menu.isPrimary ? appColorWhite : appColorPrimary,
+              BlendMode.srcIn,
+            ),
+            width: 40,
+            height: 40,
+          ),
+          const SizedBox(height: 5),
+          titleBdp(
+            menu.title,
+            size: 12,
+            color: menu.isPrimary ? appColorWhite : null,
+            textHeight: 1,
+            align: TextAlign.center,
+          ),
+        ],
+      ),
     ),
   );
 }
@@ -536,6 +605,126 @@ Widget pathologyBanner(
                 clipBehavior: Clip.antiAlias,
                 child: CachedNetworkImage(
                   imageUrl: slider.source.url,
+                  fit: BoxFit.fill,
+                  width: cardSize.width,
+                  height: cardSize.height,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    ).toList(),
+  );
+}
+
+Widget voteContainer(
+  bool active, {
+  IconData? icon,
+  double? iconSize,
+  double? iconMr,
+  double? iconPd,
+  String? title,
+  double? titleSize,
+  Function? action,
+}) {
+  return GestureDetector(
+    onTap: () {
+      if (action != null) {
+        action();
+      }
+    },
+    child: Row(
+      children: [
+        iconRounded(
+          icon ?? Icons.thumb_down_alt_outlined,
+          size: iconSize ?? 20,
+          mr: iconMr ?? 5,
+          pd: iconPd,
+          color: active ? appColorThirdOpacity : appBackground,
+          iconColor: active ? appColorThird : null,
+        ),
+        textBdp(
+          title,
+          size: titleSize ?? 12,
+          color: active ? appColorThird : null,
+          max: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    ),
+  );
+}
+
+Widget buttonCustom({
+  Widget? child,
+  double? width,
+  double? mt,
+  double? mb,
+  double? pv,
+  double? ph,
+  int? radius,
+  Color? backgroundColor,
+  BoxBorder? border,
+  Function? action,
+}) {
+  Widget content = Container(
+    margin: EdgeInsets.only(
+      top: mt ?? 0,
+      bottom: mb ?? 0,
+    ),
+    padding: EdgeInsets.symmetric(
+      vertical: pv ?? 20,
+      horizontal: ph ?? 20,
+    ),
+    decoration: boxDecorationRoundedWithShadow(
+      radius ?? 10,
+      backgroundColor: backgroundColor ?? appBackgroundOpacity,
+    ),
+    clipBehavior: Clip.antiAlias,
+    child: child,
+  );
+  return Visibility(
+    visible: child is Widget,
+    child: () {
+      if (action != null) {
+        return GestureDetector(
+          onTap: () {
+            action();
+          },
+          child: content,
+        );
+      }
+      return content;
+    }(),
+  );
+}
+
+Widget communityBanner(
+  List<FileModel> items,
+) {
+  var width = Get.width;
+  final Size cardSize = Size(width, width / 1.8);
+  return BannerView(
+    viewportFraction: 0.9,
+    height: cardSize.height,
+    enlargeCenterPage: true,
+    scrollDirection: Axis.horizontal,
+    items: items.map(
+      (slider) {
+        return SizedBox(
+          width: cardSize.width,
+          height: cardSize.height,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                decoration: boxDecorationRoundedWithShadow(
+                  20,
+                  shadowColor: appColorTransparent,
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: CachedNetworkImage(
+                  imageUrl: slider.url,
                   fit: BoxFit.fill,
                   width: cardSize.width,
                   height: cardSize.height,

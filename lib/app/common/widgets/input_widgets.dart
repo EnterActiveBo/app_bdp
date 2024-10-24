@@ -29,6 +29,8 @@ Widget textFieldBdp({
   bool? readOnly,
   void Function()? onTap,
   String? Function(String?)? validator,
+  int? minLines,
+  int? maxLines,
 }) {
   return Container(
     margin: margin,
@@ -46,6 +48,8 @@ Widget textFieldBdp({
       validator: validator,
       inputFormatters: inputFormatters,
       maxLength: max,
+      minLines: minLines,
+      maxLines: maxLines,
       keyboardType: keyboardType,
       readOnly: readOnly ?? false,
       errorInvalidEmail: "Por favor ingrese un correo electrónico valido.",

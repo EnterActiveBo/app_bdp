@@ -49,13 +49,22 @@ class UserModel {
   }
 
   String getName() {
-    String result = "$name $firstLastName $secondLastName";
+    String result = name;
+    result += (firstLastName is String) ? " $firstLastName" : "";
+    result += (secondLastName is String) ? " $secondLastName" : "";
     if (role.name == "client" &&
         profile is ProfileModel &&
         profile?.fullName is String) {
       result = profile!.fullName!;
     }
-    return result;
+    return result.toUpperCase();
+  }
+
+  String? getFeatured() {
+    if (role.name == "client") {
+      return profile?.department?.name;
+    }
+    return role.showName;
   }
 }
 

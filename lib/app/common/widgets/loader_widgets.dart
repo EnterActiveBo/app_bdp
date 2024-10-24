@@ -55,6 +55,7 @@ Widget dialogBdp({
   Function? action,
   bool? enableIcon,
   Widget? content,
+  bool? disableClose,
 }) {
   if (Get.isDialogOpen == true) {
     Get.back();
@@ -75,21 +76,27 @@ Widget dialogBdp({
       child: Column(
         mainAxisSize: MainAxisSize.min, // To make the card compact
         children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Container(
-              padding: const EdgeInsets.only(
-                top: 15,
-                right: 15,
-              ),
-              alignment: Alignment.centerRight,
-              child: const Icon(
-                Icons.close,
-                color: appColorSecondary,
+          Visibility(
+            visible: disableClose != true,
+            child: GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: Container(
+                padding: const EdgeInsets.only(
+                  top: 15,
+                  right: 15,
+                ),
+                alignment: Alignment.centerRight,
+                child: const Icon(
+                  Icons.close,
+                  color: appColorSecondary,
+                ),
               ),
             ),
+          ),
+          SizedBox(
+            height: disableClose == true ? 15 : 0,
           ),
           Visibility(
             visible: enableIcon ?? true,

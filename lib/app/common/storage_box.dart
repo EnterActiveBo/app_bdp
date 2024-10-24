@@ -1,4 +1,5 @@
 import 'package:appbdp/app/models/banner_model.dart';
+import 'package:appbdp/app/models/community_model.dart';
 import 'package:appbdp/app/models/course_bdp_model.dart';
 import 'package:appbdp/app/models/course_model.dart';
 import 'package:appbdp/app/models/faq_model.dart';
@@ -203,6 +204,23 @@ List<PathologyModel> pathologiesStored(GetStorage box) {
         value.map(
           (f) {
             return f is PathologyModel ? f : PathologyModel.fromJson(f);
+          },
+        ),
+      );
+    }
+  }
+  return [];
+}
+
+List<CommunityModel> communitiesStored(GetStorage box) {
+  String key = "communities";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    if (value is List) {
+      return List<CommunityModel>.from(
+        value.map(
+          (f) {
+            return f is CommunityModel ? f : CommunityModel.fromJson(f);
           },
         ),
       );

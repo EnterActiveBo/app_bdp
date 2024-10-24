@@ -5,6 +5,8 @@ import '../modules/community/detailCommunity/bindings/detail_community_binding.d
 import '../modules/community/detailCommunity/views/detail_community_view.dart';
 import '../modules/community/documentsCommunity/bindings/documents_community_binding.dart';
 import '../modules/community/documentsCommunity/views/documents_community_view.dart';
+import '../modules/community/fileCommunity/bindings/file_community_binding.dart';
+import '../modules/community/fileCommunity/views/file_community_view.dart';
 import '../modules/community/formCommunity/bindings/form_community_binding.dart';
 import '../modules/community/formCommunity/views/form_community_view.dart';
 import '../modules/community/views/community_view.dart';
@@ -201,6 +203,11 @@ class AppPages {
           name: _Paths.DOCUMENTS_COMMUNITY,
           page: () => const DocumentsCommunityView(),
           binding: DocumentsCommunityBinding(),
+        ),
+        GetPage(
+          name: _Paths.FILE_COMMUNITY,
+          page: () => const FileCommunityView(),
+          binding: FileCommunityBinding(),
         ),
       ],
     ),

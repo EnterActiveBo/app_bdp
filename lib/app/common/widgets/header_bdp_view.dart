@@ -12,12 +12,14 @@ class HeaderBdpView extends GetView<NotificationsController>
   final String? title;
   final String? url;
   final double? rounded;
+  final Function? customBack;
   const HeaderBdpView({
     super.key,
     this.primary,
     this.title,
     this.url,
     this.rounded,
+    this.customBack,
   });
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,11 @@ class HeaderBdpView extends GetView<NotificationsController>
                 Icons.arrow_back_ios_new_outlined,
               ),
               onPressed: () {
-                Get.back();
+                if (customBack != null) {
+                  customBack!();
+                } else {
+                  Get.back();
+                }
               },
             )
           : Container(

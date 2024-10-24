@@ -3,6 +3,7 @@ import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/banner_model.dart';
+import 'package:appbdp/app/models/community_model.dart';
 import 'package:appbdp/app/models/course_bdp_model.dart';
 import 'package:appbdp/app/models/course_model.dart';
 import 'package:appbdp/app/models/pathology_model.dart';
@@ -740,6 +741,300 @@ Widget pathologyShare(
           ).toList(),
         ),
       ],
+    ),
+  );
+}
+
+Widget communityItem(
+  CommunityModel community, {
+  Color? backgroundColor,
+  double? mt,
+  Function? action,
+  bool? enableEdit,
+  Function? actionEdit,
+  bool? enableImage = true,
+  int? maxTitle,
+  TextOverflow? titleOverflow,
+  int? maxDetail,
+  TextOverflow? detailOverflow,
+  double? voteIconSize,
+  double? voteIconMr,
+  double? voteIconPd,
+  double? voteTitleSize,
+  bool? showNextArrow = true,
+  bool? showResources = false,
+  Function? actionResource,
+  bool? showReply = false,
+  Function? actionReply,
+  Function? actionNext,
+}) {
+  FileModel? imageFeatured = community.getImageFeatured();
+  Widget content = Stack(
+    children: [
+      Container(
+        width: Get.width,
+        clipBehavior: Clip.antiAlias,
+        decoration: boxDecorationRoundedWithShadow(
+          20,
+          backgroundColor: backgroundColor ?? appBackgroundOpacity,
+          shadowColor: appColorTransparent,
+        ),
+        margin: EdgeInsets.only(
+          top: mt ?? 0,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+              visible: enableImage == true && imageFeatured is FileModel,
+              child: CachedNetworkImage(
+                imageUrl: "${imageFeatured?.url}",
+                width: Get.width,
+                height: Get.width / 2.5,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 20,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: Get.width,
+                    child: Row(
+                      children: [
+                        iconRounded(
+                          Icons.person_outlined,
+                          color: appColorSecondary,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            textRichBdp(
+                              "${community.user.getName()} | ",
+                              community.user.getFeatured() ?? "",
+                              detailColor: appColorSecondary,
+                              detailWeight: FontWeight.bold,
+                            ),
+                            textBdp(
+                              dateDifferenceHumans(community.updatedAt),
+                            ),
+                          ],
+                        ).expand(),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  titleBdp(
+                    community.title,
+                    color: appColorPrimary,
+                    align: TextAlign.left,
+                    max: maxTitle,
+                    textHeight: 1,
+                    overflow: titleOverflow,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  textBdp(
+                    community.detail,
+                    textHeight: 1,
+                    align: TextAlign.left,
+                    max: maxDetail,
+                    overflow: detailOverflow,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  SizedBox(
+                    width: Get.width,
+                    child: textBdp(
+                      "${community.meta.interactions} Respuestas",
+                      size: 13,
+                      textHeight: 1,
+                      align: TextAlign.right,
+                      max: 2,
+                      color: appTextLight,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  dividerBdp(),
+                  Row(
+                    children: [
+                      voteContainer(
+                        false,
+                        icon: Icons.thumb_up_alt_outlined,
+                        title: "Voto Positivo",
+                        iconSize: voteIconSize,
+                        iconMr: voteIconMr,
+                        iconPd: voteIconPd,
+                        titleSize: voteTitleSize,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      voteContainer(
+                        true,
+                        icon: Icons.thumb_down_alt_outlined,
+                        title: "Voto Negativo",
+                        iconSize: voteIconSize,
+                        iconMr: voteIconMr,
+                        iconPd: voteIconPd,
+                        titleSize: voteTitleSize,
+                      ),
+                      Container(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Visibility(
+                              visible: showResources == true,
+                              child: iconButton(
+                                Icons.attach_file_outlined,
+                                mr: 5,
+                                color: appColorTransparent,
+                                iconColor: appColorThird,
+                                action: actionResource,
+                              ),
+                            ),
+                            Visibility(
+                              visible: showReply == true,
+                              child: iconButton(
+                                Icons.message_outlined,
+                                mr: showNextArrow == true ? 5 : 0,
+                                color: appColorTransparent,
+                                iconColor: appColorThird,
+                                action: actionReply,
+                              ),
+                            ),
+                            Visibility(
+                              visible: showNextArrow == true,
+                              child: iconButton(
+                                Icons.arrow_forward_ios_outlined,
+                                color: appColorTransparent,
+                                iconColor: appColorThird,
+                                action: actionNext,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ).expand(),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      Visibility(
+        visible: enableEdit == true,
+        child: Positioned(
+          top: (mt ?? 0) + 10,
+          right: 10,
+          child: iconButton(
+            Icons.edit_outlined,
+            color: appColorYellow,
+            pd: 10,
+            size: 20,
+            action: actionEdit,
+          ),
+        ),
+      ),
+    ],
+  );
+  return action == null
+      ? content
+      : GestureDetector(
+          onTap: () {
+            action();
+          },
+          child: content,
+        );
+}
+
+Widget fileItem(
+  FileModel resource, {
+  Color? backgroundColor,
+  Color? titleColor,
+  Color? superTitleColor,
+  double? mt,
+  double? mb,
+  double? imageW,
+  double? imageH,
+  int? radius,
+  Function? action,
+}) {
+  return GestureDetector(
+    onTap: () {
+      if (action != null) {
+        action();
+      }
+    },
+    child: Container(
+      width: Get.width,
+      clipBehavior: Clip.antiAlias,
+      margin: EdgeInsets.only(
+        top: mt ?? 0,
+        bottom: mb ?? 0,
+      ),
+      padding: const EdgeInsets.only(
+        right: 10,
+      ),
+      decoration: boxDecorationRoundedWithShadow(
+        radius ?? 10,
+        backgroundColor: backgroundColor ?? appBackgroundOpacity,
+        shadowColor: appColorTransparent,
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Flexible(
+              flex: 0,
+              child: imageOrIcon(
+                icon: Icons.file_copy_outlined,
+                iconSize: 30,
+                w: 55,
+                h: 60,
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Container(
+                width: Get.width,
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 15,
+                ),
+                child: titleBdp(
+                  resource.originalName,
+                  size: 15,
+                  color: titleColor ?? appColorPrimary,
+                  max: 2,
+                  overflow: TextOverflow.ellipsis,
+                  align: TextAlign.left,
+                ),
+              ),
+            ),
+            const Icon(
+              Icons.arrow_forward_ios_outlined,
+              color: appColorThird,
+            ),
+          ],
+        ),
+      ),
     ),
   );
 }

@@ -169,3 +169,32 @@ Future<void> shareImage(
     subject: "GESTOR DIGITAL BDP",
   );
 }
+
+String dateDifferenceHumans(
+  DateTime date, {
+  bool numericDates = true,
+}) {
+  final originalDate = DateTime.now();
+  final difference = originalDate.difference(
+    date,
+  );
+  if ((difference.inDays / 7).floor() >= 1) {
+    return (numericDates) ? 'hace 1 semana' : 'Ultima semana';
+  } else if (difference.inDays >= 2) {
+    return 'hace ${difference.inDays} días';
+  } else if (difference.inDays >= 1) {
+    return (numericDates) ? 'hace 1 día' : 'Ayer';
+  } else if (difference.inHours >= 2) {
+    return 'hace ${difference.inHours} horas';
+  } else if (difference.inHours >= 1) {
+    return (numericDates) ? 'hace 1 hora' : 'Hace una hora';
+  } else if (difference.inMinutes >= 2) {
+    return 'hace ${difference.inMinutes} minutos';
+  } else if (difference.inMinutes >= 1) {
+    return (numericDates) ? 'hace 1 minuto' : 'Hace un minuto';
+  } else if (difference.inSeconds >= 3) {
+    return 'Hace ${difference.inSeconds} segundos';
+  } else {
+    return 'Justo ahora';
+  }
+}

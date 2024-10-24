@@ -31,6 +31,7 @@ abstract class Routes {
       _Paths.COMMUNITY + _Paths.DOCUMENTS_COMMUNITY;
   static const WEATHER = _Paths.WEATHER;
   static const PRICES = _Paths.PRICES;
+  static const FILE_COMMUNITY = _Paths.COMMUNITY + _Paths.FILE_COMMUNITY;
 }
 
 abstract class _Paths {
@@ -60,4 +61,5 @@ abstract class _Paths {
   static const DOCUMENTS_COMMUNITY = '/documents-community';
   static const WEATHER = '/weather';
   static const PRICES = '/prices';
+  static const FILE_COMMUNITY = '/file-community';
 }
