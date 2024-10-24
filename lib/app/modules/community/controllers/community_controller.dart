@@ -48,10 +48,10 @@ class CommunityController extends GetxController {
 
   @override
   void onClose() {
-    super.onClose();
     search.value = null;
     activeSearch.value = false;
     loading.value = true;
+    super.onClose();
   }
 
   initData() {
@@ -63,7 +63,7 @@ class CommunityController extends GetxController {
   getCommunityList() async {
     Map<String, dynamic> query = {
       "page": currentPage.toString(),
-      "per_page": newsPerPage.toString(),
+      "limit": newsPerPage.toString(),
     };
     if (activeSearch.value && search.value is String) {
       query['title'] = search.value;
@@ -102,7 +102,7 @@ class CommunityController extends GetxController {
     currentPage.value = 1;
   }
 
-  findNews() {
+  findCommunity() {
     if (search.value is String) {
       activeSearch.value = true;
       getCommunityList();

@@ -749,6 +749,7 @@ Widget communityItem(
   CommunityModel community, {
   Color? backgroundColor,
   double? mt,
+  double? mb,
   Function? action,
   bool? enableEdit,
   Function? actionEdit,
@@ -781,6 +782,7 @@ Widget communityItem(
         ),
         margin: EdgeInsets.only(
           top: mt ?? 0,
+          bottom: mb ?? 0,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

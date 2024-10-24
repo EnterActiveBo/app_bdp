@@ -1,3 +1,5 @@
+import 'package:appbdp/app/common/widgets/bottom_bdp_view.dart';
+import 'package:appbdp/app/common/widgets/header_bdp_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -9,9 +11,9 @@ class WeatherView extends GetView<WeatherController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('WeatherView'),
-        centerTitle: true,
+      appBar: const HeaderBdpView(
+        primary: true,
+        title: "Agroclimatico",
       ),
       body: const Center(
         child: Text(
@@ -19,6 +21,7 @@ class WeatherView extends GetView<WeatherController> {
           style: TextStyle(fontSize: 20),
         ),
       ),
+      bottomNavigationBar: const BottomBdpView(),
     );
   }
 }

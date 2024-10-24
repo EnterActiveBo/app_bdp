@@ -9,6 +9,7 @@ import 'package:appbdp/app/models/community_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../controllers/community_controller.dart';
@@ -39,53 +40,64 @@ class CommunityView extends GetView<CommunityController> {
                     formKey,
                     search: search,
                     searchFocusNode: searchFocusNode,
-                    isFilter: controller.search.value is String,
+                    isFilter: controller.activeSearch.value,
                     searchAction: (value) {
                       controller.setSearch(value);
                     },
                     action: () {
-                      if (controller.search.value is String) {
+                      if (controller.activeSearch.value) {
                         controller.setSearch(null);
                         search.text = "";
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      } else {
+                        if (controller.search.value is String) {
+                          controller.findCommunity();
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        }
                       }
                     },
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  SingleChildScrollView(
-                    child: () {
-                      List<CommunityModel> items = controller.communities;
-                      return queryBdpWidget(
-                        !controller.loading.value && items.isNotEmpty,
-                        Column(
-                          children: items.asMap().entries.map(
-                            (item) {
-                              return communityItem(
-                                item.value,
-                                mt: item.key == 0 ? 0 : 15,
-                                maxTitle: 2,
-                                titleOverflow: TextOverflow.ellipsis,
-                                maxDetail: 2,
-                                detailOverflow: TextOverflow.ellipsis,
-                                action: () {
-                                  controller.setCommunity(item.value);
-                                },
-                                enableEdit: controller.user.value?.id ==
-                                    item.value.user.id,
-                                actionEdit: () {
-                                  controller.setCommunityForm(
-                                    value: item.value,
-                                  );
-                                },
-                              );
-                            },
-                          ).toList(),
+                  () {
+                    List<CommunityModel> items = controller.communities;
+                    return queryBdpWidget(
+                      !controller.loading.value && items.isNotEmpty,
+                      LazyLoadScrollView(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: items.asMap().entries.map(
+                              (item) {
+                                return communityItem(
+                                  item.value,
+                                  mt: item.key == 0 ? 0 : 15,
+                                  maxTitle: 2,
+                                  titleOverflow: TextOverflow.ellipsis,
+                                  maxDetail: 2,
+                                  detailOverflow: TextOverflow.ellipsis,
+                                  action: () {
+                                    controller.setCommunity(item.value);
+                                  },
+                                  enableEdit: controller.user.value?.id ==
+                                      item.value.user.id,
+                                  actionEdit: () {
+                                    controller.setCommunityForm(
+                                      value: item.value,
+                                    );
+                                  },
+                                );
+                              },
+                            ).toList(),
+                          ),
                         ),
-                        loading: controller.loading.value,
-                      );
-                    }(),
-                  ).expand(),
+                        onEndOfPage: () {
+                          controller.getNextPage();
+                        },
+                      ),
+                      loading: controller.loading.value,
+                    ).expand();
+                  }(),
                 ],
               ),
             ),

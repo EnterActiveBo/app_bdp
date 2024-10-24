@@ -170,4 +170,8 @@ class MetaCommunityListModel {
     data['total'] = total;
     return data;
   }
+
+  bool isLastPage() {
+    return currentPage == lastPage;
+  }
 }
