@@ -43,7 +43,7 @@ void main() async {
   );
   runApp(
     GetMaterialApp(
-      title: "AppBDP",
+      title: "GESTOR DIGITAL BDP",
       theme: AppThemeData.lightThemeData,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
