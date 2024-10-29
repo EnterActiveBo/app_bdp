@@ -109,12 +109,12 @@ class CourseModel {
       attrs.add(department!.name);
     }
     if (gender is String) {
-      attrs.add(gender!);
+      attrs.add(gender == 'male' ? 'Hombres' : 'Mujeres');
     }
     if (attrs.isNotEmpty) {
       return attrs.join(" | ");
     }
-    return "Abierto a todo cliente";
+    return "Abierto a todos los clientes";
   }
 }
 
