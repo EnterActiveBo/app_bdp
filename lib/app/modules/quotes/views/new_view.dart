@@ -51,6 +51,11 @@ class NewView extends GetView<QuotesController> {
                   fillColor: appBackgroundOpacity,
                   borderColor: appColorTransparent,
                   borderRadius: 30,
+                  validator: (String? value) {
+                    return (value ?? "").length < 5
+                        ? 'Ingrese mínimamente 5 caracteres'
+                        : null;
+                  },
                 ),
                 textFieldBdp(
                   label: "Fechas",
@@ -94,7 +99,7 @@ class NewView extends GetView<QuotesController> {
                 Row(
                   children: [
                     titleBdp(
-                      "2. Items",
+                      "2. Ítems",
                       align: TextAlign.left,
                     ).expand(),
                     GestureDetector(
@@ -104,7 +109,7 @@ class NewView extends GetView<QuotesController> {
                       child: Row(
                         children: [
                           textBdp(
-                            "Agregar Item",
+                            "Agregar Ítem",
                             color: appTextLight,
                           ),
                           const SizedBox(
@@ -147,7 +152,7 @@ class NewView extends GetView<QuotesController> {
                   textColor: appTextNormal,
                   textWeight: FontWeight.normal,
                   textFamily: 'helvetica',
-                  message: "Por favor agregue items antes de continuar.",
+                  message: "Por favor agregue ítems antes de continuar.",
                 ),
                 dividerBdp(
                   color: appColorPrimary,
@@ -169,15 +174,36 @@ class NewView extends GetView<QuotesController> {
                   () {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
-                      controller.saveQuote({
-                        "buyer": buyer.text,
-                        "quote_at": quoteAt.text,
-                        "items": controller.newQuote.value.items
-                            .map(
-                              (x) => x.toJson(),
-                            )
-                            .toList(),
-                      });
+                      if (controller.newQuote.value.items.isNotEmpty) {
+                        controller.saveQuote({
+                          "buyer": buyer.text,
+                          "quote_at": quoteAt.text,
+                          "items": controller.newQuote.value.items
+                              .map(
+                                (x) => x.toJson(),
+                              )
+                              .toList(),
+                        });
+                      } else {
+                        Get.snackbar(
+                          "Formulario Incompleto",
+                          "Por favor agregue ítems antes de continuar.",
+                          icon: const Icon(
+                            Icons.error_outline,
+                            color: appColorWhite,
+                            size: 35,
+                          ),
+                          colorText: appColorWhite,
+                          backgroundColor: appErrorColor,
+                          duration: const Duration(minutes: 1),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 20,
+                          ),
+                          margin: const EdgeInsets.all(10),
+                          snackPosition: SnackPosition.BOTTOM,
+                        );
+                      }
                     }
                   },
                 ),

@@ -521,18 +521,30 @@ Widget newItemQuote(
                   quote.item,
                   align: TextAlign.left,
                 ),
-                iconButton(Icons.edit_outlined,
-                    color: appColorYellow, ml: 10, pd: 5, size: 15, action: () {
-                  if (edit != null) {
-                    edit();
-                  }
-                }),
-                iconButton(Icons.delete_outline,
-                    color: appErrorColor, ml: 10, pd: 5, size: 15, action: () {
-                  if (delete != null) {
-                    delete();
-                  }
-                }),
+                iconButton(
+                  Icons.edit_outlined,
+                  color: appColorYellow,
+                  ml: 10,
+                  pd: 5,
+                  size: 15,
+                  action: () {
+                    if (edit != null) {
+                      edit();
+                    }
+                  },
+                ),
+                iconButton(
+                  Icons.delete_outline,
+                  color: appErrorColor,
+                  ml: 10,
+                  pd: 5,
+                  size: 15,
+                  action: () {
+                    if (delete != null) {
+                      delete();
+                    }
+                  },
+                ),
               ],
             ),
             textBdp(
@@ -768,6 +780,7 @@ Widget communityItem(
   bool? showReply = false,
   Function? actionReply,
   Function? actionNext,
+  Function(bool)? actionVote,
 }) {
   FileModel? imageFeatured = community.getImageFeatured();
   Widget content = Stack(
@@ -873,26 +886,33 @@ Widget communityItem(
                   Row(
                     children: [
                       voteContainer(
-                        false,
+                        community.meta.positive,
                         icon: Icons.thumb_up_alt_outlined,
                         title: "Voto Positivo",
                         iconSize: voteIconSize,
                         iconMr: voteIconMr,
                         iconPd: voteIconPd,
                         titleSize: voteTitleSize,
+                        action: () {
+                          if (actionVote != null) {
+                            actionVote(true);
+                          }
+                        },
                       ),
                       const SizedBox(
                         width: 10,
                       ),
-                      voteContainer(
-                        true,
-                        icon: Icons.thumb_down_alt_outlined,
-                        title: "Voto Negativo",
-                        iconSize: voteIconSize,
-                        iconMr: voteIconMr,
-                        iconPd: voteIconPd,
-                        titleSize: voteTitleSize,
-                      ),
+                      voteContainer(community.meta.negative,
+                          icon: Icons.thumb_down_alt_outlined,
+                          title: "Voto Negativo",
+                          iconSize: voteIconSize,
+                          iconMr: voteIconMr,
+                          iconPd: voteIconPd,
+                          titleSize: voteTitleSize, action: () {
+                        if (actionVote != null) {
+                          actionVote(false);
+                        }
+                      }),
                       Container(
                         alignment: Alignment.centerRight,
                         child: Row(
@@ -946,8 +966,8 @@ Widget communityItem(
           child: iconButton(
             Icons.edit_outlined,
             color: appColorYellow,
-            pd: 10,
-            size: 20,
+            pd: 5,
+            size: 15,
             action: actionEdit,
           ),
         ),

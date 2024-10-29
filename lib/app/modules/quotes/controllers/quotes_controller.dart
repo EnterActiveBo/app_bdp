@@ -204,6 +204,13 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
               title: success
                   ? "Cotización Guardada Exitosamente"
                   : "Error al Guardar Cotización",
+              btnText: success ? "Ver Cotizaciones" : null,
+              action: () {
+                Get.back();
+                tabController.value!.animateTo(1);
+                loadingQuotes.value = true;
+                getQuotes();
+              },
             ),
           );
           if (success) {

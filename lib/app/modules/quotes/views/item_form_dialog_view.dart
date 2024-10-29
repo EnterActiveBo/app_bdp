@@ -96,7 +96,7 @@ class ItemFormDialogView extends GetView<QuotesController> {
                   child: Column(
                     children: [
                       textFieldBdp(
-                        label: "Nombre del Item",
+                        label: "Nombre del Ítem",
                         textEditingController: item,
                         textType: TextFieldType.OTHER,
                         focusNode: itemFocus,
