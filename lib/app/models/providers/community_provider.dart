@@ -48,4 +48,12 @@ class CommunityProvider extends GetConnect {
     final response = await put("communities/$communityId", data);
     return response.isOk;
   }
+
+  Future<bool> voteCommunity(
+    String communityId,
+    Map data,
+  ) async {
+    final response = await post("communities/$communityId/view-and-vote", data);
+    return response.isOk;
+  }
 }

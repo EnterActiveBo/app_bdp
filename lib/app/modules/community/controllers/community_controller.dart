@@ -1,4 +1,5 @@
 import 'package:appbdp/app/common/storage_box.dart';
+import 'package:appbdp/app/common/widgets/loader_widgets.dart';
 import 'package:appbdp/app/models/community_model.dart';
 import 'package:appbdp/app/models/providers/community_provider.dart';
 import 'package:appbdp/app/models/providers/user_provider.dart';
@@ -150,6 +151,26 @@ class CommunityController extends GetxController {
     if (userResponse is UserModel) {
       user.value = userResponse;
       box.write(userKey, userResponse);
+    }
+  }
+
+  setVote(bool value, int index) async {
+    Get.dialog(
+      barrierDismissible: false,
+      loadingDialog(),
+    );
+    communities[index].meta.positive = value;
+    communities[index].meta.negative = !value;
+    box.write(communitiesKey, communities);
+    communities.refresh();
+    await communityProvider.voteCommunity(
+      communities[index].id,
+      {
+        "vote": value,
+      },
+    );
+    if (Get.isDialogOpen == true) {
+      Get.back();
     }
   }
 }

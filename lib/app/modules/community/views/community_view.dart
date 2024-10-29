@@ -76,8 +76,8 @@ class CommunityView extends GetView<CommunityController> {
                                   titleOverflow: TextOverflow.ellipsis,
                                   maxDetail: 2,
                                   detailOverflow: TextOverflow.ellipsis,
-                                  action: () {
-                                    controller.setCommunity(item.value);
+                                  actionVote: (value) {
+                                    controller.setVote(value, item.key);
                                   },
                                   enableEdit: controller.user.value?.id ==
                                       item.value.user.id,
@@ -85,6 +85,9 @@ class CommunityView extends GetView<CommunityController> {
                                     controller.setCommunityForm(
                                       value: item.value,
                                     );
+                                  },
+                                  actionNext: () {
+                                    controller.setCommunity(item.value);
                                   },
                                 );
                               },

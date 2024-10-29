@@ -87,24 +87,32 @@ class CommunityModel {
 
 class MetaCommunityModel {
   int interactions;
-  int views;
+  bool view;
+  bool positive;
+  bool negative;
 
   MetaCommunityModel({
     required this.interactions,
-    required this.views,
+    required this.view,
+    required this.positive,
+    required this.negative,
   });
 
   factory MetaCommunityModel.fromJson(Map<String, dynamic> json) {
     return MetaCommunityModel(
       interactions: json['interactions'],
-      views: json['views'],
+      view: json['view'] == 1,
+      positive: json['positive'] == 1,
+      negative: json['negative'] == 1,
     );
   }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['interactions'] = interactions;
-    data['views'] = views;
+    data['view'] = view ? 1 : 0;
+    data['positive'] = positive ? 1 : 0;
+    data['negative'] = negative ? 1 : 0;
 
     return data;
   }

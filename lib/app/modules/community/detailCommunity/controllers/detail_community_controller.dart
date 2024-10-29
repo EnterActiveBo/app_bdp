@@ -1,4 +1,5 @@
 import 'package:appbdp/app/common/storage_box.dart';
+import 'package:appbdp/app/common/widgets/loader_widgets.dart';
 import 'package:appbdp/app/models/community_model.dart';
 import 'package:appbdp/app/models/providers/community_provider.dart';
 import 'package:appbdp/app/models/user_model.dart';
@@ -75,5 +76,35 @@ class DetailCommunityController extends GetxController {
   setDocumentCommunity(CommunityModel value) {
     documentsCommunityController.setCommunity(value);
     Get.toNamed(Routes.DOCUMENTS_COMMUNITY);
+  }
+
+  setVote(
+    bool value, {
+    int? index,
+  }) async {
+    Get.dialog(
+      barrierDismissible: false,
+      loadingDialog(),
+    );
+    if (index is int &&
+        community.value?.children.isNotEmpty == true &&
+        community.value?.children[index] is CommunityModel) {
+      community.value?.children[index].meta.positive = value;
+      community.value?.children[index].meta.negative = !value;
+      await communityProvider.voteCommunity(
+        community.value?.children[index].id ?? "",
+        {
+          "vote": value,
+        },
+      );
+    } else {
+      community.value?.meta.positive = value;
+      community.value?.meta.negative = !value;
+    }
+    community.refresh();
+
+    if (Get.isDialogOpen == true) {
+      Get.back();
+    }
   }
 }

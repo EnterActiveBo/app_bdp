@@ -78,14 +78,13 @@ class FormCommunityController extends GetxController {
                   if (Get.isDialogOpen == true) {
                     Get.back();
                   }
-                  if (Get.previousRoute == Routes.COMMUNITY) {
-                    Get.offNamed(Routes.COMMUNITY);
-                  }
                   if (target.value is CommunityModel) {
                     final DetailCommunityController detailCommunityController =
                         Get.find();
                     detailCommunityController.setCommunity(target.value!);
                     Get.offNamed(Routes.DETAIL_COMMUNITY);
+                  } else {
+                    Get.offAllNamed(Routes.COMMUNITY);
                   }
                 }
               },

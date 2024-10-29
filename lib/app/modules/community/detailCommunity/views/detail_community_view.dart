@@ -73,6 +73,9 @@ class DetailCommunityView extends GetView<DetailCommunityController> {
                           controller.community.value!,
                         );
                       },
+                      actionVote: (value) {
+                        controller.setVote(value);
+                      },
                     ),
                   ),
                 ),
@@ -124,6 +127,12 @@ class DetailCommunityView extends GetView<DetailCommunityController> {
                             actionResource: () {
                               controller.setDocumentCommunity(
                                 community.value,
+                              );
+                            },
+                            actionVote: (value) {
+                              controller.setVote(
+                                value,
+                                index: community.key,
                               );
                             },
                           );
