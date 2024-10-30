@@ -51,10 +51,11 @@ class QuotesListView extends GetView<QuotesController> {
                               iconButton(
                                 Icons.download_outlined,
                                 action: () {
-                                  downloadFile(
-                                    quote.value.downloadUrl(),
-                                    token: controller.getToken(),
-                                  );
+                                  controller.setPdfQuote(quote.value);
+                                  // downloadFile(
+                                  //   quote.value.downloadUrl(),
+                                  //   token: controller.getToken(),
+                                  // );
                                 },
                               ),
                             ],

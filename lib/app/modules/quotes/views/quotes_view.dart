@@ -15,7 +15,7 @@ class QuotesView extends GetView<QuotesController> {
     return Scaffold(
       appBar: const HeaderBdpView(
         primary: true,
-        title: "Mis Cotizaciones",
+        title: "Cotización PDF",
       ),
       body: Column(
         children: [

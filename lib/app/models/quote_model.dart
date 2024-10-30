@@ -1,3 +1,4 @@
+import 'package:appbdp/app/common/utils.dart';
 import 'package:appbdp/app/constants/api.const.dart';
 
 class QuoteModel {
@@ -85,5 +86,24 @@ class ItemQuoteModel {
 
   double total() {
     return price * quantity;
+  }
+
+  String getIndex(
+    int index, {
+    int? indexItem,
+  }) {
+    switch (index) {
+      case 0:
+        return ((indexItem ?? 0) + 1).toString();
+      case 1:
+        return item;
+      case 2:
+        return priceFormat(price);
+      case 3:
+        return quantity.toString();
+      case 4:
+        return priceFormat(total());
+    }
+    return '';
   }
 }

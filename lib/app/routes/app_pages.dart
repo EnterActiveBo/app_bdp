@@ -43,6 +43,8 @@ import '../modules/prices/views/prices_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/quotes/bindings/quotes_binding.dart';
+import '../modules/quotes/pdfQuote/bindings/pdf_quote_binding.dart';
+import '../modules/quotes/pdfQuote/views/pdf_quote_view.dart';
 import '../modules/quotes/views/quotes_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
@@ -120,11 +122,17 @@ class AppPages {
       name: _Paths.SUPPLIER,
       page: () => const SupplierView(),
       binding: SupplierBinding(),
+      middlewares: [
+        AuthMiddleware(),
+      ],
     ),
     GetPage(
       name: _Paths.COURSES,
       page: () => const CoursesView(),
       binding: CoursesBinding(),
+      middlewares: [
+        AuthMiddleware(),
+      ],
       children: [
         GetPage(
           name: _Paths.COURSE_DETAIL,
@@ -142,6 +150,9 @@ class AppPages {
       name: _Paths.GOOD_PRACTICES,
       page: () => const GoodPracticesView(),
       binding: GoodPracticesBinding(),
+      middlewares: [
+        AuthMiddleware(),
+      ],
       children: [
         GetPage(
           name: _Paths.RESOURCES,
@@ -166,11 +177,24 @@ class AppPages {
       name: _Paths.QUOTES,
       page: () => const QuotesView(),
       binding: QuotesBinding(),
+      middlewares: [
+        AuthMiddleware(),
+      ],
+      children: [
+        GetPage(
+          name: _Paths.PDF_QUOTE,
+          page: () => const PdfQuoteView(),
+          binding: PdfQuoteBinding(),
+        ),
+      ],
     ),
     GetPage(
       name: _Paths.PATHOLOGIES,
       page: () => const PathologiesView(),
       binding: PathologiesBinding(),
+      middlewares: [
+        AuthMiddleware(),
+      ],
       children: [
         GetPage(
           name: _Paths.PATHOLOGY,
@@ -188,6 +212,9 @@ class AppPages {
       name: _Paths.COMMUNITY,
       page: () => const CommunityView(),
       binding: CommunityBinding(),
+      middlewares: [
+        AuthMiddleware(),
+      ],
       children: [
         GetPage(
           name: _Paths.DETAIL_COMMUNITY,
@@ -215,11 +242,17 @@ class AppPages {
       name: _Paths.WEATHER,
       page: () => const WeatherView(),
       binding: WeatherBinding(),
+      middlewares: [
+        AuthMiddleware(),
+      ],
     ),
     GetPage(
       name: _Paths.PRICES,
       page: () => const PricesView(),
       binding: PricesBinding(),
+      middlewares: [
+        AuthMiddleware(),
+      ],
     ),
   ];
 }

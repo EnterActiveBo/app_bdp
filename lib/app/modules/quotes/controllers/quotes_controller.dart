@@ -5,10 +5,12 @@ import 'package:appbdp/app/models/providers/quote_provider.dart';
 import 'package:appbdp/app/models/providers/user_provider.dart';
 import 'package:appbdp/app/models/quote_model.dart';
 import 'package:appbdp/app/models/user_model.dart';
+import 'package:appbdp/app/modules/quotes/pdfQuote/controllers/pdf_quote_controller.dart';
 import 'package:appbdp/app/modules/quotes/views/item_form_dialog_view.dart';
 import 'package:appbdp/app/modules/quotes/views/new_view.dart';
 import 'package:appbdp/app/modules/quotes/views/quotes_list_view.dart';
 import 'package:appbdp/app/modules/quotes/views/seller_view.dart';
+import 'package:appbdp/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -16,6 +18,7 @@ import 'package:get_storage/get_storage.dart';
 class QuotesController extends GetxController with GetTickerProviderStateMixin {
   GetStorage box = GetStorage('App');
   final QuoteProvider quoteProvider = Get.find();
+  final PdfQuoteController pdfQuoteController = Get.find();
   String quoteKey = 'quotes';
   final RxList<QuoteModel> quotes = (List<QuoteModel>.of([])).obs;
   String newQuoteKey = 'newQuote';
@@ -263,6 +266,9 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
             loadingDialog(),
           );
           bool success = await quoteProvider.setSeller(data);
+          if (success) {
+            getUser();
+          }
           Get.dialog(
             dialogBdp(
               icon: success ? Icons.check_outlined : Icons.error_outlined,
@@ -278,5 +284,13 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
 
   String? getToken() {
     return box.read('token');
+  }
+
+  setPdfQuote(QuoteModel value) {
+    pdfQuoteController.setQuote(
+      value,
+      user.value!,
+    );
+    Get.toNamed(Routes.PDF_QUOTE);
   }
 }
