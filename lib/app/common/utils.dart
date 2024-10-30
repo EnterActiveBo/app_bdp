@@ -198,3 +198,8 @@ String dateDifferenceHumans(
     return 'Justo ahora';
   }
 }
+
+String simpleUid(String uid) {
+  List<String> uidList = uid.split("-");
+  return uidList.first;
+}

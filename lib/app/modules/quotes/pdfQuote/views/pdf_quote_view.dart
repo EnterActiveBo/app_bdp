@@ -31,7 +31,10 @@ class PdfQuoteView extends GetView<PdfQuoteController> {
           'Carta': PdfPageFormat.letter,
           'A4': PdfPageFormat.a4,
         },
-        pdfFileName: "${controller.quote.value?.id}.pdf",
+        pdfFileName: "${simpleUid(controller.quote.value!.id!)}.pdf",
+        loadingWidget: const CircularProgressIndicator(
+          color: appColorSecondary,
+        ),
         scrollViewDecoration: const BoxDecoration(
           color: appColorWhite,
         ),
@@ -129,7 +132,7 @@ class PdfQuoteView extends GetView<PdfQuoteController> {
                         children: [
                           pw.Text('Cotización:'),
                           pw.Text(
-                            controller.quote.value!.id ?? "",
+                            simpleUid(controller.quote.value!.id!),
                             maxLines: 1,
                           ),
                           pw.Text('Fecha:'),
