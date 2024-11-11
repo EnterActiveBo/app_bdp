@@ -1,16 +1,16 @@
 import 'package:appbdp/app/models/providers/gatip_provider.dart';
 import 'package:get/get.dart';
 
-import '../controllers/prices_controller.dart';
+import '../controllers/production_controller.dart';
 
-class PricesBinding extends Bindings {
+class ProductionBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<GatipProvider>(
       () => GatipProvider(),
     );
-    Get.put<PricesController>(
-      PricesController(),
+    Get.put<ProductionController>(
+      ProductionController(),
     );
   }
 }

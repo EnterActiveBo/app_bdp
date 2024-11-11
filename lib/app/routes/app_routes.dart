@@ -33,6 +33,7 @@ abstract class Routes {
   static const PRICES = _Paths.PRICES;
   static const FILE_COMMUNITY = _Paths.COMMUNITY + _Paths.FILE_COMMUNITY;
   static const PDF_QUOTE = _Paths.QUOTES + _Paths.PDF_QUOTE;
+  static const PRODUCTION = _Paths.PRODUCTION;
 }
 
 abstract class _Paths {
@@ -64,4 +65,5 @@ abstract class _Paths {
   static const PRICES = '/prices';
   static const FILE_COMMUNITY = '/file-community';
   static const PDF_QUOTE = '/pdf-quote';
+  static const PRODUCTION = '/production';
 }

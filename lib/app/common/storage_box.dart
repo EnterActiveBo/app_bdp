@@ -3,6 +3,7 @@ import 'package:appbdp/app/models/community_model.dart';
 import 'package:appbdp/app/models/course_bdp_model.dart';
 import 'package:appbdp/app/models/course_model.dart';
 import 'package:appbdp/app/models/faq_model.dart';
+import 'package:appbdp/app/models/gatip_model.dart';
 import 'package:appbdp/app/models/notification_model.dart';
 import 'package:appbdp/app/models/pathology_model.dart';
 import 'package:appbdp/app/models/quote_model.dart';
@@ -221,6 +222,23 @@ List<CommunityModel> communitiesStored(GetStorage box) {
         value.map(
           (f) {
             return f is CommunityModel ? f : CommunityModel.fromJson(f);
+          },
+        ),
+      );
+    }
+  }
+  return [];
+}
+
+List<PricesProductModel> gatipProductsStored(GetStorage box) {
+  String key = "gatip_products";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    if (value is List) {
+      return List<PricesProductModel>.from(
+        value.map(
+          (f) {
+            return f is PricesProductModel ? f : PricesProductModel.fromJson(f);
           },
         ),
       );

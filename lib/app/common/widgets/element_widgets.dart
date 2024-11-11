@@ -737,3 +737,39 @@ Widget communityBanner(
     ).toList(),
   );
 }
+
+Widget tooltipBdp(
+  String title,
+  String detail, {
+  double? pv,
+  double? ph,
+}) {
+  return Container(
+    padding: EdgeInsets.symmetric(
+      vertical: pv ?? 10,
+      horizontal: ph ?? 10,
+    ),
+    height: 70,
+    child: Column(
+      children: [
+        titleBdp(
+          title,
+          color: appColorWhite,
+          size: 12,
+        ),
+        dividerBdp(
+          width: 100,
+          color: appColorWhite,
+          margin: 5,
+        ),
+        titleBdp(
+          detail,
+          color: appColorWhite,
+          size: 12,
+          max: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    ),
+  );
+}

@@ -1,4 +1,5 @@
 import 'package:appbdp/app/constants/color.const.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -135,6 +136,66 @@ Widget buttonBdp(
         color: textColor ?? appColorWhite,
         fontSize: textSize ?? 18,
         fontWeight: textWeight ?? FontWeight.bold,
+      ),
+    ),
+  );
+}
+
+InputDecoration dropDownDecoration() {
+  return InputDecoration(
+    filled: true,
+    fillColor: appBackgroundOpacity,
+    border: OutlineInputBorder(
+      borderSide: const BorderSide(
+        width: 0,
+        color: appColorTransparent,
+      ),
+      borderRadius: BorderRadius.circular(30),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(30),
+      borderSide: const BorderSide(
+        color: appColorTransparent,
+        width: 1,
+      ),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(30),
+      borderSide: const BorderSide(
+        color: appColorTransparent,
+        width: 1,
+      ),
+    ),
+    hintStyle: const TextStyle(
+      color: appColorPrimary,
+      fontSize: 15,
+      fontWeight: FontWeight.w600,
+    ),
+    contentPadding: const EdgeInsets.symmetric(
+      vertical: 15,
+      horizontal: 25,
+    ),
+  );
+}
+
+DropdownSuffixProps dropdownSuffixProps({
+  bool? showClear,
+}) {
+  return DropdownSuffixProps(
+    clearButtonProps: ClearButtonProps(
+      isVisible: showClear ?? true,
+      color: appColorPrimary,
+    ),
+    dropdownButtonProps: const DropdownButtonProps(
+      iconClosed: Icon(Icons.keyboard_arrow_down_outlined),
+      iconOpened: Icon(Icons.keyboard_arrow_up_outlined),
+      style: ButtonStyle(
+        backgroundColor: WidgetStatePropertyAll<Color>(
+          appColorThird,
+        ),
+        iconColor: WidgetStatePropertyAll<Color>(
+          appColorWhite,
+        ),
       ),
     ),
   );

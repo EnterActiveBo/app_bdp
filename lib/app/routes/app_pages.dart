@@ -40,6 +40,8 @@ import '../modules/pathologies/pathology/views/pathology_view.dart';
 import '../modules/pathologies/views/pathologies_view.dart';
 import '../modules/prices/bindings/prices_binding.dart';
 import '../modules/prices/views/prices_view.dart';
+import '../modules/production/bindings/production_binding.dart';
+import '../modules/production/views/production_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/quotes/bindings/quotes_binding.dart';
@@ -250,6 +252,14 @@ class AppPages {
       name: _Paths.PRICES,
       page: () => const PricesView(),
       binding: PricesBinding(),
+      middlewares: [
+        AuthMiddleware(),
+      ],
+    ),
+    GetPage(
+      name: _Paths.PRODUCTION,
+      page: () => const ProductionView(),
+      binding: ProductionBinding(),
       middlewares: [
         AuthMiddleware(),
       ],

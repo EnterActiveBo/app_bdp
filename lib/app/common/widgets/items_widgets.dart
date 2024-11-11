@@ -6,6 +6,7 @@ import 'package:appbdp/app/models/banner_model.dart';
 import 'package:appbdp/app/models/community_model.dart';
 import 'package:appbdp/app/models/course_bdp_model.dart';
 import 'package:appbdp/app/models/course_model.dart';
+import 'package:appbdp/app/models/gatip_model.dart';
 import 'package:appbdp/app/models/pathology_model.dart';
 import 'package:appbdp/app/models/quote_model.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
@@ -1058,5 +1059,54 @@ Widget fileItem(
         ),
       ),
     ),
+  );
+}
+
+Widget locationItems(
+  List<ProductionLocationModel> locations, {
+  String? unit,
+}) {
+  return Column(
+    children: locations.asMap().entries.map((location) {
+      return containerBdp(
+        mt: location.key == 0 ? 0 : 15,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            titleBdp(
+              location.value.department,
+              align: TextAlign.left,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            textRichBdp(
+              "Municipio: ",
+              location.value.municipality,
+              titleSize: 15,
+              detailSize: 15,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            textRichBdp(
+              "Producto: ",
+              location.value.detail,
+              titleSize: 15,
+              detailSize: 15,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            textRichBdp(
+              "${unit ?? "ha"}: ",
+              priceFormat(location.value.quantity),
+              titleSize: 15,
+              detailSize: 15,
+            ),
+          ],
+        ),
+      );
+    }).toList(),
   );
 }
