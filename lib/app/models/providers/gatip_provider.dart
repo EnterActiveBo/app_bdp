@@ -203,4 +203,14 @@ class GatipProvider extends GetConnect {
     }
     return null;
   }
+
+  Future<WeatherModel?> getAgroClimatic() async {
+    final response = await get(
+      'gatip/agro-climatic',
+    );
+    if (response.body != null && response.body['data'] != null) {
+      return WeatherModel.fromJson(response.body['data']);
+    }
+    return null;
+  }
 }

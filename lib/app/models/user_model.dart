@@ -172,6 +172,14 @@ class ProfileModel {
         .toList();
     return data;
   }
+
+  String? getDepartmentLocality() {
+    String? result = department?.name;
+    if (locality is LocalityModel) {
+      return "$result | ${locality?.name}";
+    }
+    return result;
+  }
 }
 
 class DepartmentModel {

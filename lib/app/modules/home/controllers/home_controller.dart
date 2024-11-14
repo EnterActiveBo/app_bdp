@@ -164,7 +164,7 @@ class HomeController extends GetxController {
       menu.addAll([
         MenuModel(
           title: "Clima",
-          page: Routes.PRODUCTION,
+          page: Routes.WEATHER,
           svg: "clima",
           isPrimary: true,
           // disabled: user.value?.role.name != 'client',

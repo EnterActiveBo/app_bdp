@@ -1,3 +1,5 @@
+import 'package:appbdp/app/models/banner_model.dart';
+
 class PricesProductModel {
   int code;
   String name;
@@ -335,5 +337,32 @@ class ProductionItemModel {
 
   bool isEqual(ProductionItemModel model) {
     return name == model.name;
+  }
+}
+
+class WeatherModel {
+  String id;
+  num week;
+  FileModel image;
+  WeatherModel({
+    required this.id,
+    required this.week,
+    required this.image,
+  });
+
+  factory WeatherModel.fromJson(Map<String, dynamic> json) {
+    return WeatherModel(
+      id: json['id'],
+      week: json['week'],
+      image: FileModel.fromJson(json['image']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['week'] = week;
+    data['image'] = image.toJson();
+    return data;
   }
 }
