@@ -6,20 +6,8 @@ class SupplierController extends GetxController {
   final Rx<OfficeModel?> central = (null as OfficeModel?).obs;
   final RxList<OfficeModel> offices = (List<OfficeModel>.of([])).obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   setSupplier(SupplierModel item) {
     supplier.value = item;

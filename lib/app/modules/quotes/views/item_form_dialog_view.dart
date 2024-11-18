@@ -114,7 +114,7 @@ class ItemFormDialogView extends GetView<QuotesController> {
                         },
                       ),
                       textFieldBdp(
-                        label: "Precio",
+                        label: "Precio Unitario",
                         textEditingController: price,
                         textType: TextFieldType.NUMBER,
                         inputFormatters: [

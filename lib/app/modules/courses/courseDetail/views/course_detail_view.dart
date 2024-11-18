@@ -22,7 +22,7 @@ class CourseDetailView extends GetView<CourseDetailController> {
     return Scaffold(
       appBar: const HeaderBdpView(
         primary: true,
-        title: "Cursos",
+        title: "Eventos BDP",
       ),
       body: Obx(
         () => SingleChildScrollView(
@@ -50,15 +50,14 @@ class CourseDetailView extends GetView<CourseDetailController> {
                       child: CachedNetworkImage(
                         imageUrl: "${controller.course.value?.image?.url}",
                         width: Get.width,
-                        height: Get.width / 2,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fitHeight,
                       ),
                     );
                   }
                   return const SizedBox();
                 }(),
                 titleBdp(
-                  "BDP",
+                  "EVENTO BDP",
                   color: appColorThird,
                   size: 15,
                 ),
@@ -77,11 +76,6 @@ class CourseDetailView extends GetView<CourseDetailController> {
                   mb: 15,
                   child: Column(
                     children: [
-                      iconTextActionBdp(
-                        icon: Icons.person_outline,
-                        title: controller.course.value?.getAttrs(),
-                        iconColor: appColorThird,
-                      ),
                       iconTextActionBdp(
                         icon: Icons.calendar_month_outlined,
                         title: controller.course.value?.getDate(),

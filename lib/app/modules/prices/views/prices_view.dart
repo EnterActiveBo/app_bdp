@@ -218,7 +218,7 @@ class PricesView extends GetView<PricesController> {
                     !controller.loadingCity.value,
                     SfCartesianChart(
                       primaryXAxis: const CategoryAxis(
-                        majorGridLines: const MajorGridLines(width: 0),
+                        majorGridLines: MajorGridLines(width: 0),
                         labelIntersectAction: AxisLabelIntersectAction.rotate90,
                         crossesAt: -2,
                         placeLabelsNearAxisLine: false,

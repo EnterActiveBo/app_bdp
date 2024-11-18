@@ -2,7 +2,6 @@ import 'package:appbdp/app/common/utils.dart';
 import 'package:appbdp/app/common/widgets/bottom_bdp_view.dart';
 import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/header_bdp_view.dart';
-import 'package:appbdp/app/common/widgets/input_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/api.const.dart';
 import 'package:appbdp/app/constants/color.const.dart';
@@ -19,7 +18,7 @@ class CourseBdpDetailView extends GetView<CourseBdpDetailController> {
     return Scaffold(
       appBar: const HeaderBdpView(
         primary: true,
-        title: "Cursos",
+        title: "Cursos BDP",
       ),
       body: Obx(
         () => SingleChildScrollView(
@@ -124,21 +123,23 @@ class CourseBdpDetailView extends GetView<CourseBdpDetailController> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                buttonBdp(
-                  "Tomar el Curso",
-                  () {
-                    openUrl(aulaBdpUrl);
-                  },
-                ),
               ],
             ),
           ),
         ),
       ),
       bottomNavigationBar: const BottomBdpView(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          openUrl(aulaBdpUrl);
+        },
+        backgroundColor: appColorSecondary,
+        shape: const CircleBorder(),
+        child: const Icon(
+          Icons.add,
+          color: appColorWhite,
+        ),
+      ),
     );
   }
 }

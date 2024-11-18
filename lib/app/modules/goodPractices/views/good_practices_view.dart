@@ -23,7 +23,7 @@ class GoodPracticesView extends GetView<GoodPracticesController> {
     return Scaffold(
       appBar: const HeaderBdpView(
         primary: true,
-        title: "Directorio de Proveedores",
+        title: "Buenas Practicas",
       ),
       body: Obx(
         () => Padding(
@@ -32,6 +32,7 @@ class GoodPracticesView extends GetView<GoodPracticesController> {
             vertical: 20,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               searchFilter(
                 formKey,
@@ -47,6 +48,87 @@ class GoodPracticesView extends GetView<GoodPracticesController> {
                     search.text = "";
                   }
                 },
+              ),
+              SizedBox(
+                height: controller.user.value?.isClient() == true ? 15 : 0,
+              ),
+              Visibility(
+                visible: controller.user.value?.isClient() == true,
+                child: Row(
+                  children: [
+                    titleBdp(
+                      "Filtrar",
+                      align: TextAlign.left,
+                    ).expand(),
+                    GestureDetector(
+                      onTap: () {
+                        controller.cleanFilterCategory();
+                      },
+                      child: titleBdp(
+                        "Limpiar",
+                        size: 13,
+                        color: appColorThird,
+                        align: TextAlign.right,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: controller.user.value?.isClient() == true ? 10 : 0,
+              ),
+              Visibility(
+                visible: controller.user.value?.isClient() == true,
+                child: () {
+                  List<CategoryResourceModel> items = controller.categories.map(
+                    (category) {
+                      return category.category ?? category;
+                    },
+                  ).toList();
+                  List<String> ids = items
+                      .map(
+                        (item) => item.id,
+                      )
+                      .toSet()
+                      .toList();
+                  items.retainWhere(
+                    (i) => ids.remove(i.id),
+                  );
+                  items.sort();
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: items.toList().asMap().entries.map(
+                        (category) {
+                          bool isSelected =
+                              controller.catagoriesSelected.contains(
+                            category.value.id,
+                          );
+                          return tagContainer(
+                            ml: category.key == 0 ? 0 : 5,
+                            pv: 5,
+                            ph: 15,
+                            radius: 5,
+                            backgroundColor: isSelected
+                                ? appColorThirdOpacity
+                                : appBackgroundOpacity,
+                            child: titleBdp(
+                              category.value.title,
+                              size: 12,
+                              color:
+                                  isSelected ? appColorThird : appColorPrimary,
+                            ),
+                            action: () {
+                              controller.setFilterCategory(
+                                category.value.id,
+                              );
+                            },
+                          );
+                        },
+                      ).toList(),
+                    ),
+                  );
+                }(),
               ),
               const SizedBox(
                 height: 20,

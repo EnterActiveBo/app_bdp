@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 
 import 'package:appbdp/app/common/utils.dart';
 import 'package:appbdp/app/common/widgets/header_bdp_view.dart';

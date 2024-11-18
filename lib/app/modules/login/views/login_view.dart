@@ -103,6 +103,27 @@ class LoginView extends GetView<LoginController> {
                     },
                     focusNode: submitFocusNode,
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      titleBdp(
+                        "¿Olvidó su contraseña?",
+                        size: 14,
+                        weight: FontWeight.normal,
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: titleBdp(
+                          "Ingrese aquí",
+                          color: appColorThird,
+                          size: 14,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

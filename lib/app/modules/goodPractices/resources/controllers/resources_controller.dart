@@ -54,11 +54,6 @@ class ResourcesController extends GetxController
   }
 
   @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
   void onClose() {
     super.onClose();
     reset();
@@ -188,5 +183,6 @@ class ResourcesController extends GetxController
     searchFile.value = null;
     searchVideo.value = null;
     searchLink.value = null;
+    tabController.value?.animateTo(0);
   }
 }

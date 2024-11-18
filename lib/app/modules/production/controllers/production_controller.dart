@@ -44,11 +44,6 @@ class ProductionController extends GetxController {
   }
 
   @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
   void onClose() {
     super.onClose();
     loadingChart.value = true;
@@ -237,6 +232,10 @@ class ProductionController extends GetxController {
     items.refresh();
     loadingChart.value = true;
     loadingLocation.value = true;
+    setDepartment(null);
+    setRegion(null);
+    setMunicipality(null);
+    setProduct(null);
     await getUnits();
     await getComposition();
     await getLocations();

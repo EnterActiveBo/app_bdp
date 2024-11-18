@@ -28,6 +28,7 @@ Widget textFieldBdp({
   int? max,
   TextInputType? keyboardType,
   bool? readOnly,
+  bool? isRequired,
   void Function()? onTap,
   String? Function(String?)? validator,
   int? minLines,
@@ -53,6 +54,7 @@ Widget textFieldBdp({
       maxLines: maxLines,
       keyboardType: keyboardType,
       readOnly: readOnly ?? false,
+      isValidationRequired: isRequired ?? true,
       errorInvalidEmail: "Por favor ingrese un correo electrónico valido.",
       errorThisFieldRequired: "El campo es requerido.",
       errorMinimumPasswordLength:

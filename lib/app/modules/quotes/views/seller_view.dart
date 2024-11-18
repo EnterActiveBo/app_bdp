@@ -58,9 +58,10 @@ class SellerView extends GetView<QuotesController> {
                 fillColor: appBackgroundOpacity,
                 borderColor: appColorTransparent,
                 borderRadius: 30,
+                isRequired: false,
               ),
               textFieldBdp(
-                label: "Teléfono",
+                label: "Teléfono o Celular",
                 textEditingController: controller.phone,
                 textType: TextFieldType.PHONE,
                 focusNode: phoneFocusNode,
@@ -71,6 +72,7 @@ class SellerView extends GetView<QuotesController> {
                 fillColor: appBackgroundOpacity,
                 borderColor: appColorTransparent,
                 borderRadius: 30,
+                isRequired: false,
               ),
               textFieldBdp(
                 label: "Correo Electrónico",
@@ -84,6 +86,7 @@ class SellerView extends GetView<QuotesController> {
                 fillColor: appBackgroundOpacity,
                 borderColor: appColorTransparent,
                 borderRadius: 30,
+                isRequired: false,
               ),
               const SizedBox(
                 height: 20,

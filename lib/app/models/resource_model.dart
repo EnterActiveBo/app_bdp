@@ -88,7 +88,7 @@ class ResourceModel {
   }
 }
 
-class CategoryResourceModel {
+class CategoryResourceModel implements Comparable<CategoryResourceModel> {
   String id;
   String title;
   CategoryResourceModel? category;
@@ -133,5 +133,10 @@ class CategoryResourceModel {
         )
         .toList();
     return data;
+  }
+
+  @override
+  int compareTo(CategoryResourceModel other) {
+    return title.compareTo(other.title);
   }
 }

@@ -69,6 +69,11 @@ class _VideoView extends State<VideoView> {
       looping: false,
       progressIndicatorDelay: null,
       hideControlsTimer: const Duration(seconds: 1),
+      optionsTranslation: OptionsTranslation(
+        playbackSpeedButtonText: 'Velocidad de reproducción',
+        subtitlesButtonText: 'Subtítulos',
+        cancelButtonText: 'Cerrar',
+      ),
       materialProgressColors: ChewieProgressColors(
         playedColor: appColorSecondary,
         handleColor: appColorPrimary,

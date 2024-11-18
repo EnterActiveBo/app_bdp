@@ -8,20 +8,8 @@ class DocumentsCommunityController extends GetxController {
   final Rx<CommunityModel?> community = (null as CommunityModel?).obs;
   final FileCommunityController fileCommunityController = Get.find();
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   setCommunity(CommunityModel value) {
     community.value = value;

@@ -196,7 +196,7 @@ class HomeController extends GetxController {
           isPrimary: false,
         ),
         MenuModel(
-          title: "Cursos",
+          title: "Eventos BDP/Cursos BDP",
           page: Routes.COURSES,
           svg: "cursos",
           isPrimary: false,

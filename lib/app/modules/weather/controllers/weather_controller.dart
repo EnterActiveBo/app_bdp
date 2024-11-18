@@ -21,10 +21,6 @@ class WeatherController extends GetxController {
     initData();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {

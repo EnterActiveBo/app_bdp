@@ -32,10 +32,10 @@ class CoursesController extends GetxController
   final Rx<TabController?> tabController = (null as TabController?).obs;
   List<Tab> enableTabs = <Tab>[
     const Tab(
-      text: "Cursos BDP",
+      text: "Eventos BDP",
     ),
     const Tab(
-      text: "Aula BDP",
+      text: "Cursos BDP",
     ),
   ];
   List<Widget> tabContents = <Widget>[
@@ -51,11 +51,6 @@ class CoursesController extends GetxController
       length: enableTabs.length,
     );
     initData();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override

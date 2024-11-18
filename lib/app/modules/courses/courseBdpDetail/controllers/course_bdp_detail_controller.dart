@@ -8,20 +8,8 @@ class CourseBdpDetailController extends GetxController {
   final Rx<CourseBdpModel?> course = (null as CourseBdpModel?).obs;
   final RxList<TopicBdpModel> topics = (List<TopicBdpModel>.of([])).obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
 
   setCourse(CourseBdpModel value) {
     course.value = value;

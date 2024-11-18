@@ -257,7 +257,7 @@ Widget officeItem(
                 Icons.location_on_outlined,
                 ml: 5,
                 action: () {
-                  openUrl("$office.mapUrl");
+                  openUrl("${office.mapUrl}");
                 },
               ),
             ),
@@ -404,7 +404,7 @@ Widget courseItem({
   int? radius,
   Function? action,
 }) {
-  String superTitle = "${courseBdp is CourseBdpModel ? "AULA " : ""}BDP";
+  String superTitle = "${courseBdp is CourseBdpModel ? "CURSO" : "EVENTO"} BDP";
   String title = course?.title ?? courseBdp?.title ?? "N/T";
   String dates = "";
   if (course is CourseModel) {
@@ -439,6 +439,10 @@ Widget courseItem({
               flex: 0,
               child: imageOrIcon(
                 imageUrl: course?.image?.url,
+                svgIcon: course?.image?.url is! String,
+                svgAsset: "assets/images/icons/cursos_bottom.svg",
+                iconColor: appColorWhite,
+                iconSize: 20,
                 w: imageW ?? 80,
               ),
             ),
@@ -655,7 +659,8 @@ Widget pathologyShare(
 ) {
   ResourcePathologyModel? image = pathology.getImageFeatured();
   List<ResourcePathologyModel> files = pathology.getResourcesByType("file");
-  return Padding(
+  return Container(
+    width: Get.width,
     padding: const EdgeInsets.symmetric(
       vertical: 20,
       horizontal: 15,

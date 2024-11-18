@@ -14,15 +14,7 @@ class FormCommunityController extends GetxController {
   final title = TextEditingController();
   final detail = TextEditingController();
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {

@@ -343,19 +343,38 @@ Widget searchFilter(
 
 Widget imageOrIcon({
   String? imageUrl,
+  String? svgAsset,
   IconData? icon,
   double? iconSize,
   Color? iconColor,
   Color? backgroundColor,
   double? w,
   double? h,
+  bool? svgIcon,
 }) {
-  if (imageUrl is String) {
+  if (imageUrl is String && svgIcon == false) {
     return CachedNetworkImage(
       imageUrl: imageUrl,
       width: w ?? 60,
       height: h,
       fit: BoxFit.cover,
+    );
+  }
+  if (svgAsset is String && svgIcon == true) {
+    return Container(
+      width: w ?? 60,
+      height: h ?? 75,
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: backgroundColor ?? appColorThird,
+      ),
+      child: SvgPicture.asset(
+        svgAsset,
+        colorFilter: ColorFilter.mode(
+          iconColor ?? appColorPrimary,
+          BlendMode.srcIn,
+        ),
+      ),
     );
   }
   return Container(
@@ -540,7 +559,7 @@ Widget pathologyItem(
             child: CachedNetworkImage(
               imageUrl: "${imageFeatured?.source.url}",
               width: Get.width,
-              height: 120,
+              height: 110,
               fit: BoxFit.cover,
             ),
           ),

@@ -16,15 +16,7 @@ class PdfQuoteController extends GetxController {
   final PdfColor whiteColor = PdfColor.fromHex(appColorWhite.toHex());
   final PdfColor transparent = PdfColor.fromHex(appColorTransparent.toHex());
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {

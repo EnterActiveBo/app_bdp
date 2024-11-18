@@ -14,21 +14,6 @@ class PathologyController extends GetxController {
   final Rx<PathologyModel?> pathology = (null as PathologyModel?).obs;
   ScreenshotController screenshotController = ScreenshotController();
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   setPathology(PathologyModel value) {
     pathology.value = value;
   }

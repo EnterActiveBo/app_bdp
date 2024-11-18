@@ -63,10 +63,6 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
     initData();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {

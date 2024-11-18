@@ -66,6 +66,10 @@ class UserModel {
     }
     return role.showName;
   }
+
+  bool isClient() {
+    return role.name == "client";
+  }
 }
 
 class ProfileModel {

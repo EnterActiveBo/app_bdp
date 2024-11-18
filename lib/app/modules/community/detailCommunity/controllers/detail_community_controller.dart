@@ -18,15 +18,7 @@ class DetailCommunityController extends GetxController {
   final Rx<UserModel?> user = (null as UserModel?).obs;
   final loading = true.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {

@@ -6,6 +6,7 @@ Widget queryBdpWidget(
   bool condition,
   Widget mainWidget, {
   String? message,
+  String? loadingMessage,
   double? size,
   Color? textColor,
   Color? progressColor,
@@ -18,7 +19,7 @@ Widget queryBdpWidget(
   }
   if (loading == true) {
     return loadingBdp(
-      message: message,
+      message: loadingMessage,
       size: size,
       textColor: textColor,
       progressColor: progressColor,
