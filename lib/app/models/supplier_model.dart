@@ -83,6 +83,10 @@ class SupplierModel {
         .toList();
     return data;
   }
+
+  bool haveTechnology(TechnologyModel item) {
+    return technologies.any((element) => element.id == item.id);
+  }
 }
 
 class TechnologyModel {
@@ -114,6 +118,16 @@ class TechnologyModel {
     data['detail'] = detail;
     data['image'] = image?.toJson();
     return data;
+  }
+
+  String getTitleTruncated({
+    int? max,
+  }) {
+    int maxLength = max ?? 15;
+    if (title.length > maxLength) {
+      return "${title.substring(0, maxLength)}...";
+    }
+    return title;
   }
 }
 

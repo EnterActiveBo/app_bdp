@@ -1,5 +1,6 @@
 import 'package:appbdp/app/common/storage_box.dart';
 import 'package:appbdp/app/common/utils.dart';
+import 'package:appbdp/app/models/course_model.dart';
 import 'package:appbdp/app/models/providers/supplier_provider.dart';
 import 'package:appbdp/app/models/providers/technology_provider.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
@@ -20,6 +21,7 @@ class SuppliersController extends GetxController {
       (List<TechnologyModel>.of([])).obs;
   final Rx<String?> search = (null as String?).obs;
   final Rx<TechnologyModel?> technology = (null as TechnologyModel?).obs;
+  final Rx<TargetModel?> department = (null as TargetModel?).obs;
   final loading = true.obs;
 
   @override
@@ -28,12 +30,13 @@ class SuppliersController extends GetxController {
     initData();
   }
 
-
   @override
   void onClose() {
-    super.onClose();
     loading.value = true;
     search.value = null;
+    setDepartment(null);
+    setTechnology(null);
+    super.onClose();
   }
 
   initData() {
@@ -87,11 +90,14 @@ class SuppliersController extends GetxController {
         }
       }
       if (technology.value is TechnologyModel) {
-        filter &= supplier.technologies
-            .where(
-              (tech) => tech.id == technology.value?.id,
-            )
-            .isNotEmpty;
+        filter &= supplier.technologies.any(
+          (tech) => tech.id == technology.value?.id,
+        );
+      }
+      if (department.value is TargetModel) {
+        filter &= supplier.offices.any(
+          (office) => office.department?.id == department.value?.id,
+        );
       }
       return filter;
     }).toList();
@@ -105,8 +111,28 @@ class SuppliersController extends GetxController {
     technology.value = value;
   }
 
+  setDepartment(TargetModel? value) {
+    department.value = value;
+  }
+
   setSupplier(SupplierModel item) {
     supplierController.setSupplier(item);
     Get.toNamed(Routes.SUPPLIER);
+  }
+
+  List<TargetModel> getDepartments() {
+    List<TargetModel> departments = [];
+    suppliers.forEach((supplier) {
+      departments.addAll(
+        supplier.offices.map(
+          (office) => office.department!,
+        ),
+      );
+    });
+    List<String> ids = departments.map((e) => e.id).toSet().toList();
+    departments.retainWhere(
+      (department) => ids.remove(department.id),
+    );
+    return departments;
   }
 }
