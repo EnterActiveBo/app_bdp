@@ -16,6 +16,7 @@ class SellerView extends GetView<QuotesController> {
     FocusNode addressFocusNode = FocusNode();
     FocusNode phoneFocusNode = FocusNode();
     FocusNode emailFocusNode = FocusNode();
+    FocusNode termsFocusNode = FocusNode();
     FocusNode submitFocusNode = FocusNode();
 
     return SingleChildScrollView(
@@ -79,6 +80,20 @@ class SellerView extends GetView<QuotesController> {
                 textEditingController: controller.email,
                 textType: TextFieldType.EMAIL,
                 focusNode: emailFocusNode,
+                nextNode: termsFocusNode,
+                margin: const EdgeInsets.symmetric(
+                  vertical: 10,
+                ),
+                fillColor: appBackgroundOpacity,
+                borderColor: appColorTransparent,
+                borderRadius: 30,
+                isRequired: false,
+              ),
+              textFieldBdp(
+                label: "Términos y Condiciones",
+                textEditingController: controller.terms,
+                textType: TextFieldType.MULTILINE,
+                focusNode: termsFocusNode,
                 nextNode: submitFocusNode,
                 margin: const EdgeInsets.symmetric(
                   vertical: 10,
@@ -102,6 +117,7 @@ class SellerView extends GetView<QuotesController> {
                       'address': controller.address.text,
                       'phone': controller.phone.text,
                       'email': controller.email.text,
+                      'terms': controller.terms.text,
                     });
                   }
                 },

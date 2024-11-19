@@ -15,7 +15,7 @@ class QuoteProvider extends GetConnect {
 
   Future<List<QuoteModel>?> getQuotes() async {
     final response = await get('quotes');
-    if (response.body['data'] is List) {
+    if (response.body != null && response.body['data'] is List) {
       return List<QuoteModel>.from(
         response.body['data'].map(
           (item) {

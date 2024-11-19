@@ -267,16 +267,18 @@ class EconomicActivityModel {
 class SellerModel {
   String id;
   String name;
-  String address;
-  String phone;
-  String email;
+  String? address;
+  String? phone;
+  String? email;
+  String? terms;
 
   SellerModel({
     required this.id,
     required this.name,
-    required this.address,
-    required this.phone,
-    required this.email,
+    this.address,
+    this.phone,
+    this.email,
+    this.terms,
   });
 
   factory SellerModel.fromJson(Map<String, dynamic> json) {
@@ -286,6 +288,7 @@ class SellerModel {
       address: json['address'],
       phone: json['phone'],
       email: json['email'],
+      terms: json['terms'],
     );
   }
 
@@ -296,6 +299,7 @@ class SellerModel {
     data['address'] = address;
     data['phone'] = phone;
     data['email'] = email;
+    data['terms'] = terms;
     return data;
   }
 }

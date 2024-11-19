@@ -5,12 +5,14 @@ class QuoteModel {
   String? id;
   String? buyer;
   DateTime? quoteAt;
+  int? validDays;
   List<ItemQuoteModel> items;
 
   QuoteModel({
     this.id,
     this.buyer,
     this.quoteAt,
+    this.validDays,
     required this.items,
   });
 
@@ -21,6 +23,7 @@ class QuoteModel {
       quoteAt: json['quoteAt'] != null
           ? DateTime.parse(json['quoteAt']).toLocal()
           : null,
+      validDays: json['validDays'],
       items: json['items'] != null
           ? List<ItemQuoteModel>.from(
               json['items'].map((x) => ItemQuoteModel.fromJson(x)))
@@ -33,6 +36,7 @@ class QuoteModel {
     data['id'] = id;
     data['buyer'] = buyer;
     data['quoteAt'] = quoteAt?.toString();
+    data['validDays'] = validDays;
     data['items'] = items.map((x) => x.toJson()).toList();
     return data;
   }

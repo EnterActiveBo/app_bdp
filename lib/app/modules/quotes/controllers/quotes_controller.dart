@@ -52,6 +52,7 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
   final address = TextEditingController();
   final phone = TextEditingController();
   final email = TextEditingController();
+  final terms = TextEditingController();
 
   @override
   void onInit() {
@@ -62,7 +63,6 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
     );
     initData();
   }
-
 
   @override
   void onClose() {
@@ -244,6 +244,7 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
       address.text = user.value?.seller?.address ?? "";
       phone.text = user.value?.seller?.phone ?? "";
       email.text = user.value?.seller?.email ?? "";
+      terms.text = user.value?.seller?.terms ?? "";
     }
   }
 

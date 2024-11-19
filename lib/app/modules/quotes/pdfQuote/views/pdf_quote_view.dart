@@ -1,4 +1,3 @@
-
 import 'package:appbdp/app/common/utils.dart';
 import 'package:appbdp/app/common/widgets/header_bdp_view.dart';
 import 'package:appbdp/app/constants/color.const.dart';
@@ -136,6 +135,10 @@ class PdfQuoteView extends GetView<PdfQuoteController> {
                           ),
                           pw.Text('Fecha:'),
                           pw.Text(dateBdp(controller.quote.value!.quoteAt)!),
+                          pw.Text('Validez:'),
+                          pw.Text(
+                            "${controller.quote.value!.validDays} día(s)",
+                          ),
                         ],
                       ),
                     ),
@@ -377,50 +380,55 @@ class PdfQuoteView extends GetView<PdfQuoteController> {
   }
 
   pw.Widget _termsAndConditions(pw.Context context) {
-    return pw.Row(
-      crossAxisAlignment: pw.CrossAxisAlignment.end,
-      children: [
-        pw.Expanded(
-          child: pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Container(
-                decoration: pw.BoxDecoration(
-                  border: pw.Border(
-                    top: pw.BorderSide(
+    String terms = controller.user.value?.seller?.terms ?? "";
+    if (terms.isEmpty) {
+      return pw.SizedBox();
+    } else {
+      return pw.Row(
+        crossAxisAlignment: pw.CrossAxisAlignment.end,
+        children: [
+          pw.Expanded(
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Container(
+                  decoration: pw.BoxDecoration(
+                    border: pw.Border(
+                      top: pw.BorderSide(
+                        color: controller.primaryColor,
+                      ),
+                    ),
+                  ),
+                  padding: const pw.EdgeInsets.only(
+                    top: 5,
+                    bottom: 5,
+                  ),
+                  child: pw.Text(
+                    'Términos y Condiciones',
+                    style: pw.TextStyle(
+                      fontSize: 7,
                       color: controller.primaryColor,
+                      fontWeight: pw.FontWeight.bold,
                     ),
                   ),
                 ),
-                padding: const pw.EdgeInsets.only(
-                  top: 5,
-                  bottom: 5,
-                ),
-                child: pw.Text(
-                  'Términos y Condiciones',
+                pw.Text(
+                  terms,
+                  textAlign: pw.TextAlign.left,
                   style: pw.TextStyle(
-                    fontSize: 7,
-                    color: controller.primaryColor,
-                    fontWeight: pw.FontWeight.bold,
+                    fontSize: 5,
+                    lineSpacing: 2,
+                    color: controller.textColor,
                   ),
                 ),
-              ),
-              pw.Text(
-                pw.LoremText().paragraph(40),
-                textAlign: pw.TextAlign.left,
-                style: pw.TextStyle(
-                  fontSize: 5,
-                  lineSpacing: 2,
-                  color: controller.textColor,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        pw.Expanded(
-          child: pw.SizedBox(),
-        ),
-      ],
-    );
+          pw.Expanded(
+            child: pw.SizedBox(),
+          ),
+        ],
+      );
+    }
   }
 }

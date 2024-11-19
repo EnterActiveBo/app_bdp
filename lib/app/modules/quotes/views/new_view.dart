@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:appbdp/app/common/utils.dart';
 import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/input_widgets.dart';
@@ -8,6 +10,7 @@ import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/user_model.dart';
 import 'package:appbdp/app/modules/quotes/controllers/quotes_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -23,6 +26,9 @@ class NewView extends GetView<QuotesController> {
     final quoteAt = TextEditingController();
     FocusNode quoteAtFocus = FocusNode();
     quoteAt.text = dateBdp(controller.newQuote.value.quoteAt) ?? "";
+    final validDays = TextEditingController();
+    FocusNode validDaysFocus = FocusNode();
+    validDays.text = (controller.newQuote.value.validDays ?? 7).toString();
 
     return Obx(
       () => SingleChildScrollView(
@@ -64,8 +70,9 @@ class NewView extends GetView<QuotesController> {
                     label: "Fechas",
                     readOnly: true,
                     textEditingController: quoteAt,
-                    textType: TextFieldType.NAME,
+                    textType: TextFieldType.OTHER,
                     focusNode: quoteAtFocus,
+                    nextNode: validDaysFocus,
                     margin: const EdgeInsets.symmetric(
                       vertical: 5,
                     ),
@@ -95,6 +102,24 @@ class NewView extends GetView<QuotesController> {
                         quoteAt.text = "${dateBdp(dateSelect)}";
                       }
                     },
+                  ),
+                  textFieldBdp(
+                    label: "Validez en días",
+                    textEditingController: validDays,
+                    textType: TextFieldType.NUMBER,
+                    keyboardType: TextInputType.numberWithOptions(
+                      signed: Platform.isIOS,
+                    ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    focusNode: validDaysFocus,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 10,
+                    ),
+                    fillColor: appBackgroundOpacity,
+                    borderColor: appColorTransparent,
+                    borderRadius: 30,
                   ),
                   dividerBdp(
                     color: appColorPrimary,
@@ -181,6 +206,7 @@ class NewView extends GetView<QuotesController> {
                           controller.saveQuote({
                             "buyer": buyer.text,
                             "quote_at": quoteAt.text,
+                            "valid_days": int.parse(validDays.text),
                             "items": controller.newQuote.value.items
                                 .map(
                                   (x) => x.toJson(),
