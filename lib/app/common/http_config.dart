@@ -3,11 +3,17 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 import 'package:get_storage/get_storage.dart';
 
-httpDefaultConfiguration(GetHttpClient httpClient, GetStorage box) {
+httpDefaultConfiguration(
+  GetHttpClient httpClient,
+  GetStorage box, {
+  bool? enabledContentType,
+}) {
   httpClient.timeout = const Duration(seconds: 300);
   httpClient.addRequestModifier((Request request) {
     request.headers['Accept'] = "application/json";
-    request.headers['Content-Type'] = "application/json";
+    if (enabledContentType ?? true) {
+      request.headers['Content-Type'] = "application/json";
+    }
     request.headers['XMLHttpRequest'] = "XMLHttpRequest";
     request.headers['Charset'] = "utf-8";
     if (box.hasData('token')) {
