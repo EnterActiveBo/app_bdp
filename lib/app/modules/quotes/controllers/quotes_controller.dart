@@ -1,6 +1,7 @@
 import 'package:appbdp/app/common/storage_box.dart';
 import 'package:appbdp/app/common/widgets/loader_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
+import 'package:appbdp/app/models/providers/file_provider.dart';
 import 'package:appbdp/app/models/providers/quote_provider.dart';
 import 'package:appbdp/app/models/providers/user_provider.dart';
 import 'package:appbdp/app/models/quote_model.dart';
@@ -11,6 +12,7 @@ import 'package:appbdp/app/modules/quotes/views/new_view.dart';
 import 'package:appbdp/app/modules/quotes/views/quotes_list_view.dart';
 import 'package:appbdp/app/modules/quotes/views/seller_view.dart';
 import 'package:appbdp/app/routes/app_pages.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -27,6 +29,7 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
   final UserProvider userProvider = Get.find();
   String userKey = 'user';
   final Rx<UserModel?> user = (null as UserModel?).obs;
+  final FileProvider fileProvider = Get.find();
   final loadingUser = true.obs;
   // Tabs definition
   final Rx<TabController?> tabController = (null as TabController?).obs;
@@ -53,6 +56,8 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
   final phone = TextEditingController();
   final email = TextEditingController();
   final terms = TextEditingController();
+  final image = TextEditingController();
+  final Rx<FilePickerResult?> imageSeller = (null as FilePickerResult?).obs;
 
   @override
   void onInit() {
@@ -69,6 +74,7 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
     super.onClose();
     loadingQuotes.value = true;
     loadingUser.value = true;
+    imageSeller.value = null;
   }
 
   initData() {
@@ -230,10 +236,13 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
   }
 
   getUser() async {
+    loadingUser.value = true;
     UserModel? userResponse = await userProvider.getProfile();
+    loadingUser.value = false;
     if (userResponse is UserModel) {
       user.value = userResponse;
       box.write(userKey, userResponse);
+      imageSeller.value = null;
       setSellerData();
     }
   }
@@ -245,6 +254,7 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
       phone.text = user.value?.seller?.phone ?? "";
       email.text = user.value?.seller?.email ?? "";
       terms.text = user.value?.seller?.terms ?? "";
+      image.text = user.value?.seller?.image?.id ?? "";
     }
   }
 
@@ -289,5 +299,60 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
       user.value!,
     );
     Get.toNamed(Routes.PDF_QUOTE);
+  }
+
+  uploadImage() async {
+    Get.dialog(
+      barrierDismissible: false,
+      loadingDialog(),
+    );
+    imageSeller.value = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['png', 'jpg', 'jpeg'],
+    );
+    imageSeller.refresh();
+    if (imageSeller.value is FilePickerResult) {
+      String? imageId = await fileProvider.store(
+        imageSeller.value!,
+        folder: 'seller',
+      );
+      if (imageId is String) {
+        image.text = imageId;
+        Get.dialog(
+          dialogBdp(
+            icon: Icons.check_outlined,
+            title: "Imagen subida correctamente.",
+          ),
+        );
+      } else {
+        Get.dialog(
+          dialogBdp(
+            icon: Icons.error_outlined,
+            title:
+                "Ocurrió un error al subir la imagen, por favor intente de nuevo.",
+          ),
+        );
+        imageSeller.value = null;
+      }
+    } else {
+      Get.snackbar(
+        "Por favor seleccione una imagen",
+        "debe seleccionar una imagen para continuar.",
+        icon: const Icon(
+          Icons.error_outline,
+          color: appColorWhite,
+          size: 35,
+        ),
+        colorText: appColorWhite,
+        backgroundColor: appColorSecondary,
+        duration: const Duration(minutes: 1),
+        padding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 20,
+        ),
+        margin: const EdgeInsets.all(10),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 }

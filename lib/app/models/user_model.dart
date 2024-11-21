@@ -1,3 +1,5 @@
+import 'package:appbdp/app/models/banner_model.dart';
+
 class UserModel {
   String id;
   String name;
@@ -271,6 +273,7 @@ class SellerModel {
   String? phone;
   String? email;
   String? terms;
+  FileModel? image;
 
   SellerModel({
     required this.id,
@@ -279,6 +282,7 @@ class SellerModel {
     this.phone,
     this.email,
     this.terms,
+    this.image,
   });
 
   factory SellerModel.fromJson(Map<String, dynamic> json) {
@@ -289,6 +293,7 @@ class SellerModel {
       phone: json['phone'],
       email: json['email'],
       terms: json['terms'],
+      image: json['image'] != null ? FileModel.fromJson(json['image']) : null,
     );
   }
 
@@ -300,6 +305,7 @@ class SellerModel {
     data['phone'] = phone;
     data['email'] = email;
     data['terms'] = terms;
+    data['image'] = image?.toJson();
     return data;
   }
 }

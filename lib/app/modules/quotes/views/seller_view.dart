@@ -1,7 +1,14 @@
+import 'dart:io';
+
+import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/input_widgets.dart';
+import 'package:appbdp/app/common/widgets/query_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
+import 'package:appbdp/app/models/banner_model.dart';
 import 'package:appbdp/app/modules/quotes/controllers/quotes_controller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -103,6 +110,72 @@ class SellerView extends GetView<QuotesController> {
                 borderRadius: 30,
                 isRequired: false,
               ),
+              Row(
+                children: [
+                  titleBdp(
+                    "Logo",
+                    weight: FontWeight.normal,
+                    align: TextAlign.left,
+                    size: 15,
+                  ).expand(),
+                  GestureDetector(
+                    onTap: () {
+                      controller.uploadImage();
+                    },
+                    child: Row(
+                      children: [
+                        textBdp(
+                          "Cargar Imagen",
+                          color: appTextLight,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Icon(
+                          Icons.add_circle,
+                          color: appColorThird,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Obx(
+                () => containerBdp(
+                  mt: 10,
+                  child: queryBdpWidget(
+                    !controller.loadingUser.value,
+                    () {
+                      if (controller.imageSeller.value is FilePickerResult) {
+                        return Column(
+                          children: controller.imageSeller.value!.files.map(
+                            (img) {
+                              return Image.file(
+                                File(img.xFile.path),
+                                height: 150,
+                                fit: BoxFit.cover,
+                              );
+                            },
+                          ).toList(),
+                        );
+                      }
+                      if (controller.user.value?.seller?.image is FileModel) {
+                        return CachedNetworkImage(
+                          imageUrl: controller.user.value!.seller!.image!.url,
+                          fit: BoxFit.cover,
+                          height: 150,
+                        );
+                      }
+                      return titleBdp(
+                        "No existe una imagen guardada.",
+                        weight: FontWeight.normal,
+                        size: 15,
+                      );
+                    }(),
+                    loading: true,
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -118,6 +191,7 @@ class SellerView extends GetView<QuotesController> {
                       'phone': controller.phone.text,
                       'email': controller.email.text,
                       'terms': controller.terms.text,
+                      'image_id': controller.image.text,
                     });
                   }
                 },

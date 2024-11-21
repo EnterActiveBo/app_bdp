@@ -18,7 +18,7 @@ class PdfQuoteView extends GetView<PdfQuoteController> {
     return Scaffold(
       appBar: const HeaderBdpView(
         primary: true,
-        title: "Cotización PDF",
+        title: "Mis Cotizaciones",
       ),
       body: PdfPreview(
         initialPageFormat: PdfPageFormat.letter,
@@ -84,6 +84,23 @@ class PdfQuoteView extends GetView<PdfQuoteController> {
 
   pw.Widget _buildHeader(pw.Context context) {
     String? logo = controller.logo.value;
+    pw.Widget logoWidget = logo is String
+        ? pw.SvgImage(
+            svg: logo,
+            width: 120,
+            height: 40,
+            fit: pw.BoxFit.cover,
+          )
+        : pw.PdfLogo();
+    if (controller.imageSeller.value != null) {
+      logoWidget = pw.Image(
+        controller.imageSeller.value!,
+        width: 120,
+        height: 40,
+        fit: pw.BoxFit.cover,
+      );
+    }
+
     return pw.Column(
       children: [
         pw.Row(
@@ -154,7 +171,7 @@ class PdfQuoteView extends GetView<PdfQuoteController> {
                     alignment: pw.Alignment.topRight,
                     padding: const pw.EdgeInsets.only(bottom: 8, left: 30),
                     height: 72,
-                    child: logo != null ? pw.SvgImage(svg: logo) : pw.PdfLogo(),
+                    child: logoWidget,
                   ),
                 ],
               ),
