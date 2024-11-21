@@ -15,7 +15,7 @@ class PathologyProvider extends GetConnect {
 
   Future<List<PathologyModel>?> getPathologies() async {
     final response = await get('pathologies');
-    if (response.body['data'] is List) {
+    if (response.body != null && response.body['data'] is List) {
       return List<PathologyModel>.from(
         response.body['data'].map(
           (item) {
@@ -29,7 +29,7 @@ class PathologyProvider extends GetConnect {
 
   Future<List<TagPathologyModel>?> getTagsPathology() async {
     final response = await get('pathologies/tags');
-    if (response.body['data'] is List) {
+    if (response.body != null && response.body['data'] is List) {
       return List<TagPathologyModel>.from(
         response.body['data'].map(
           (item) {

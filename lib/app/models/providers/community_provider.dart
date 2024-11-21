@@ -20,7 +20,7 @@ class CommunityProvider extends GetConnect {
       'communities',
       query: query,
     );
-    if (response.body['data'] is List) {
+    if (response.body != null && response.body['data'] is List) {
       return CommunityListModel.fromJson(response.body);
     }
     return null;
@@ -30,7 +30,7 @@ class CommunityProvider extends GetConnect {
     final response = await get(
       "communities/$communityId",
     );
-    if (response.body['data'] is Map) {
+    if (response.body != null && response.body['data'] is Map) {
       return CommunityModel.fromJson(response.body['data']);
     }
     return null;
