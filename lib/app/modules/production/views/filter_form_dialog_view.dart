@@ -106,7 +106,7 @@ class FilterFormDialogView extends GetView<ProductionController> {
                               String search,
                             ) {
                               return Container(
-                                height: 40,
+                                height: 50,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 5,
                                   horizontal: 10,
@@ -151,6 +151,7 @@ class FilterFormDialogView extends GetView<ProductionController> {
                             item.name,
                             filter,
                           ),
+                          enabled: controller.regions.isNotEmpty,
                           popupProps: PopupProps.menu(
                             showSearchBox: true,
                             showSelectedItems: true,
@@ -159,7 +160,7 @@ class FilterFormDialogView extends GetView<ProductionController> {
                               String search,
                             ) {
                               return Container(
-                                height: 40,
+                                height: 50,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 5,
                                   horizontal: 10,
@@ -174,7 +175,9 @@ class FilterFormDialogView extends GetView<ProductionController> {
                               decoration: InputDecoration(),
                             ),
                           ),
-                          suffixProps: dropdownSuffixProps(),
+                          suffixProps: dropdownSuffixProps(
+                            disabled: controller.regions.isEmpty,
+                          ),
                           decoratorProps: DropDownDecoratorProps(
                             decoration: dropDownDecoration(),
                           ),
@@ -204,6 +207,7 @@ class FilterFormDialogView extends GetView<ProductionController> {
                             item.name,
                             filter,
                           ),
+                          enabled: controller.municipalities.isNotEmpty,
                           popupProps: PopupProps.menu(
                             showSearchBox: true,
                             showSelectedItems: true,
@@ -212,7 +216,7 @@ class FilterFormDialogView extends GetView<ProductionController> {
                               String search,
                             ) {
                               return Container(
-                                height: 40,
+                                height: 50,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 5,
                                   horizontal: 10,
@@ -227,7 +231,9 @@ class FilterFormDialogView extends GetView<ProductionController> {
                               decoration: InputDecoration(),
                             ),
                           ),
-                          suffixProps: dropdownSuffixProps(),
+                          suffixProps: dropdownSuffixProps(
+                            disabled: controller.municipalities.isEmpty,
+                          ),
                           decoratorProps: DropDownDecoratorProps(
                             decoration: dropDownDecoration(),
                           ),
@@ -257,6 +263,7 @@ class FilterFormDialogView extends GetView<ProductionController> {
                             item.name,
                             filter,
                           ),
+                          enabled: controller.products.isNotEmpty,
                           popupProps: PopupProps.menu(
                             showSearchBox: true,
                             showSelectedItems: true,
@@ -265,7 +272,7 @@ class FilterFormDialogView extends GetView<ProductionController> {
                               String search,
                             ) {
                               return Container(
-                                height: 40,
+                                height: 50,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 5,
                                   horizontal: 10,
@@ -280,7 +287,9 @@ class FilterFormDialogView extends GetView<ProductionController> {
                               decoration: InputDecoration(),
                             ),
                           ),
-                          suffixProps: dropdownSuffixProps(),
+                          suffixProps: dropdownSuffixProps(
+                            disabled: controller.products.isEmpty,
+                          ),
                           decoratorProps: DropDownDecoratorProps(
                             decoration: dropDownDecoration(),
                           ),
@@ -319,7 +328,7 @@ class FilterFormDialogView extends GetView<ProductionController> {
                               String search,
                             ) {
                               return Container(
-                                height: 40,
+                                height: 50,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 5,
                                   horizontal: 10,

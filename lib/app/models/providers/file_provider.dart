@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:appbdp/app/common/http_config.dart';
 import 'package:appbdp/app/constants/api.const.dart';
+import 'package:appbdp/app/models/banner_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -20,7 +21,7 @@ class FileProvider extends GetConnect {
     );
   }
 
-  Future<String?> store(
+  Future<FileModel?> store(
     FilePickerResult file, {
     String? folder,
   }) async {
@@ -34,6 +35,7 @@ class FileProvider extends GetConnect {
             ),
             filename: file.files.first.xFile.name,
           ),
+          'object': true,
         },
       );
 
@@ -43,7 +45,7 @@ class FileProvider extends GetConnect {
         contentType: 'multipart/form-data',
       );
       if (response.body != null && response.body['data'] != null) {
-        return response.body['data']['id'];
+        return FileModel.fromJson(response.body['data']);
       }
     }
     return null;

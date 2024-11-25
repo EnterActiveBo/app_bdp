@@ -13,6 +13,10 @@ import '../modules/community/views/community_view.dart';
 import '../modules/courses/bindings/courses_binding.dart';
 import '../modules/courses/courseBdpDetail/bindings/course_bdp_detail_binding.dart';
 import '../modules/courses/courseBdpDetail/views/course_bdp_detail_view.dart';
+import '../modules/courses/courseBdpModule/bindings/course_bdp_module_binding.dart';
+import '../modules/courses/courseBdpModule/views/course_bdp_module_view.dart';
+import '../modules/courses/courseBdpTopic/bindings/course_bdp_topic_binding.dart';
+import '../modules/courses/courseBdpTopic/views/course_bdp_topic_view.dart';
 import '../modules/courses/courseDetail/bindings/course_detail_binding.dart';
 import '../modules/courses/courseDetail/views/course_detail_view.dart';
 import '../modules/courses/views/courses_view.dart';
@@ -145,6 +149,16 @@ class AppPages {
           name: _Paths.COURSE_BDP_DETAIL,
           page: () => const CourseBdpDetailView(),
           binding: CourseBdpDetailBinding(),
+        ),
+        GetPage(
+          name: _Paths.COURSE_BDP_TOPIC,
+          page: () => const CourseBdpTopicView(),
+          binding: CourseBdpTopicBinding(),
+        ),
+        GetPage(
+          name: _Paths.COURSE_BDP_MODULE,
+          page: () => const CourseBdpModuleView(),
+          binding: CourseBdpModuleBinding(),
         ),
       ],
     ),

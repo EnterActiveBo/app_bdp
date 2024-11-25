@@ -2,6 +2,7 @@ import 'package:appbdp/app/common/utils.dart';
 import 'package:appbdp/app/common/widgets/bottom_bdp_view.dart';
 import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/header_bdp_view.dart';
+import 'package:appbdp/app/common/widgets/query_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/api.const.dart';
 import 'package:appbdp/app/constants/color.const.dart';
@@ -73,55 +74,73 @@ class CourseBdpDetailView extends GetView<CourseBdpDetailController> {
                   align: TextAlign.left,
                 ),
                 dividerBdp(),
-                Visibility(
-                  visible: controller.topics.isNotEmpty,
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                      top: 5,
-                    ),
-                    child: Column(
-                      children: controller.topics.asMap().entries.map(
-                        (topic) {
-                          return containerBdp(
-                            mt: topic.key == 0 ? 0 : 15,
-                            radius: 20,
-                            border: const Border(
-                              left: BorderSide(
-                                color: appColorThird,
-                                width: 20,
+                titleBdp("Contenido"),
+                SizedBox(
+                  height: controller.topics.isNotEmpty ? 10 : 0,
+                ),
+                queryBdpWidget(
+                  !controller.loadingTopic.value &&
+                      controller.topics.isNotEmpty,
+                  Column(
+                    children: controller.topics.asMap().entries.map(
+                      (topic) {
+                        return containerBdp(
+                          mt: topic.key == 0 ? 0 : 15,
+                          pv: 10,
+                          ph: 12,
+                          radius: 15,
+                          border: const Border(
+                            left: BorderSide(
+                              color: appColorThird,
+                              width: 15,
+                            ),
+                          ),
+                          action: () {
+                            controller.setTopic(topic.value);
+                          },
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    titleBdp(
+                                      "AULA BDP",
+                                      color: appColorThird,
+                                      size: 15,
+                                    ),
+                                    titleBdp(
+                                      topic.value.title,
+                                      color: appColorPrimary,
+                                      align: TextAlign.left,
+                                      size: 15,
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          topic.value.detail is String ? 5 : 0,
+                                    ),
+                                    textBdp(
+                                      topic.value.detail,
+                                      align: TextAlign.left,
+                                      textHeight: 1.2,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                titleBdp(
-                                  "AULA BDP",
-                                  color: appColorThird,
-                                  size: 15,
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                titleBdp(
-                                  topic.value.title,
-                                  color: appColorPrimary,
-                                  align: TextAlign.left,
-                                  size: 15,
-                                ),
-                                SizedBox(
-                                  height: topic.value.detail is String ? 10 : 0,
-                                ),
-                                textBdp(
-                                  topic.value.detail,
-                                  align: TextAlign.left,
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ).toList(),
-                    ),
+                              const SizedBox(
+                                width: 2,
+                              ),
+                              const Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: appColorThird,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ).toList(),
                   ),
+                  loading: controller.loadingTopic.value,
                 ),
               ],
             ),

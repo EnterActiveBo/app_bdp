@@ -1,6 +1,7 @@
 import 'package:appbdp/app/common/storage_box.dart';
 import 'package:appbdp/app/common/widgets/loader_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
+import 'package:appbdp/app/models/banner_model.dart';
 import 'package:appbdp/app/models/providers/file_provider.dart';
 import 'package:appbdp/app/models/providers/quote_provider.dart';
 import 'package:appbdp/app/models/providers/user_provider.dart';
@@ -312,12 +313,12 @@ class QuotesController extends GetxController with GetTickerProviderStateMixin {
     );
     imageSeller.refresh();
     if (imageSeller.value is FilePickerResult) {
-      String? imageId = await fileProvider.store(
+      FileModel? imageId = await fileProvider.store(
         imageSeller.value!,
         folder: 'seller',
       );
-      if (imageId is String) {
-        image.text = imageId;
+      if (imageId is FileModel) {
+        image.text = imageId.id;
         Get.dialog(
           dialogBdp(
             icon: Icons.check_outlined,

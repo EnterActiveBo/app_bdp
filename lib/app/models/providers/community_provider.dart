@@ -56,4 +56,14 @@ class CommunityProvider extends GetConnect {
     final response = await post("communities/$communityId/view-and-vote", data);
     return response.isOk;
   }
+
+  Future<bool> sourceDelete(
+    String communityId,
+    String sourceId,
+  ) async {
+    final response = await delete(
+      "communities/$communityId/resources/$sourceId",
+    );
+    return response.isOk;
+  }
 }

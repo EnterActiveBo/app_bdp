@@ -8,7 +8,7 @@ class CommunityModel {
   String title;
   String detail;
   DateTime updatedAt;
-  List<FileModel> resources;
+  List<ResourceCommunityModel> resources;
   UserModel user;
   MetaCommunityModel meta;
   List<CommunityModel> children;
@@ -31,9 +31,9 @@ class CommunityModel {
       detail: json['detail'],
       updatedAt: DateTime.parse(json['updatedAt']).toLocal(),
       resources: json['resources'] != null
-          ? List<FileModel>.from(
+          ? List<ResourceCommunityModel>.from(
               json['resources'].map((r) {
-                return FileModel.fromJson(r['source'] ?? r);
+                return ResourceCommunityModel.fromJson(r);
               }).toList(),
             )
           : [],
@@ -63,15 +63,20 @@ class CommunityModel {
   }
 
   FileModel? getImageFeatured() {
-    return resources.firstWhereOrNull(
-      (resource) => searchString(resource.mimeType, "image"),
-    );
+    return resources
+        .firstWhereOrNull(
+          (resource) => searchString(resource.source.mimeType, "image"),
+        )
+        ?.source;
   }
 
   List<FileModel> getImages() {
     return resources
         .where(
-          (resource) => searchString(resource.mimeType, "image"),
+          (resource) => searchString(resource.source.mimeType, "image"),
+        )
+        .map(
+          (resource) => resource.source,
         )
         .toList();
   }
@@ -79,7 +84,10 @@ class CommunityModel {
   List<FileModel> getFiles() {
     return resources
         .where(
-          (resource) => !searchString(resource.mimeType, "image"),
+          (resource) => !searchString(resource.source.mimeType, "image"),
+        )
+        .map(
+          (resource) => resource.source,
         )
         .toList();
   }
@@ -181,5 +189,36 @@ class MetaCommunityListModel {
 
   bool isLastPage() {
     return currentPage == lastPage;
+  }
+}
+
+class ResourceCommunityModel {
+  String? id;
+  FileModel source;
+
+  ResourceCommunityModel({
+    this.id,
+    required this.source,
+  });
+
+  factory ResourceCommunityModel.fromJson(Map<String, dynamic> json) {
+    return ResourceCommunityModel(
+      id: json['id'],
+      source: FileModel.fromJson(json['source']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['source'] = source.toJson();
+    return data;
+  }
+
+  Map<String, dynamic> toSend() {
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['source_id'] = source.id;
+    return data;
   }
 }

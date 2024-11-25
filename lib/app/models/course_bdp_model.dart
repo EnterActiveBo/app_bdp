@@ -1,4 +1,5 @@
 import 'package:appbdp/app/common/utils.dart';
+import 'package:appbdp/app/constants/api.const.dart';
 
 class CourseBdpModel {
   num id;
@@ -81,5 +82,49 @@ class TopicBdpModel {
     data['titulo'] = title;
     data['detalle'] = detail;
     return data;
+  }
+}
+
+class ModuleBdpModel {
+  num id;
+  num topicId;
+  String title;
+  String type;
+  String? detail;
+  String? file;
+
+  ModuleBdpModel({
+    required this.id,
+    required this.topicId,
+    required this.title,
+    required this.type,
+    this.detail,
+    this.file,
+  });
+
+  factory ModuleBdpModel.fromJson(Map<String, dynamic> json) {
+    return ModuleBdpModel(
+      id: json['sec_recursos'],
+      topicId: json['sec_temas'],
+      title: json['titulo'],
+      type: json['tipo_archivo'],
+      detail: json['detalle'],
+      file: json['archivo'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['sec_recursos'] = id;
+    data['sec_temas'] = topicId;
+    data['titulo'] = title;
+    data['tipo_archivo'] = type;
+    data['detalle'] = detail;
+    data['archivo'] = file;
+    return data;
+  }
+
+  String getUrl() {
+    return "${urlV1}courses-aula/$file/get-resources";
   }
 }

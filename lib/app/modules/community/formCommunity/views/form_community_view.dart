@@ -2,6 +2,7 @@ import 'package:appbdp/app/common/widgets/bottom_bdp_view.dart';
 import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/header_bdp_view.dart';
 import 'package:appbdp/app/common/widgets/input_widgets.dart';
+import 'package:appbdp/app/common/widgets/items_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/community_model.dart';
@@ -113,6 +114,69 @@ class FormCommunityView extends GetView<FormCommunityController> {
                           : null;
                     },
                   ),
+                  Row(
+                    children: [
+                      titleBdp(
+                        "3. Recursos Multimedia",
+                        weight: FontWeight.normal,
+                        align: TextAlign.left,
+                        size: 15,
+                      ).expand(),
+                      GestureDetector(
+                        onTap: () {
+                          controller.uploadFile();
+                        },
+                        child: Row(
+                          children: [
+                            textBdp(
+                              "Cargar Recurso",
+                              color: appTextLight,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            const Icon(
+                              Icons.add_circle,
+                              color: appColorThird,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  containerBdp(
+                    mt: 10,
+                    ph: controller.sources.isEmpty ? null : 0,
+                    pv: controller.sources.isEmpty ? null : 0,
+                    backgroundColor:
+                        controller.sources.isNotEmpty ? appColorWhite : null,
+                    child: () {
+                      if (controller.sources.isNotEmpty) {
+                        return Column(
+                          children: controller.sources.asMap().entries.map(
+                            (resource) {
+                              return fileItem(
+                                resource.value.source,
+                                mt: resource.key == 0 ? 0 : 15,
+                                icon: Icons.delete_outline,
+                                iconColor: appErrorColor,
+                                action: () {
+                                  controller.removeSource(
+                                    resource.key,
+                                  );
+                                },
+                              );
+                            },
+                          ).toList(),
+                        );
+                      }
+                      return titleBdp(
+                        "No existen recursos agregados.",
+                        weight: FontWeight.normal,
+                        size: 15,
+                      );
+                    }(),
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -126,6 +190,11 @@ class FormCommunityView extends GetView<FormCommunityController> {
                           'title': controller.title.text,
                           'detail': controller.detail.text,
                           'parent_id': controller.reply.value?.id,
+                          'sources': controller.sources
+                              .map(
+                                (e) => e.toSend(),
+                              )
+                              .toList(),
                         });
                       }
                     },

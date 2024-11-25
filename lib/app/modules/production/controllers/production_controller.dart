@@ -53,9 +53,6 @@ class ProductionController extends GetxController {
   initData() {
     getDepartments();
     getUnits();
-    getRegions();
-    getMunicipalities();
-    getProducts();
     getComposition();
     getLocations();
   }
@@ -104,6 +101,10 @@ class ProductionController extends GetxController {
       },
     ).toList();
     departments.refresh();
+    getRegions();
+    getMunicipalities();
+    getProducts();
+    getUnits();
   }
 
   ProductionDepartmentModel? departmentSelected() {
@@ -130,6 +131,9 @@ class ProductionController extends GetxController {
       },
     ).toList();
     regions.refresh();
+    getMunicipalities();
+    getProducts();
+    getUnits();
   }
 
   ProductionRegionModel? regionSelected() {
@@ -156,6 +160,8 @@ class ProductionController extends GetxController {
       },
     ).toList();
     municipalities.refresh();
+    getProducts();
+    getUnits();
   }
 
   ProductionMunicipalityModel? municipalitySelected() {
@@ -182,6 +188,7 @@ class ProductionController extends GetxController {
       },
     ).toList();
     products.refresh();
+    getUnits();
   }
 
   ProductionProductModel? productSelected() {
@@ -278,21 +285,6 @@ class ProductionController extends GetxController {
     }
     loadingChart.value = true;
     loadingLocation.value = true;
-    ProductionDepartmentModel? department = departmentSelected();
-    ProductionRegionModel? region = regionSelected();
-    ProductionMunicipalityModel? municipality = municipalitySelected();
-    ProductionProductModel? product = productSelected();
-    ProductionUnitModel? unit = unitSelected();
-    await getDepartments();
-    setDepartment(department);
-    await getRegions();
-    setRegion(region);
-    await getMunicipalities();
-    setMunicipality(municipality);
-    await getProducts();
-    setProduct(product);
-    await getUnits();
-    setUnit(unit);
     await getComposition();
     await getLocations();
   }

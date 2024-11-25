@@ -168,6 +168,13 @@ InputDecoration dropDownDecoration() {
         width: 1,
       ),
     ),
+    disabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(30),
+      borderSide: const BorderSide(
+        color: appColorTransparent,
+        width: 1,
+      ),
+    ),
     hintStyle: const TextStyle(
       color: appColorPrimary,
       fontSize: 15,
@@ -182,21 +189,22 @@ InputDecoration dropDownDecoration() {
 
 DropdownSuffixProps dropdownSuffixProps({
   bool? showClear,
+  bool? disabled,
 }) {
   return DropdownSuffixProps(
     clearButtonProps: ClearButtonProps(
       isVisible: showClear ?? true,
       color: appColorPrimary,
     ),
-    dropdownButtonProps: const DropdownButtonProps(
-      iconClosed: Icon(Icons.keyboard_arrow_down_outlined),
-      iconOpened: Icon(Icons.keyboard_arrow_up_outlined),
+    dropdownButtonProps: DropdownButtonProps(
+      iconClosed: const Icon(Icons.keyboard_arrow_down_outlined),
+      iconOpened: const Icon(Icons.keyboard_arrow_up_outlined),
       style: ButtonStyle(
         backgroundColor: WidgetStatePropertyAll<Color>(
-          appColorThird,
+          disabled == true ? appColorWhite : appColorThird,
         ),
         iconColor: WidgetStatePropertyAll<Color>(
-          appColorWhite,
+          disabled == true ? appErrorColor : appColorWhite,
         ),
       ),
     ),

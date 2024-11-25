@@ -504,6 +504,92 @@ Widget courseItem({
   );
 }
 
+Widget courseModuleItem(
+  ModuleBdpModel module, {
+  Color? backgroundColor,
+  Color? titleColor,
+  Color? superTitleColor,
+  double? mt,
+  double? mb,
+  double? imageW,
+  double? imageH,
+  int? radius,
+  Function? action,
+}) {
+  IconData icon = Icons.file_present_outlined;
+  switch (module.type) {
+    case "2":
+      icon = Icons.play_circle_fill_outlined;
+      break;
+    case "3":
+      icon = Icons.image_outlined;
+    case "4":
+      icon = Icons.music_note_outlined;
+    default:
+  }
+  return GestureDetector(
+    onTap: () {
+      if (action != null) {
+        action();
+      }
+    },
+    child: Container(
+      width: Get.width,
+      clipBehavior: Clip.antiAlias,
+      margin: EdgeInsets.only(
+        top: mt ?? 0,
+        bottom: mb ?? 0,
+      ),
+      decoration: boxDecorationRoundedWithShadow(
+        radius ?? 20,
+        backgroundColor: backgroundColor ?? appBackgroundOpacity,
+        shadowColor: appColorTransparent,
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Flexible(
+              flex: 0,
+              child: imageOrIcon(
+                icon: icon,
+                iconColor: appColorWhite,
+                iconSize: 35,
+                w: imageW ?? 60,
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                width: Get.width,
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 15,
+                ),
+                child: titleBdp(
+                  module.title,
+                  size: 15,
+                  color: titleColor ?? appColorPrimary,
+                  max: 2,
+                  weight: FontWeight.w400,
+                  overflow: TextOverflow.ellipsis,
+                  align: TextAlign.left,
+                ),
+              ),
+            ),
+            const Icon(
+              Icons.arrow_forward_ios_outlined,
+              color: appColorThird,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 Widget newItemQuote(
   ItemQuoteModel quote, {
   double? mt,
@@ -1000,6 +1086,8 @@ Widget fileItem(
   double? imageW,
   double? imageH,
   int? radius,
+  IconData? icon,
+  Color? iconColor,
   Function? action,
 }) {
   return GestureDetector(
@@ -1056,9 +1144,9 @@ Widget fileItem(
                 ),
               ),
             ),
-            const Icon(
-              Icons.arrow_forward_ios_outlined,
-              color: appColorThird,
+            Icon(
+              icon ?? Icons.arrow_forward_ios_outlined,
+              color: iconColor ?? appColorThird,
             ),
           ],
         ),

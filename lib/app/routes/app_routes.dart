@@ -34,6 +34,8 @@ abstract class Routes {
   static const FILE_COMMUNITY = _Paths.COMMUNITY + _Paths.FILE_COMMUNITY;
   static const PDF_QUOTE = _Paths.QUOTES + _Paths.PDF_QUOTE;
   static const PRODUCTION = _Paths.PRODUCTION;
+  static const COURSE_BDP_TOPIC = _Paths.COURSES + _Paths.COURSE_BDP_TOPIC;
+  static const COURSE_BDP_MODULE = _Paths.COURSES + _Paths.COURSE_BDP_MODULE;
 }
 
 abstract class _Paths {
@@ -66,4 +68,6 @@ abstract class _Paths {
   static const FILE_COMMUNITY = '/file-community';
   static const PDF_QUOTE = '/pdf-quote';
   static const PRODUCTION = '/production';
+  static const COURSE_BDP_TOPIC = '/course-bdp-topic';
+  static const COURSE_BDP_MODULE = '/course-bdp-module';
 }
