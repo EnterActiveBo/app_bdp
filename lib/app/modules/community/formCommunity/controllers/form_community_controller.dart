@@ -21,6 +21,8 @@ class FormCommunityController extends GetxController {
   final detail = TextEditingController();
   final RxList<ResourceCommunityModel> sources =
       (List<ResourceCommunityModel>.of([])).obs;
+  final RxList<TagCommunityModel> tags = (List<TagCommunityModel>.of([])).obs;
+  final RxList<String> tagsSelected = (List<String>.of([])).obs;
 
   @override
   void onClose() {
@@ -32,8 +34,10 @@ class FormCommunityController extends GetxController {
     CommunityModel? targetValue,
     CommunityModel? valueReply,
     CommunityModel? value,
+    List<TagCommunityModel>? tagsValue,
   }) {
     cleanForm();
+    tags.value = tagsValue ?? [];
     target.value = targetValue;
     target.refresh();
     reply.value = valueReply;
@@ -44,6 +48,7 @@ class FormCommunityController extends GetxController {
       title.text = community.value!.title;
       detail.text = community.value!.detail;
       sources.value = community.value!.resources;
+      tagsSelected.value = community.value!.tags.map((t) => t.id).toList();
     }
   }
 
@@ -103,6 +108,22 @@ class FormCommunityController extends GetxController {
     community.refresh();
     target.value = null;
     target.refresh();
+    tagsSelected.clear();
+    tagsSelected.refresh();
+  }
+
+  setTagSelected(String value) {
+    if (tagsSelected.contains(value)) {
+      tagsSelected.remove(value);
+    } else {
+      tagsSelected.add(value);
+    }
+    tagsSelected.refresh();
+  }
+
+  cleanTagsSelected() {
+    tagsSelected.clear();
+    tagsSelected.refresh();
   }
 
   uploadFile() async {

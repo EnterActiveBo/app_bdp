@@ -122,6 +122,7 @@ class DetailCommunityView extends GetView<DetailCommunityController> {
                               controller.setCommunity(
                                 community.value,
                                 prevValue: controller.community.value,
+                                tagsValue: controller.tags,
                               );
                             },
                             actionResource: () {

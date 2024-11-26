@@ -35,6 +35,7 @@ class CommunityView extends GetView<CommunityController> {
                 horizontal: 15,
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   searchFilter(
                     formKey,
@@ -56,6 +57,58 @@ class CommunityView extends GetView<CommunityController> {
                         }
                       }
                     },
+                  ),
+                  Row(
+                    children: [
+                      titleBdp(
+                        "Filtrar",
+                        align: TextAlign.left,
+                      ).expand(),
+                      GestureDetector(
+                        onTap: () {
+                          controller.cleanTagsSelected();
+                        },
+                        child: titleBdp(
+                          "Limpiar",
+                          size: 13,
+                          color: appColorThird,
+                          align: TextAlign.right,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: controller.tags.asMap().entries.map(
+                        (tag) {
+                          bool isSelected = controller.tagsSelected.contains(
+                            tag.value.id,
+                          );
+                          return tagContainer(
+                            ml: tag.key == 0 ? 0 : 5,
+                            pv: 5,
+                            ph: 15,
+                            radius: 5,
+                            backgroundColor: isSelected
+                                ? appColorThirdOpacity
+                                : appBackgroundOpacity,
+                            child: titleBdp(
+                              tag.value.title,
+                              size: 12,
+                              color:
+                                  isSelected ? appColorThird : appColorPrimary,
+                            ),
+                            action: () {
+                              controller.setTagSelected(tag.value.id);
+                            },
+                          );
+                        },
+                      ).toList(),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,

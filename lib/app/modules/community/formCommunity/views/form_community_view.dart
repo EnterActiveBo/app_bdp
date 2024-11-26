@@ -37,17 +37,16 @@ class FormCommunityView extends GetView<FormCommunityController> {
             child: Form(
               key: formKey,
               child: Column(
-                crossAxisAlignment:
-                    (controller.community.value is CommunityModel ||
-                            controller.reply.value is CommunityModel)
-                        ? CrossAxisAlignment.start
-                        : CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Visibility(
                     visible: (controller.community.value == null &&
                         controller.reply.value == null),
-                    child: titleBdp(
-                      "Nueva Pregunta a la Comunidad",
+                    child: SizedBox(
+                      width: Get.width,
+                      child: titleBdp(
+                        "Nueva Pregunta a la Comunidad",
+                      ),
                     ),
                   ),
                   Visibility(
@@ -114,10 +113,55 @@ class FormCommunityView extends GetView<FormCommunityController> {
                           : null;
                     },
                   ),
+                  SizedBox(
+                    width: Get.width,
+                    child: titleBdp(
+                      "3. Etiquetas",
+                      weight: FontWeight.normal,
+                      align: TextAlign.left,
+                      size: 15,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: controller.tags.asMap().entries.map(
+                        (tag) {
+                          bool isSelected = controller.tagsSelected.contains(
+                            tag.value.id,
+                          );
+                          return tagContainer(
+                            ml: tag.key == 0 ? 0 : 5,
+                            pv: 5,
+                            ph: 15,
+                            radius: 5,
+                            backgroundColor: isSelected
+                                ? appColorThirdOpacity
+                                : appBackgroundOpacity,
+                            child: titleBdp(
+                              tag.value.title,
+                              size: 12,
+                              color:
+                                  isSelected ? appColorThird : appColorPrimary,
+                            ),
+                            action: () {
+                              controller.setTagSelected(tag.value.id);
+                            },
+                          );
+                        },
+                      ).toList(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     children: [
                       titleBdp(
-                        "3. Recursos Multimedia",
+                        "4. Recursos Multimedia",
                         weight: FontWeight.normal,
                         align: TextAlign.left,
                         size: 15,
@@ -186,16 +230,38 @@ class FormCommunityView extends GetView<FormCommunityController> {
                       FocusManager.instance.primaryFocus?.unfocus();
                       if (formKey.currentState!.validate()) {
                         formKey.currentState!.save();
-                        controller.saveCommunity({
-                          'title': controller.title.text,
-                          'detail': controller.detail.text,
-                          'parent_id': controller.reply.value?.id,
-                          'sources': controller.sources
-                              .map(
-                                (e) => e.toSend(),
-                              )
-                              .toList(),
-                        });
+                        if (controller.tagsSelected.isNotEmpty) {
+                          controller.saveCommunity({
+                            'title': controller.title.text,
+                            'detail': controller.detail.text,
+                            'parent_id': controller.reply.value?.id,
+                            'tags': controller.tagsSelected,
+                            'sources': controller.sources
+                                .map(
+                                  (e) => e.toSend(),
+                                )
+                                .toList(),
+                          });
+                        } else {
+                          Get.snackbar(
+                            "Formulario Incompleto",
+                            "Por favor agregue etiquetas antes de continuar.",
+                            icon: const Icon(
+                              Icons.error_outline,
+                              color: appColorWhite,
+                              size: 35,
+                            ),
+                            colorText: appColorWhite,
+                            backgroundColor: appErrorColor,
+                            duration: const Duration(minutes: 1),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 20,
+                            ),
+                            margin: const EdgeInsets.all(10),
+                            snackPosition: SnackPosition.BOTTOM,
+                          );
+                        }
                       }
                     },
                   ),

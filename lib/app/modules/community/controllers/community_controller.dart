@@ -30,7 +30,9 @@ class CommunityController extends GetxController {
   final Rx<CommunityListModel?> communityList =
       (null as CommunityListModel?).obs;
   final RxList<CommunityModel> communities = (List<CommunityModel>.of([])).obs;
+  final RxList<TagCommunityModel> tags = (List<TagCommunityModel>.of([])).obs;
   final Rx<String?> search = (null as String?).obs;
+  final RxList<String> tagsSelected = (List<String>.of([])).obs;
   final activeSearch = false.obs;
   final newsPerPage = 10.obs;
   final currentPage = 1.obs;
@@ -41,7 +43,6 @@ class CommunityController extends GetxController {
     super.onInit();
     initData();
   }
-
 
   @override
   void onClose() {
@@ -55,16 +56,12 @@ class CommunityController extends GetxController {
     initUser();
     communities.value = communitiesStored(box);
     getCommunityList();
+    getTags();
   }
 
   getCommunityList() async {
-    Map<String, dynamic> query = {
-      "page": currentPage.toString(),
-      "limit": newsPerPage.toString(),
-    };
-    if (activeSearch.value && search.value is String) {
-      query['title'] = search.value;
-    }
+    loading.value = true;
+    Map<String, dynamic> query = getQuery();
     CommunityListModel? communityListResponse =
         await communityProvider.getCommunities(
       query: query,
@@ -73,11 +70,12 @@ class CommunityController extends GetxController {
     if (communityListResponse is CommunityListModel) {
       communityList.value = communityListResponse;
       if (communityListResponse.meta.currentPage == 1 &&
-          activeSearch.value == false) {
+          (activeSearch.value == false || tagsSelected.isEmpty)) {
         communities.value = communityListResponse.data;
         box.write(communitiesKey, communityListResponse.data);
       } else {
-        if (activeSearch.value && currentPage.value == 1) {
+        if ((activeSearch.value || tagsSelected.isNotEmpty) &&
+            currentPage.value == 1) {
           communities.value = communityListResponse.data;
         } else {
           communities.addAll(communityListResponse.data);
@@ -92,6 +90,44 @@ class CommunityController extends GetxController {
     communities.retainWhere(
       (item) => ids.remove(item.id),
     );
+  }
+
+  Map<String, dynamic> getQuery() {
+    Map<String, dynamic> query = {
+      "page": currentPage.toString(),
+      "limit": newsPerPage.toString(),
+      "title": search.value,
+      // "tags[]": tagsSelected.isNotEmpty ? tagsSelected.join("&tags[]=") : null,
+      "tags[]": tagsSelected.isNotEmpty ? tagsSelected : null,
+    };
+    query.removeWhere((key, value) => value == null);
+    return query;
+  }
+
+  getTags() async {
+    List<TagCommunityModel>? response = await communityProvider.getTags();
+    if (response is List<TagCommunityModel>) {
+      tags.value = response;
+      tags.refresh();
+    }
+  }
+
+  setTagSelected(String value) {
+    if (tagsSelected.contains(value)) {
+      tagsSelected.remove(value);
+    } else {
+      tagsSelected.add(value);
+    }
+    tagsSelected.refresh();
+    currentPage.value = 1;
+    getCommunityList();
+  }
+
+  cleanTagsSelected() {
+    tagsSelected.clear();
+    tagsSelected.refresh();
+    currentPage.value = 1;
+    getCommunityList();
   }
 
   setSearch(String? value) {
@@ -124,7 +160,10 @@ class CommunityController extends GetxController {
   }
 
   setCommunity(CommunityModel value) {
-    detailCommunityController.setCommunity(value);
+    detailCommunityController.setCommunity(
+      value,
+      tagsValue: tags,
+    );
     Get.toNamed(Routes.DETAIL_COMMUNITY);
   }
 
@@ -133,6 +172,7 @@ class CommunityController extends GetxController {
   }) {
     formCommunityController.setCommunity(
       value: value,
+      tagsValue: tags,
     );
     Get.toNamed(Routes.FORM_COMMUNITY);
   }

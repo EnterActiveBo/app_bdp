@@ -66,4 +66,18 @@ class CommunityProvider extends GetConnect {
     );
     return response.isOk;
   }
+
+  Future<List<TagCommunityModel>?> getTags() async {
+    final response = await get('tags-community');
+    if (response.body != null && response.body['data'] is List) {
+      return List<TagCommunityModel>.from(
+        response.body['data'].map(
+          (item) {
+            return TagCommunityModel.fromJson(item);
+          },
+        ).toList(),
+      );
+    }
+    return null;
+  }
 }

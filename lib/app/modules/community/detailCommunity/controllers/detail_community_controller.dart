@@ -16,9 +16,8 @@ class DetailCommunityController extends GetxController {
   final Rx<CommunityModel?> community = (null as CommunityModel?).obs;
   final Rx<CommunityModel?> prev = (null as CommunityModel?).obs;
   final Rx<UserModel?> user = (null as UserModel?).obs;
+  final RxList<TagCommunityModel> tags = (List<TagCommunityModel>.of([])).obs;
   final loading = true.obs;
-
-
 
   @override
   void onClose() {
@@ -29,12 +28,15 @@ class DetailCommunityController extends GetxController {
   setCommunity(
     CommunityModel value, {
     CommunityModel? prevValue,
+    List<TagCommunityModel>? tagsValue,
   }) async {
     community.value = value;
     getCommunity();
     user.value = userStored(box);
     prev.value = prevValue;
     prev.refresh();
+    tags.value = tagsValue ?? [];
+    tags.refresh();
   }
 
   getCommunity() async {
@@ -61,6 +63,7 @@ class DetailCommunityController extends GetxController {
       targetValue: targetValue,
       value: value,
       valueReply: reply,
+      tagsValue: tags,
     );
     Get.toNamed(Routes.FORM_COMMUNITY);
   }

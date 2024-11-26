@@ -8,6 +8,7 @@ class CommunityModel {
   String title;
   String detail;
   DateTime updatedAt;
+  List<TagCommunityModel> tags;
   List<ResourceCommunityModel> resources;
   UserModel user;
   MetaCommunityModel meta;
@@ -18,6 +19,7 @@ class CommunityModel {
     required this.title,
     required this.detail,
     required this.updatedAt,
+    required this.tags,
     required this.resources,
     required this.user,
     required this.meta,
@@ -30,6 +32,15 @@ class CommunityModel {
       title: json['title'],
       detail: json['detail'],
       updatedAt: DateTime.parse(json['updatedAt']).toLocal(),
+      tags: json['tags'] != null
+          ? List<TagCommunityModel>.from(
+              json['tags'].map(
+                (item) {
+                  return TagCommunityModel.fromJson(item);
+                },
+              ).toList(),
+            )
+          : [],
       resources: json['resources'] != null
           ? List<ResourceCommunityModel>.from(
               json['resources'].map((r) {
@@ -55,6 +66,7 @@ class CommunityModel {
     data['title'] = title;
     data['detail'] = detail;
     data['updatedAt'] = updatedAt.toString();
+    data['tags'] = tags.map((i) => i.toJson()).toList();
     data['resources'] = resources.map((x) => x.toJson()).toList();
     data['user'] = user.toJson();
     data['meta'] = meta.toJson();
@@ -90,6 +102,30 @@ class CommunityModel {
           (resource) => resource.source,
         )
         .toList();
+  }
+}
+
+class TagCommunityModel {
+  String id;
+  String title;
+
+  TagCommunityModel({
+    required this.id,
+    required this.title,
+  });
+
+  factory TagCommunityModel.fromJson(Map<String, dynamic> json) {
+    return TagCommunityModel(
+      id: json['id'],
+      title: json['title'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    return data;
   }
 }
 
