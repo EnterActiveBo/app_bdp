@@ -6,7 +6,6 @@ import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chewie/chewie.dart';
-import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
@@ -24,19 +23,18 @@ class CourseBdpModuleView extends StatefulWidget {
 
 class CourseBdpModuleState extends State<CourseBdpModuleView> {
   final CourseBdpModuleController controller = Get.find();
-  late VideoPlayerController _storedVideoController;
+  VideoPlayerController? _storedVideoController;
   ChewieController? _prettyVideoController;
 
   @override
   void initState() {
     super.initState();
-    // initializePlayer();
   }
 
   @override
   void dispose() {
     if (controller.module.value?.type == "2") {
-      _storedVideoController.dispose();
+      _storedVideoController?.dispose();
       _prettyVideoController?.dispose();
     }
     super.dispose();
@@ -66,20 +64,23 @@ class CourseBdpModuleState extends State<CourseBdpModuleView> {
                 controller.module.value!.getUrl(),
               );
               break;
-            case "2":
-              initializePlayer();
-              content = videoView();
-              break;
+            // case "2":
+            //   initializePlayer();
+            //   content = videoView();
+            //   break;
             default:
               content = documentView();
           }
         }
         return Scaffold(
-          backgroundColor:
-              controller.module.value?.type == "2" ? appColorPrimary : null,
-          appBar: const HeaderBdpView(
+          // backgroundColor:
+          //     controller.module.value?.type == "2" ? appColorPrimary : null,
+          appBar: HeaderBdpView(
             primary: true,
             title: "Cursos BDP",
+            url: controller.module.value?.type == "1"
+                ? controller.module.value?.getUrl()
+                : null,
           ),
           body: content,
         );
@@ -95,7 +96,7 @@ class CourseBdpModuleState extends State<CourseBdpModuleView> {
         ),
       );
       await Future.wait([
-        _storedVideoController.initialize(),
+        _storedVideoController!.initialize(),
       ]);
       _createPrettyVideoController();
       setState(() {});
@@ -104,7 +105,7 @@ class CourseBdpModuleState extends State<CourseBdpModuleView> {
 
   void _createPrettyVideoController() {
     _prettyVideoController = ChewieController(
-      videoPlayerController: _storedVideoController,
+      videoPlayerController: _storedVideoController!,
       autoPlay: false,
       looping: false,
       progressIndicatorDelay: null,
@@ -240,7 +241,7 @@ class CourseBdpModuleState extends State<CourseBdpModuleView> {
                   Expanded(
                     child: textRichBdp(
                       "Tipo de Archivo: ",
-                      "Imagen".toUpperCase(),
+                      controller.module.value?.getType().toUpperCase() ?? "",
                     ),
                   ),
                 ],

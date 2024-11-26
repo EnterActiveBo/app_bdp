@@ -127,4 +127,21 @@ class ModuleBdpModel {
   String getUrl() {
     return "${urlV1}courses-aula/$file/get-resources";
   }
+
+  String getType() {
+    String result = "documento";
+    switch (type) {
+      case "2":
+        result = "video";
+        break;
+      case "3":
+        result = "imagen";
+        break;
+      case "4":
+        result = "audio";
+        break;
+      default:
+    }
+    return result;
+  }
 }
