@@ -23,7 +23,7 @@ class GoodPracticesView extends GetView<GoodPracticesController> {
     return Scaffold(
       appBar: const HeaderBdpView(
         primary: true,
-        title: "Buenas Practicas",
+        title: "Buenas Prácticas",
       ),
       body: Obx(
         () => Padding(
