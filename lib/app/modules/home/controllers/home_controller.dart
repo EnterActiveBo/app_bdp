@@ -190,6 +190,13 @@ class HomeController extends GetxController {
           isPrimary: false,
         ),
         MenuModel(
+          title: "Información de Producción",
+          page: Routes.PRODUCTION,
+          svg: "produccion",
+          isPrimary: true,
+          // disabled: user.value?.role.name != 'client',
+        ),
+        MenuModel(
           title: "Proveedores",
           page: Routes.SUPPLIERS,
           svg: "proveedores",
@@ -223,8 +230,9 @@ class HomeController extends GetxController {
         MenuModel(
           title: "Encuesta",
           page: Routes.QUIZ,
-          svg: "comunidad",
+          svg: "encuesta",
           isPrimary: false,
+          // disabled: user.value?.role.name != 'client',
         ),
       ]);
       menu.refresh();

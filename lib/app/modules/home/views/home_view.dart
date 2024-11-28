@@ -4,7 +4,6 @@ import 'package:appbdp/app/common/widgets/header_bdp_view.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/menu_model.dart';
-import 'package:appbdp/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
@@ -93,22 +92,6 @@ class HomeView extends GetView<HomeController> {
         ),
       ),
       bottomNavigationBar: const BottomBdpView(),
-      floatingActionButton: () {
-        if (controller.user.value?.role.name == 'client') {
-          return FloatingActionButton(
-            onPressed: () {
-              Get.toNamed(Routes.PRODUCTION);
-            },
-            backgroundColor: appColorSecondary,
-            shape: const CircleBorder(),
-            child: const Icon(
-              Icons.bar_chart_outlined,
-              color: appColorWhite,
-            ),
-          );
-        }
-        return null;
-      }(),
     );
   }
 }
