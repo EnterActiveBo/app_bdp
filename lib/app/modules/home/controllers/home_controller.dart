@@ -220,6 +220,12 @@ class HomeController extends GetxController {
           svg: "comunidad",
           isPrimary: false,
         ),
+        MenuModel(
+          title: "Encuesta",
+          page: Routes.QUIZ,
+          svg: "comunidad",
+          isPrimary: false,
+        ),
       ]);
       menu.refresh();
     }

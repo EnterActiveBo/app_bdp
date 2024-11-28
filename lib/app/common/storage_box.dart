@@ -6,6 +6,7 @@ import 'package:appbdp/app/models/faq_model.dart';
 import 'package:appbdp/app/models/gatip_model.dart';
 import 'package:appbdp/app/models/notification_model.dart';
 import 'package:appbdp/app/models/pathology_model.dart';
+import 'package:appbdp/app/models/quiz_model.dart';
 import 'package:appbdp/app/models/quote_model.dart';
 import 'package:appbdp/app/models/resource_model.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
@@ -245,4 +246,15 @@ List<PricesProductModel> gatipProductsStored(GetStorage box) {
     }
   }
   return [];
+}
+
+QuizResponseModel? quizResponse(GetStorage box) {
+  String key = "quiz_response";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    return value is QuizResponseModel
+        ? value
+        : QuizResponseModel.fromJson(value);
+  }
+  return null;
 }

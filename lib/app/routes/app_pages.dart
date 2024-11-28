@@ -48,6 +48,8 @@ import '../modules/production/bindings/production_binding.dart';
 import '../modules/production/views/production_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/quiz/bindings/quiz_binding.dart';
+import '../modules/quiz/views/quiz_view.dart';
 import '../modules/quotes/bindings/quotes_binding.dart';
 import '../modules/quotes/pdfQuote/bindings/pdf_quote_binding.dart';
 import '../modules/quotes/pdfQuote/views/pdf_quote_view.dart';
@@ -277,6 +279,11 @@ class AppPages {
       middlewares: [
         AuthMiddleware(),
       ],
+    ),
+    GetPage(
+      name: _Paths.QUIZ,
+      page: () => const QuizView(),
+      binding: QuizBinding(),
     ),
   ];
 }

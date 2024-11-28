@@ -792,3 +792,56 @@ Widget tooltipBdp(
     ),
   );
 }
+
+Widget quizItem(
+  String title, {
+  double? mt,
+  bool? selected,
+  Function? action,
+}) {
+  return Container(
+    margin: EdgeInsets.only(
+      top: mt ?? 0,
+    ),
+    padding: const EdgeInsets.symmetric(
+      vertical: 10,
+      horizontal: 15,
+    ),
+    decoration: BoxDecoration(
+      color: selected == true ? appColorThirdQuiz : appColorWhite,
+      borderRadius: BorderRadius.circular(
+        10,
+      ),
+      border: Border.all(
+        color: selected == true ? appColorThirdQuiz : appColorPrimary,
+        width: 1,
+      ),
+    ),
+    child: GestureDetector(
+      onTap: () {
+        if (action != null) {
+          action();
+        }
+      },
+      child: Row(
+        children: [
+          Expanded(
+            child: titleBdp(
+              title,
+              color: selected == true ? appColorThird : null,
+              align: TextAlign.left,
+              weight: FontWeight.w400,
+            ),
+          ),
+          Visibility(
+            visible: selected == true,
+            child: const Icon(
+              Icons.check,
+              color: appColorThird,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}

@@ -20,6 +20,7 @@ Widget textFieldBdp({
   Color? fillColor,
   Color? borderColor,
   void Function(String)? onChanged,
+  void Function(String)? onSubmitted,
   String? label,
   Color? labelColor,
   double? labelBottom,
@@ -65,6 +66,11 @@ Widget textFieldBdp({
         }
       },
       onTap: onTap,
+      onFieldSubmitted: (value) {
+        if (onSubmitted != null) {
+          onSubmitted(value);
+        }
+      },
       suffixIconColor: appColorPrimary,
       cursorColor: appColorPrimary,
       decoration: InputDecoration(
@@ -119,6 +125,7 @@ Widget buttonBdp(
   double? w,
   double? h,
   FocusNode? focusNode,
+  OutlinedBorder? shape,
 }) {
   return ElevatedButton(
     focusNode: focusNode,
@@ -127,6 +134,7 @@ Widget buttonBdp(
       minimumSize: Size(w ?? Get.width, h ?? 50),
       elevation: 5,
       shadowColor: appColorBlack.withOpacity(.3),
+      shape: shape,
     ),
     onPressed: onClick,
     child: Text(
