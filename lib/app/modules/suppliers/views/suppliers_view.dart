@@ -1,12 +1,12 @@
 import 'package:appbdp/app/common/widgets/bottom_bdp_view.dart';
 import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/header_bdp_view.dart';
-import 'package:appbdp/app/common/widgets/items_widgets.dart';
 import 'package:appbdp/app/common/widgets/query_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/course_model.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
+import 'package:appbdp/app/modules/suppliers/views/item_supplier_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -49,14 +49,15 @@ class SuppliersView extends GetView<SuppliersController> {
                     child: titleBdp(
                       technology.value.title,
                       align: TextAlign.left,
+                      textHeight: 1,
                     ),
                   ),
                 );
                 itemsWidgets.addAll(
                   suppliersWidgets.asMap().entries.map(
                     (supplier) {
-                      return supplierItem(
-                        supplier.value,
+                      return ItemSupplierView(
+                        supplier: supplier.value,
                         mt: supplier.key == 0 ? 0 : 15,
                         action: () {
                           controller.setSupplier(supplier.value);

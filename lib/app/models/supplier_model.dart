@@ -87,6 +87,14 @@ class SupplierModel {
   bool haveTechnology(TechnologyModel item) {
     return technologies.any((element) => element.id == item.id);
   }
+
+  String getDepartment() {
+    return offices
+        .map(
+          (office) => office.department?.name,
+        )
+        .join(" | ");
+  }
 }
 
 class TechnologyModel {
