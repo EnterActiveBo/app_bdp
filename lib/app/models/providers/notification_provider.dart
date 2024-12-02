@@ -12,7 +12,9 @@ class NotificationProvider extends GetConnect {
     httpClient.baseUrl = "${urlV1}notifications";
     httpDefaultConfiguration(httpClient, box);
     httpClient.defaultDecoder = (map) {
-      if (map['data'] is Map<String, dynamic> && map['data']['id'] is String) {
+      if (map is Map &&
+          map['data'] is Map<String, dynamic> &&
+          map['data']['id'] is String) {
         return NotificationModel.fromJson(map['data']);
       }
       if (map['data'] is List) {

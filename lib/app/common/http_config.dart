@@ -7,8 +7,11 @@ httpDefaultConfiguration(
   GetHttpClient httpClient,
   GetStorage box, {
   bool? enabledContentType,
+  int? timeout,
 }) {
-  httpClient.timeout = const Duration(seconds: 300);
+  httpClient.timeout = Duration(
+    seconds: timeout ?? 300,
+  );
   httpClient.addRequestModifier((Request request) {
     request.headers['Accept'] = "application/json";
     if (enabledContentType ?? true) {

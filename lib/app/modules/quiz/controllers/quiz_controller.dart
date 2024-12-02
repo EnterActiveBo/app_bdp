@@ -1,4 +1,3 @@
-import 'package:appbdp/app/common/storage_box.dart';
 import 'package:appbdp/app/common/widgets/loader_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/providers/quiz_provider.dart';
@@ -36,12 +35,7 @@ class QuizController extends GetxController with GetTickerProviderStateMixin {
   }
 
   initData() {
-    responseQuiz.value = quizResponse(box);
-    if (responseQuiz.value is! QuizResponseModel) {
-      getQuiz();
-    } else {
-      loading.value = false;
-    }
+    getQuiz();
   }
 
   getQuiz() async {

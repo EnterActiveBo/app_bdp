@@ -108,6 +108,8 @@ class FormCommunityController extends GetxController {
     community.refresh();
     target.value = null;
     target.refresh();
+    sources.clear();
+    sources.refresh();
     tagsSelected.clear();
     tagsSelected.refresh();
   }

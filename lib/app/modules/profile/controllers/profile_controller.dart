@@ -47,6 +47,7 @@ class ProfileController extends GetxController {
   closeSession() {
     box.remove('token');
     box.remove('user');
+    box.remove('quiz_response');
     box.erase();
     Get.offAllNamed(Routes.LOGIN);
   }
