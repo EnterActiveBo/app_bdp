@@ -1,5 +1,6 @@
 import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/input_widgets.dart';
+import 'package:appbdp/app/common/widgets/loader_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/quiz_model.dart';
@@ -85,6 +86,17 @@ class ItemQuizView extends GetView<QuizController> {
       quiz.responses.remove(option);
     } else if (quiz.responses.length < quiz.limit) {
       quiz.responses.add(option);
+    } else {
+      String plural = quiz.limit == 1 ? 'opción' : 'opciones';
+      Get.dialog(
+        dialogBdp(
+          icon: Icons.warning_amber_outlined,
+          iconColor: appColorYellow,
+          title: 'Solo puede seleccionar ${quiz.limit} $plural.',
+          btnText: 'Cerrar',
+          btnBackgroundColor: appColorPrimary,
+        ),
+      );
     }
     controller.setQuizResponse(index, quiz);
   }

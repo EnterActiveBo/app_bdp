@@ -100,7 +100,7 @@ class QuizController extends GetxController with GetTickerProviderStateMixin {
     if (tabController.value is TabController &&
         tabController.value!.index < quiz.value!.form.length - 1) {
       ItemQuizModel item = quiz.value!.form[tabController.value!.index];
-      if (item.responses.isNotEmpty) {
+      if (item.isReady()) {
         tabController.value!.animateTo(tabController.value!.index + 1);
       } else {
         Get.dialog(

@@ -30,7 +30,7 @@ class QuizModel {
 
   bool readyToSave() {
     return form.every(
-      (x) => x.responses.isNotEmpty,
+      (x) => x.isReady(),
     );
   }
 
@@ -89,6 +89,15 @@ class ItemQuizModel {
             )
           : null,
     );
+  }
+
+  bool isReady() {
+    bool ready = true;
+    ready &= responses.isNotEmpty;
+    if (extra?.isNotEmpty == true) {
+      ready |= extra?.any((x) => x.editController.text.isNotEmpty) ?? false;
+    }
+    return ready;
   }
 
   Map<String, dynamic> toJson() {
