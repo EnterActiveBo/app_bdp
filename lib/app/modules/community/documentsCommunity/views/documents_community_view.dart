@@ -17,7 +17,7 @@ class DocumentsCommunityView extends GetView<DocumentsCommunityController> {
     return Scaffold(
       appBar: const HeaderBdpView(
         primary: true,
-        title: "Comunidad BDP",
+        title: "Comunidad",
       ),
       body: Obx(
         () {

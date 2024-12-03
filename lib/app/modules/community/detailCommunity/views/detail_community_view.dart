@@ -17,7 +17,7 @@ class DetailCommunityView extends GetView<DetailCommunityController> {
     return Scaffold(
       appBar: HeaderBdpView(
         primary: true,
-        title: "Comunidad BDP",
+        title: "Comunidad",
         customBack: () {
           if (controller.prev.value is CommunityModel) {
             controller.setCommunity(

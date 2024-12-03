@@ -24,7 +24,7 @@ class FileCommunityView extends GetView<FileCommunityController> {
         return Scaffold(
           appBar: HeaderBdpView(
             primary: true,
-            title: "Comunidad BDP",
+            title: "Comunidad",
             url: controller.pdfUrl(),
           ),
           body: () {
