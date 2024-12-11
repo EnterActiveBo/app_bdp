@@ -10,6 +10,7 @@ import 'package:appbdp/app/models/gatip_model.dart';
 import 'package:appbdp/app/models/pathology_model.dart';
 import 'package:appbdp/app/models/quote_model.dart';
 import 'package:appbdp/app/models/supplier_model.dart';
+import 'package:appbdp/app/models/support_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -1201,5 +1202,98 @@ Widget locationItems(
         ),
       );
     }).toList(),
+  );
+}
+
+Widget supportItem(
+  SupportModel support, {
+  double? mt,
+  Function? action,
+}) {
+  return Stack(
+    children: [
+      containerBdp(
+        backgroundColor: support.statusColor(),
+        mt: mt,
+        pv: 15,
+        action: action,
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  titleBdp(
+                    support.statusText(),
+                    color: appColorThird,
+                    size: 14,
+                    align: TextAlign.left,
+                  ),
+                  titleBdp(
+                    "Cliente: ${support.user.getName()}",
+                    size: 12,
+                    weight: FontWeight.normal,
+                    color: support.status == 'close' ? appTextNormal : null,
+                    align: TextAlign.left,
+                  ),
+                  titleBdp(
+                    support.title,
+                    textHeight: 0,
+                    max: 2,
+                    overflow: TextOverflow.ellipsis,
+                    color: support.status == 'close' ? appTextNormal : null,
+                    align: TextAlign.left,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  titleBdp(
+                    "Última Actualización: ${dateBdp(
+                      support.updatedAt,
+                      format: "dd/MM/yyyy HH:mm",
+                    )}",
+                    size: 12,
+                    weight: FontWeight.normal,
+                    align: TextAlign.left,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const Icon(
+              Icons.arrow_forward_ios_outlined,
+              color: appColorThird,
+            ),
+          ],
+        ),
+      ),
+      Visibility(
+        visible: support.messagesCount > 0,
+        child: Positioned(
+          top: (mt ?? 0) + 10,
+          right: 10,
+          child: Container(
+            padding: const EdgeInsets.all(6),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: appColorThird,
+            ),
+            constraints: const BoxConstraints(
+              minWidth: 20,
+              maxWidth: 80,
+            ),
+            child: titleBdp(
+              support.messagesCount.toString(),
+              color: appColorWhite,
+              size: 10,
+              max: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+      ),
+    ],
   );
 }

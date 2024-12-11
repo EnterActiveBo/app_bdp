@@ -1,3 +1,5 @@
+import 'package:appbdp/app/common/utils.dart';
+
 class BannerModel {
   String id;
   String title;
@@ -78,5 +80,12 @@ class FileModel {
     data['extension'] = extension;
     data['url'] = url;
     return data;
+  }
+
+  bool isImage() {
+    return searchString(
+      mimeType,
+      "image",
+    );
   }
 }

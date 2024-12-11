@@ -682,12 +682,14 @@ Widget buttonCustom({
   double? mb,
   double? pv,
   double? ph,
+  double? w,
   int? radius,
   Color? backgroundColor,
   BoxBorder? border,
   Function? action,
 }) {
   Widget content = Container(
+    width: w,
     margin: EdgeInsets.only(
       top: mt ?? 0,
       bottom: mb ?? 0,

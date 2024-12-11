@@ -15,7 +15,7 @@ class MainController extends SuperController {
     Routes.GOOD_PRACTICES,
     Routes.COMMUNITY,
     Routes.HOME,
-    Routes.COURSES,
+    Routes.SUPPORTS,
     Routes.PROFILE,
   ];
   final NotificationsController notificationsController =

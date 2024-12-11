@@ -1,5 +1,7 @@
+import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -178,6 +180,37 @@ Widget dialogBdp({
           ),
         ],
       ),
+    ),
+  );
+}
+
+Widget imageDialog(
+  String image,
+) {
+  if (Get.isDialogOpen == true) {
+    Get.back();
+  }
+  return Dialog(
+    elevation: 0.0,
+    child: Stack(
+      children: [
+        InteractiveViewer(
+          child: CachedNetworkImage(
+            imageUrl: image,
+          ),
+        ),
+        Positioned(
+          top: 10,
+          right: 10,
+          child: iconButton(
+            Icons.close,
+            color: appErrorColor,
+            action: () {
+              Get.back();
+            },
+          ),
+        )
+      ],
     ),
   );
 }

@@ -34,7 +34,7 @@ class BottomBdpView extends GetView<MainController> {
           ),
           bottomNavigationItem(
             Icons.phone_outlined,
-            svg: "assets/images/icons/cursos.svg",
+            svg: "assets/images/icons/support.svg",
           ),
           bottomNavigationItem(
             Icons.person_outline,

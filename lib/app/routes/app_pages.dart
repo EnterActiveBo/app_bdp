@@ -60,6 +60,10 @@ import '../modules/supplier/bindings/supplier_binding.dart';
 import '../modules/supplier/views/supplier_view.dart';
 import '../modules/suppliers/bindings/suppliers_binding.dart';
 import '../modules/suppliers/views/suppliers_view.dart';
+import '../modules/supports/bindings/supports_binding.dart';
+import '../modules/supports/support/bindings/support_binding.dart';
+import '../modules/supports/support/views/support_view.dart';
+import '../modules/supports/views/supports_view.dart';
 import '../modules/weather/bindings/weather_binding.dart';
 import '../modules/weather/views/weather_view.dart';
 import 'middlewares/auth_middleware.dart';
@@ -284,6 +288,18 @@ class AppPages {
       name: _Paths.QUIZ,
       page: () => const QuizView(),
       binding: QuizBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUPPORTS,
+      page: () => const SupportsView(),
+      binding: SupportsBinding(),
+      children: [
+        GetPage(
+          name: _Paths.SUPPORT,
+          page: () => const SupportView(),
+          binding: SupportBinding(),
+        ),
+      ],
     ),
   ];
 }

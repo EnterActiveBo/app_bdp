@@ -72,6 +72,11 @@ class UserModel {
   bool isClient() {
     return role.name == "client";
   }
+
+  String chatUser() {
+    String result = isClient() ? 'Cliente: ' : 'Gestor: ';
+    return result + getName();
+  }
 }
 
 class ProfileModel {

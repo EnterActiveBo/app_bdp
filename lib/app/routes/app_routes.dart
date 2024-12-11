@@ -37,6 +37,8 @@ abstract class Routes {
   static const COURSE_BDP_TOPIC = _Paths.COURSES + _Paths.COURSE_BDP_TOPIC;
   static const COURSE_BDP_MODULE = _Paths.COURSES + _Paths.COURSE_BDP_MODULE;
   static const QUIZ = _Paths.QUIZ;
+  static const SUPPORTS = _Paths.SUPPORTS;
+  static const SUPPORT = _Paths.SUPPORTS + _Paths.SUPPORT;
 }
 
 abstract class _Paths {
@@ -72,4 +74,6 @@ abstract class _Paths {
   static const COURSE_BDP_TOPIC = '/course-bdp-topic';
   static const COURSE_BDP_MODULE = '/course-bdp-module';
   static const QUIZ = '/quiz';
+  static const SUPPORTS = '/supports';
+  static const SUPPORT = '/support';
 }

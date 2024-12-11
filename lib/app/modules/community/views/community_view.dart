@@ -160,32 +160,30 @@ class CommunityView extends GetView<CommunityController> {
             Positioned(
               bottom: 10,
               right: 10,
-              child: GestureDetector(
-                onTap: () {
+              child: buttonCustom(
+                backgroundColor: appColorThird,
+                pv: 5,
+                ph: 15,
+                radius: 30,
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.edit_outlined,
+                      color: appColorWhite,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    titleBdp(
+                      "Pregunta a la comunidad",
+                      color: appColorWhite,
+                      size: 13,
+                    ),
+                  ],
+                ),
+                action: () {
                   controller.setCommunityForm();
                 },
-                child: buttonCustom(
-                  backgroundColor: appColorThird,
-                  pv: 5,
-                  ph: 15,
-                  radius: 30,
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.edit_outlined,
-                        color: appColorWhite,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      titleBdp(
-                        "Pregunta a la comunidad",
-                        color: appColorWhite,
-                        size: 13,
-                      ),
-                    ],
-                  ),
-                ),
               ),
             ),
           ],

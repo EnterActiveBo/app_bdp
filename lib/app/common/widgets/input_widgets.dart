@@ -102,9 +102,9 @@ Widget textFieldBdp({
         suffixIcon: suffixIcon,
         hintText: hintText,
         hintStyle: TextStyle(
-          color: labelColor ?? appColorPrimary,
+          color: labelColor ?? appTextLight,
           fontSize: 15,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.normal,
         ),
         contentPadding: EdgeInsets.symmetric(
           vertical: vertical ?? 15,
