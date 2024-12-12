@@ -58,7 +58,12 @@ class SupportsController extends GetxController {
     );
     loading.value = false;
     if (response is SupportListModel) {
-      supports.value = response.data;
+      if (currentPage.value == 1) {
+        supports.value = response.data;
+      } else {
+        supports.addAll(response.data);
+      }
+      supports.refresh();
       meta.value = response.meta;
     }
   }
@@ -145,5 +150,10 @@ class SupportsController extends GetxController {
       userValue: user.value,
     );
     Get.toNamed(Routes.SUPPORT);
+  }
+
+  reloadSupports() async {
+    currentPage.value = 1;
+    await getSupports();
   }
 }

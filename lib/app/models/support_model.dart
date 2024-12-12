@@ -82,7 +82,7 @@ class SupportModel {
       case 'open':
         return appBackgroundOpacity;
       case 'closed':
-        return appColorSecondary;
+        return appColorSecondary.withOpacity(0.1);
       default:
         return appBackgroundOpacity;
     }

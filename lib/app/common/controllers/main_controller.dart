@@ -131,8 +131,9 @@ class MainController extends SuperController {
           requestAlertPermission: true,
         ),
       ),
-      onDidReceiveNotificationResponse:
-          (NotificationResponse notificationResponse) {
+      onDidReceiveNotificationResponse: (
+        NotificationResponse notificationResponse,
+      ) {
         Get.toNamed(Routes.NOTIFICATIONS);
       },
     );
@@ -141,23 +142,26 @@ class MainController extends SuperController {
   Future<void> showNotification(RemoteNotification? notification) async {
     if (Platform.isAndroid) {
       AndroidNotification? android = notification!.android;
-      final http.Response response = await http.get(
-        Uri.parse("${android!.imageUrl}"),
-      );
-      BigPictureStyleInformation upalStyle = BigPictureStyleInformation(
-        ByteArrayAndroidBitmap.fromBase64String(
-          base64Encode(
-            response.bodyBytes,
+      BigPictureStyleInformation? bdpStyle;
+      if (android?.imageUrl is String) {
+        final http.Response response = await http.get(
+          Uri.parse("${android!.imageUrl}"),
+        );
+        bdpStyle = BigPictureStyleInformation(
+          ByteArrayAndroidBitmap.fromBase64String(
+            base64Encode(
+              response.bodyBytes,
+            ),
           ),
-        ),
-        largeIcon: ByteArrayAndroidBitmap.fromBase64String(
-          base64Encode(
-            response.bodyBytes,
+          largeIcon: ByteArrayAndroidBitmap.fromBase64String(
+            base64Encode(
+              response.bodyBytes,
+            ),
           ),
-        ),
-        contentTitle: notification.title,
-        summaryText: notification.body,
-      );
+          contentTitle: notification.title,
+          summaryText: notification.body,
+        );
+      }
       NotificationDetails notificationDetail = NotificationDetails(
         android: AndroidNotificationDetails(
           androidChannel.id,
@@ -167,7 +171,7 @@ class MainController extends SuperController {
           importance: Importance.max,
           icon: "app_icon",
           channelShowBadge: true,
-          styleInformation: upalStyle,
+          styleInformation: bdpStyle,
         ),
       );
       await flutterLocalNotificationsPlugin.show(
@@ -182,16 +186,22 @@ class MainController extends SuperController {
   Future<void> showNotificationIos(RemoteNotification? notification) async {
     AppleNotification? ios = notification!.apple;
     if (ios is AppleNotification) {
-      final String bigPicturePath = await _downloadAndSaveFile(
-        ios.imageUrl ?? '',
-        "upal_notification.jpg",
-      );
+      List<DarwinNotificationAttachment> attachments = [];
+      String? bigPicturePath;
+      if (ios.imageUrl is String) {
+        bigPicturePath = await _downloadAndSaveFile(
+          ios.imageUrl ?? '',
+          "bdp_notification.jpg",
+        );
+        attachments.add(
+          DarwinNotificationAttachment(bigPicturePath),
+        );
+      }
       NotificationDetails notificationDetail = NotificationDetails(
         iOS: DarwinNotificationDetails(
-            categoryIdentifier: 'plainCategory',
-            attachments: <DarwinNotificationAttachment>[
-              DarwinNotificationAttachment(bigPicturePath),
-            ]),
+          categoryIdentifier: 'plainCategory',
+          attachments: attachments,
+        ),
       );
       await flutterLocalNotificationsPlugin.show(
         notification.hashCode,

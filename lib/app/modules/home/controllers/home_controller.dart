@@ -70,6 +70,7 @@ class HomeController extends GetxController {
   setFcmToken(
     String? token,
   ) async {
+    printInfo(info: "device token: $token");
     await userProvider.device({
       "type": Platform.isAndroid ? "android" : "ios",
       "fcm_token": token,

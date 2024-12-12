@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:862698320738:android:a7af016f59fdd175b4323b',
     messagingSenderId: '862698320738',
     projectId: 'appbdp',
-    storageBucket: 'appbdp.appspot.com',
+    storageBucket: 'appbdp.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -62,7 +62,7 @@ class DefaultFirebaseOptions {
     appId: '1:862698320738:ios:6b50edbcc8d40ca4b4323b',
     messagingSenderId: '862698320738',
     projectId: 'appbdp',
-    storageBucket: 'appbdp.appspot.com',
+    storageBucket: 'appbdp.firebasestorage.app',
     iosBundleId: 'com.enteractive.appbdp',
   );
 

@@ -20,9 +20,13 @@ class SupportsView extends GetView<SupportsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const HeaderBdpView(
+      appBar: HeaderBdpView(
         primary: true,
         title: "Soporte en Línea",
+        iconAction: Icons.refresh_outlined,
+        action: () {
+          controller.reloadSupports();
+        },
       ),
       body: Obx(
         () => Padding(

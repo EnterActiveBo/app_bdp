@@ -1,3 +1,4 @@
+import 'package:appbdp/app/common/utils.dart';
 import 'package:appbdp/app/common/widgets/element_widgets.dart';
 import 'package:appbdp/app/common/widgets/loader_widgets.dart';
 import 'package:appbdp/app/common/widgets/text_widgets.dart';
@@ -262,5 +263,38 @@ class SupportController extends GetxController {
         },
       ),
     );
+  }
+
+  showDownload(
+    String url,
+  ) {
+    if (Get.isDialogOpen == true || Get.isBottomSheetOpen == true) {
+      Get.back();
+    }
+    Get.dialog(
+      dialogBdp(
+        icon: Icons.download_outlined,
+        iconColor: appColorSecondary,
+        title: '¿Descargar archivo?',
+        btnText: 'Sí, descargar',
+        btnBackgroundColor: appColorSecondary,
+        action: () async {
+          downloadFile(url);
+          Get.back();
+        },
+      ),
+    );
+  }
+
+  reloadSupport() async {
+    Get.closeAllSnackbars();
+    Get.dialog(
+      barrierDismissible: false,
+      loadingDialog(),
+    );
+    await getSupport();
+    if (Get.isDialogOpen == true || Get.isBottomSheetOpen == true) {
+      Get.back();
+    }
   }
 }

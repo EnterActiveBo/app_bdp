@@ -26,9 +26,13 @@ class SupportView extends GetView<SupportController> {
     FocusNode submitFocusNode = FocusNode();
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: const HeaderBdpView(
+      appBar: HeaderBdpView(
         primary: true,
         title: "Soporte en Línea",
+        iconAction: Icons.refresh_outlined,
+        action: () {
+          controller.reloadSupport();
+        },
       ),
       body: Obx(
         () {
@@ -63,10 +67,10 @@ class SupportView extends GetView<SupportController> {
                       visible: controller.user.value?.isClient() == false &&
                           controller.support.value?.isActive() == true,
                       child: Positioned(
-                        top: 15,
-                        right: 20,
+                        top: 5,
+                        right: 5,
                         child: iconButton(
-                          Icons.check_outlined,
+                          Icons.close,
                           pd: 5,
                           size: 15,
                           color: appColorYellow,
@@ -257,6 +261,9 @@ class SupportView extends GetView<SupportController> {
                 ),
                 sourceItem(
                   source: message.source,
+                  background: background == appBackgroundOpacity
+                      ? appColorThirdOpacity
+                      : appBackgroundOpacity,
                 ),
                 const SizedBox(
                   height: 5,
@@ -295,7 +302,7 @@ class SupportView extends GetView<SupportController> {
 
   Widget sourceItem({
     FileModel? source,
-    bool? isMine,
+    Color? background,
   }) {
     Widget? content;
     Function? action;
@@ -345,9 +352,7 @@ class SupportView extends GetView<SupportController> {
           ],
         );
         action = () {
-          downloadFile(
-            source.url,
-          );
+          controller.showDownload(source.url);
         };
       }
     }
@@ -355,8 +360,7 @@ class SupportView extends GetView<SupportController> {
       child: content,
       ph: pd,
       pv: pd,
-      backgroundColor:
-          isMine ?? false ? appColorThirdOpacity : appBackgroundOpacity,
+      backgroundColor: background ?? appBackgroundOpacity,
       action: action,
     );
   }

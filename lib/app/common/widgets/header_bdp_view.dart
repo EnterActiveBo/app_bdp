@@ -13,6 +13,8 @@ class HeaderBdpView extends GetView<NotificationsController>
   final String? url;
   final double? rounded;
   final Function? customBack;
+  final Function? action;
+  final IconData? iconAction;
   const HeaderBdpView({
     super.key,
     this.primary,
@@ -20,6 +22,8 @@ class HeaderBdpView extends GetView<NotificationsController>
     this.url,
     this.rounded,
     this.customBack,
+    this.action,
+    this.iconAction,
   });
   @override
   Widget build(BuildContext context) {
@@ -78,6 +82,20 @@ class HeaderBdpView extends GetView<NotificationsController>
             ),
             onPressed: () {
               downloadFile("$url");
+            },
+          ),
+        ),
+        Visibility(
+          visible: action != null && iconAction != null,
+          child: IconButton(
+            icon: Icon(
+              iconAction,
+              color: appColorWhite,
+            ),
+            onPressed: () {
+              if (action != null) {
+                action!();
+              }
             },
           ),
         ),

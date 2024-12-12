@@ -28,6 +28,7 @@ void main() async {
     ),
   );
   await Firebase.initializeApp(
+    name: 'appbdp',
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(fcmBackgroundHandler);
@@ -65,6 +66,7 @@ void main() async {
 @pragma('vm:entry-point')
 Future<void> fcmBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(
+    name: 'appbdp',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 }
