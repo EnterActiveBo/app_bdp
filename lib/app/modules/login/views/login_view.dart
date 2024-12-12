@@ -28,6 +28,7 @@ class LoginView extends GetView<LoginController> {
         child: Center(
           child: Form(
             key: formKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 30,

@@ -21,6 +21,7 @@ class CommunityView extends GetView<CommunityController> {
     final formKey = GlobalKey<FormState>();
     final search = TextEditingController();
     final FocusNode searchFocusNode = FocusNode();
+    final ScrollController scrollController = ScrollController();
     return Scaffold(
       appBar: const HeaderBdpView(
         primary: true,
@@ -118,34 +119,38 @@ class CommunityView extends GetView<CommunityController> {
                     return queryBdpWidget(
                       !controller.loading.value && items.isNotEmpty,
                       LazyLoadScrollView(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: items.asMap().entries.map(
-                              (item) {
-                                return communityItem(
-                                  item.value,
-                                  mt: item.key == 0 ? 0 : 15,
-                                  maxTitle: 2,
-                                  titleOverflow: TextOverflow.ellipsis,
-                                  maxDetail: 2,
-                                  detailOverflow: TextOverflow.ellipsis,
-                                  actionVote: (value) {
-                                    controller.setVote(value, item.key);
-                                  },
-                                  enableEdit: controller.user.value?.id ==
-                                      item.value.user.id,
-                                  actionEdit: () {
-                                    controller.setCommunityForm(
-                                      value: item.value,
-                                    );
-                                  },
-                                  actionNext: () {
-                                    controller.setCommunity(item.value);
-                                  },
+                        isLoading: true,
+                        child: ListView.separated(
+                          controller: scrollController,
+                          itemBuilder: (context, index) {
+                            CommunityModel item = items[index];
+                            return communityItem(
+                              item,
+                              maxTitle: 2,
+                              titleOverflow: TextOverflow.ellipsis,
+                              maxDetail: 2,
+                              detailOverflow: TextOverflow.ellipsis,
+                              actionVote: (value) {
+                                controller.setVote(value, index);
+                              },
+                              enableEdit:
+                                  controller.user.value?.id == item.user.id,
+                              actionEdit: () {
+                                controller.setCommunityForm(
+                                  value: item,
                                 );
                               },
-                            ).toList(),
-                          ),
+                              actionNext: () {
+                                controller.setCommunity(item);
+                              },
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const SizedBox(
+                              height: 15,
+                            );
+                          },
+                          itemCount: items.length,
                         ),
                         onEndOfPage: () {
                           controller.getNextPage();

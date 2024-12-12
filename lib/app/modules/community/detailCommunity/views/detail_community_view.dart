@@ -32,118 +32,123 @@ class DetailCommunityView extends GetView<DetailCommunityController> {
         () {
           List<FileModel> images =
               controller.community.value?.getImages() ?? [];
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Visibility(
-                  visible: images.isNotEmpty == true,
-                  child: communityBanner(
-                    images,
-                  ),
-                ),
-                Visibility(
-                  visible: controller.community.value is CommunityModel,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 15,
+          return Expanded(
+            child: queryBdpWidget(
+              !controller.loading.value,
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 20,
                     ),
-                    child: communityItem(
-                      controller.community.value!,
-                      enableImage: false,
-                      backgroundColor: appColorWhite,
-                      voteIconSize: 15,
-                      voteTitleSize: 10,
-                      showNextArrow: false,
-                      showReply: true,
-                      showResources:
-                          controller.community.value?.getFiles().isNotEmpty,
-                      actionReply: () {
-                        controller.setCommunityForm(
-                          targetValue: controller.community.value,
-                          reply: controller.community.value,
-                        );
-                      },
-                      actionResource: () {
-                        controller.setDocumentCommunity(
+                    Visibility(
+                      visible: images.isNotEmpty == true,
+                      child: communityBanner(
+                        images,
+                      ),
+                    ),
+                    Visibility(
+                      visible: controller.community.value is CommunityModel,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 15,
+                        ),
+                        child: communityItem(
                           controller.community.value!,
-                        );
-                      },
-                      actionVote: (value) {
-                        controller.setVote(value);
-                      },
+                          enableImage: false,
+                          backgroundColor: appColorWhite,
+                          voteIconSize: 15,
+                          voteTitleSize: 10,
+                          showNextArrow: false,
+                          showReply: true,
+                          showResources:
+                              controller.community.value?.getFiles().isNotEmpty,
+                          actionReply: () {
+                            controller.setCommunityForm(
+                              targetValue: controller.community.value,
+                              reply: controller.community.value,
+                            );
+                          },
+                          actionResource: () {
+                            controller.setDocumentCommunity(
+                              controller.community.value!,
+                            );
+                          },
+                          actionVote: (value) {
+                            controller.setVote(value);
+                          },
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                queryBdpWidget(
-                  !controller.loading.value &&
+                    queryBdpWidget(
                       controller.community.value?.children.isNotEmpty == true,
-                  Container(
-                    color: appBackgroundLight,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 15,
-                    ),
-                    child: Column(
-                      children: (controller.community.value?.children ?? [])
-                          .asMap()
-                          .entries
-                          .map(
-                        (community) {
-                          return communityItem(
-                            community.value,
-                            enableImage: false,
-                            backgroundColor: appColorTransparent,
-                            voteIconSize: 15,
-                            voteTitleSize: 10,
-                            enableEdit: controller.user.value?.id ==
-                                community.value.user.id,
-                            actionEdit: () {
-                              controller.setCommunityForm(
-                                value: community.value,
-                              );
-                            },
-                            showNextArrow:
-                                community.value.meta.interactions > 0,
-                            showResources:
-                                community.value.getFiles().isNotEmpty,
-                            showReply: true,
-                            actionReply: () {
-                              controller.setCommunityForm(
-                                targetValue: controller.community.value,
-                                reply: community.value,
-                              );
-                            },
-                            actionNext: () {
-                              controller.setCommunity(
+                      Container(
+                        color: appBackgroundLight,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 15,
+                        ),
+                        child: Column(
+                          children: (controller.community.value?.children ?? [])
+                              .asMap()
+                              .entries
+                              .map(
+                            (community) {
+                              return communityItem(
                                 community.value,
-                                prevValue: controller.community.value,
-                                tagsValue: controller.tags,
+                                enableImage: false,
+                                backgroundColor: appColorTransparent,
+                                voteIconSize: 15,
+                                voteTitleSize: 10,
+                                enableEdit: controller.user.value?.id ==
+                                    community.value.user.id,
+                                actionEdit: () {
+                                  controller.setCommunityForm(
+                                    value: community.value,
+                                  );
+                                },
+                                showNextArrow:
+                                    community.value.meta.interactions > 0,
+                                showResources:
+                                    community.value.getFiles().isNotEmpty,
+                                showReply: true,
+                                actionReply: () {
+                                  controller.setCommunityForm(
+                                    targetValue: controller.community.value,
+                                    reply: community.value,
+                                  );
+                                },
+                                actionNext: () {
+                                  controller.setCommunity(
+                                    community.value,
+                                    prevValue: controller.community.value,
+                                    tagsValue: controller.tags,
+                                  );
+                                },
+                                actionResource: () {
+                                  controller.setDocumentCommunity(
+                                    community.value,
+                                  );
+                                },
+                                actionVote: (value) {
+                                  controller.setVote(
+                                    value,
+                                    index: community.key,
+                                  );
+                                },
                               );
                             },
-                            actionResource: () {
-                              controller.setDocumentCommunity(
-                                community.value,
-                              );
-                            },
-                            actionVote: (value) {
-                              controller.setVote(
-                                value,
-                                index: community.key,
-                              );
-                            },
-                          );
-                        },
-                      ).toList(),
+                          ).toList(),
+                        ),
+                      ),
+                      loading: controller.loading.value,
                     ),
-                  ),
-                  loading: controller.loading.value,
+                  ],
                 ),
-              ],
+              ),
+              loading: controller.loading.value,
             ),
           );
         },

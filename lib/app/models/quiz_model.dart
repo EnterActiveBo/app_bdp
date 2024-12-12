@@ -123,7 +123,14 @@ class ItemQuizModel {
     final data = <String, dynamic>{};
     data['title'] = title;
     data['options'] = responses;
-    data['extra'] = extra?.map((x) => x.toStore()).toList();
+    data['extra'] = extra
+        ?.where(
+          (e) => e.editController.text.isNotEmpty,
+        )
+        .map(
+          (x) => x.toStore(),
+        )
+        .toList();
     return data;
   }
 }

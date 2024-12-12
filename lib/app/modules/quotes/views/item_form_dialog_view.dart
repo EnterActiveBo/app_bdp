@@ -49,6 +49,7 @@ class ItemFormDialogView extends GetView<QuotesController> {
           width: Get.width,
           child: Form(
             key: formKey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               children: [
                 Container(
@@ -107,6 +108,7 @@ class ItemFormDialogView extends GetView<QuotesController> {
                         fillColor: appBackgroundOpacity,
                         borderColor: appColorTransparent,
                         borderRadius: 30,
+                        max: 100,
                         validator: (String? value) {
                           return (value ?? "").length < 3
                               ? 'Ingrese mínimamente 3 caracteres'

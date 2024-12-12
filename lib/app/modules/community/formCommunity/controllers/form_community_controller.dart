@@ -1,3 +1,4 @@
+import 'package:appbdp/app/common/storage_box.dart';
 import 'package:appbdp/app/common/widgets/loader_widgets.dart';
 import 'package:appbdp/app/constants/color.const.dart';
 import 'package:appbdp/app/models/banner_model.dart';
@@ -9,8 +10,10 @@ import 'package:appbdp/app/routes/app_pages.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class FormCommunityController extends GetxController {
+  GetStorage box = GetStorage('App');
   final CommunityProvider communityProvider = Get.find();
   final FileProvider fileProvider = Get.find();
   final Rx<FilePickerResult?> resourceFile = (null as FilePickerResult?).obs;
@@ -37,7 +40,8 @@ class FormCommunityController extends GetxController {
     List<TagCommunityModel>? tagsValue,
   }) {
     cleanForm();
-    tags.value = tagsValue ?? [];
+    tags.value = tagsCommunityStored(box);
+    tags.refresh();
     target.value = targetValue;
     target.refresh();
     reply.value = valueReply;

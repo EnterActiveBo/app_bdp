@@ -14,6 +14,7 @@ class CommunityController extends GetxController {
   GetStorage box = GetStorage('App');
   final UserProvider userProvider = Get.find();
   String userKey = 'user';
+
   final Rx<UserModel?> user = (null as UserModel?).obs;
   String communitiesKey = 'communities';
   final CommunityProvider communityProvider = Get.find();
@@ -31,6 +32,7 @@ class CommunityController extends GetxController {
       (null as CommunityListModel?).obs;
   final RxList<CommunityModel> communities = (List<CommunityModel>.of([])).obs;
   final RxList<TagCommunityModel> tags = (List<TagCommunityModel>.of([])).obs;
+  String tagsKey = 'community-tags';
   final Rx<String?> search = (null as String?).obs;
   final RxList<String> tagsSelected = (List<String>.of([])).obs;
   final activeSearch = false.obs;
@@ -54,14 +56,14 @@ class CommunityController extends GetxController {
 
   initData() {
     initUser();
-    communities.value = communitiesStored(box);
+    // communities.value = communitiesStored(box);
     getCommunityList();
     getTags();
   }
 
   getCommunityList() async {
-    loading.value = true;
     Map<String, dynamic> query = getQuery();
+    loading.value = currentPage.value == 1;
     CommunityListModel? communityListResponse =
         await communityProvider.getCommunities(
       query: query,
@@ -109,6 +111,7 @@ class CommunityController extends GetxController {
     if (response is List<TagCommunityModel>) {
       tags.value = response;
       tags.refresh();
+      box.write(tagsKey, response);
     }
   }
 

@@ -118,6 +118,7 @@ class QuizController extends GetxController with GetTickerProviderStateMixin {
   }
 
   sendQuiz() async {
+    quiz.refresh();
     if (quiz.value!.readyToSave()) {
       Get.dialog(
         dialogBdp(

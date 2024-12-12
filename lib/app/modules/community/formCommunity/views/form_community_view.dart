@@ -36,6 +36,7 @@ class FormCommunityView extends GetView<FormCommunityController> {
             ),
             child: Form(
               key: formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -76,7 +77,7 @@ class FormCommunityView extends GetView<FormCommunityController> {
                   ),
                   dividerBdp(),
                   textFieldBdp(
-                    label: "1. Título",
+                    label: "1. Título *",
                     textEditingController: controller.title,
                     textType: TextFieldType.OTHER,
                     focusNode: titleFocus,
@@ -87,6 +88,7 @@ class FormCommunityView extends GetView<FormCommunityController> {
                     fillColor: appBackgroundOpacity,
                     borderColor: appColorTransparent,
                     borderRadius: 30,
+                    max: 250,
                     validator: (String? value) {
                       return (value ?? "").length < 5
                           ? 'Ingrese mínimamente 5 caracteres'
@@ -94,7 +96,7 @@ class FormCommunityView extends GetView<FormCommunityController> {
                     },
                   ),
                   textFieldBdp(
-                    label: "2. Detalle",
+                    label: "2. Detalle *",
                     textEditingController: controller.detail,
                     textType: TextFieldType.MULTILINE,
                     focusNode: detailFocus,
@@ -105,6 +107,7 @@ class FormCommunityView extends GetView<FormCommunityController> {
                     fillColor: appBackgroundOpacity,
                     borderColor: appColorTransparent,
                     borderRadius: 10,
+                    max: 1000,
                     minLines: 3,
                     maxLines: 5,
                     validator: (String? value) {
@@ -116,7 +119,7 @@ class FormCommunityView extends GetView<FormCommunityController> {
                   SizedBox(
                     width: Get.width,
                     child: titleBdp(
-                      "3. Etiquetas",
+                      "3. Etiquetas *",
                       weight: FontWeight.normal,
                       align: TextAlign.left,
                       size: 15,

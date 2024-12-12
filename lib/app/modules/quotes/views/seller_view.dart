@@ -29,6 +29,7 @@ class SellerView extends GetView<QuotesController> {
     return SingleChildScrollView(
       child: Form(
         key: formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 20,
@@ -53,6 +54,12 @@ class SellerView extends GetView<QuotesController> {
                 fillColor: appBackgroundOpacity,
                 borderColor: appColorTransparent,
                 borderRadius: 30,
+                max: 300,
+                validator: (String? value) {
+                  return (value ?? "").length < 3
+                      ? 'Ingrese mínimamente 3 caracteres'
+                      : null;
+                },
               ),
               textFieldBdp(
                 label: "Dirección",
@@ -67,6 +74,12 @@ class SellerView extends GetView<QuotesController> {
                 borderColor: appColorTransparent,
                 borderRadius: 30,
                 isRequired: false,
+                max: 100,
+                validator: (String? value) {
+                  return (value ?? "").length < 3
+                      ? 'Ingrese mínimamente 3 caracteres'
+                      : null;
+                },
               ),
               textFieldBdp(
                 label: "Teléfono o Celular",
@@ -81,6 +94,12 @@ class SellerView extends GetView<QuotesController> {
                 borderColor: appColorTransparent,
                 borderRadius: 30,
                 isRequired: false,
+                max: 15,
+                validator: (String? value) {
+                  return (value ?? "").length < 7
+                      ? 'Ingrese mínimamente 7 caracteres'
+                      : null;
+                },
               ),
               textFieldBdp(
                 label: "Correo Electrónico",
@@ -109,6 +128,12 @@ class SellerView extends GetView<QuotesController> {
                 borderColor: appColorTransparent,
                 borderRadius: 30,
                 isRequired: false,
+                max: 200,
+                validator: (String? value) {
+                  return (value ?? "").length < 3
+                      ? 'Ingrese mínimamente 3 caracteres'
+                      : null;
+                },
               ),
               Row(
                 children: [

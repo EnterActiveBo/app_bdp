@@ -34,6 +34,7 @@ class NewView extends GetView<QuotesController> {
       () => SingleChildScrollView(
         child: Form(
           key: formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 20,
@@ -60,9 +61,10 @@ class NewView extends GetView<QuotesController> {
                     fillColor: appBackgroundOpacity,
                     borderColor: appColorTransparent,
                     borderRadius: 30,
+                    max: 100,
                     validator: (String? value) {
-                      return (value ?? "").length < 5
-                          ? 'Ingrese mínimamente 5 caracteres'
+                      return (value ?? "").length < 3
+                          ? 'Ingrese mínimamente 3 caracteres'
                           : null;
                     },
                   ),

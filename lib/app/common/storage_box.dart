@@ -258,3 +258,20 @@ QuizResponseModel? quizResponse(GetStorage box) {
   }
   return null;
 }
+
+List<TagCommunityModel> tagsCommunityStored(GetStorage box) {
+  String key = "community-tags";
+  if (box.hasData(key)) {
+    var value = box.read(key);
+    if (value is List) {
+      return List<TagCommunityModel>.from(
+        value.map(
+          (f) {
+            return f is TagCommunityModel ? f : TagCommunityModel.fromJson(f);
+          },
+        ),
+      );
+    }
+  }
+  return [];
+}
