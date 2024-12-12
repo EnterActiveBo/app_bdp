@@ -20,7 +20,7 @@ class WeatherView extends GetView<WeatherController> {
     return Scaffold(
       appBar: const HeaderBdpView(
         primary: true,
-        title: "Agroclimatico",
+        title: "Agroclimático",
       ),
       body: Obx(
         () => SingleChildScrollView(
