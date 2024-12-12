@@ -242,6 +242,7 @@ Widget officeItem(
                     office.department?.name ?? "N/T",
                     color: appColorThird,
                     size: 14,
+                    align: TextAlign.left,
                   ),
                 ),
                 SizedBox(
@@ -249,6 +250,7 @@ Widget officeItem(
                 ),
                 titleBdp(
                   office.title,
+                  align: TextAlign.left,
                 ),
               ],
             ).expand(),
@@ -265,7 +267,7 @@ Widget officeItem(
             Visibility(
               visible: office.webUrl is String,
               child: iconButton(
-                Icons.open_in_browser_outlined,
+                Icons.public_outlined,
                 ml: 5,
                 action: () {
                   openUrl("${office.webUrl}");
@@ -356,7 +358,6 @@ Widget imageDetailItem({
               child: CachedNetworkImage(
                 imageUrl: "$imageUrl",
                 width: Get.width,
-                height: Get.width / 2.5,
                 fit: BoxFit.cover,
               ),
             ),
@@ -372,6 +373,7 @@ Widget imageDetailItem({
                     title ?? "",
                     color: titleColor ?? appColorThird,
                     size: 18,
+                    align: TextAlign.left,
                   ),
                   SizedBox(
                     height: detail is String ? 10 : 0,
@@ -981,7 +983,7 @@ Widget communityItem(
                       voteContainer(
                         community.meta.positive,
                         icon: Icons.thumb_up_alt_outlined,
-                        title: "Voto Positivo",
+                        title: "Positivo",
                         iconSize: voteIconSize,
                         iconMr: voteIconMr,
                         iconPd: voteIconPd,
@@ -997,7 +999,7 @@ Widget communityItem(
                       ),
                       voteContainer(community.meta.negative,
                           icon: Icons.thumb_down_alt_outlined,
-                          title: "Voto Negativo",
+                          title: "Negativo",
                           iconSize: voteIconSize,
                           iconMr: voteIconMr,
                           iconPd: voteIconPd,

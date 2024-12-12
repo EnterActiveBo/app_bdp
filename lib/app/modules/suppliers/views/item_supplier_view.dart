@@ -100,6 +100,7 @@ class ItemSupplierViewState extends State<ItemSupplierView> {
             ),
             titleBdp(
               widget.supplier.title,
+              align: TextAlign.left,
             ),
           ],
         ),
