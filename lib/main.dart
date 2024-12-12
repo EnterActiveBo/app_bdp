@@ -84,7 +84,11 @@ Future<void> initNotifications() async {
     onDidReceiveNotificationResponse: (
       NotificationResponse notificationResponse,
     ) {
-      Get.toNamed(Routes.NOTIFICATIONS);
+      Get.toNamed(
+        notificationResponse.payload == "support"
+            ? Routes.SUPPORTS
+            : Routes.NOTIFICATIONS,
+      );
     },
   );
 }

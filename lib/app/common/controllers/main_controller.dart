@@ -106,15 +106,35 @@ class MainController extends SuperController {
                 'Message also contained a notification: ${message.notification}',
           );
           if (Platform.isAndroid) {
-            showNotification(message.notification);
+            showNotification(message.notification, data: message.data);
           }
           if (Platform.isIOS) {
-            showNotificationIos(message.notification);
+            showNotificationIos(message.notification, data: message.data);
           }
           notificationsController.getNotifications();
         }
       },
     );
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      printInfo(
+        info: 'Message opened app!',
+      );
+      printInfo(
+        info: 'Message data: ${message.data}',
+      );
+      if (message.notification != null) {
+        printInfo(
+          info:
+              'Message also contained a notification: ${message.notification}',
+        );
+        Get.toNamed(
+          message.data["type"] == "support"
+              ? Routes.SUPPORTS
+              : Routes.NOTIFICATIONS,
+        );
+        notificationsController.getNotifications();
+      }
+    });
   }
 
   Future<void> initNotifications() async {
@@ -139,7 +159,10 @@ class MainController extends SuperController {
     );
   }
 
-  Future<void> showNotification(RemoteNotification? notification) async {
+  Future<void> showNotification(
+    RemoteNotification? notification, {
+    Map<String, dynamic>? data,
+  }) async {
     if (Platform.isAndroid) {
       AndroidNotification? android = notification!.android;
       BigPictureStyleInformation? bdpStyle;
@@ -179,11 +202,15 @@ class MainController extends SuperController {
         notification.title,
         notification.body,
         notificationDetail,
+        payload: data?["type"],
       );
     }
   }
 
-  Future<void> showNotificationIos(RemoteNotification? notification) async {
+  Future<void> showNotificationIos(
+    RemoteNotification? notification, {
+    Map<String, dynamic>? data,
+  }) async {
     AppleNotification? ios = notification!.apple;
     if (ios is AppleNotification) {
       List<DarwinNotificationAttachment> attachments = [];
@@ -208,6 +235,7 @@ class MainController extends SuperController {
         notification.title,
         notification.body,
         notificationDetail,
+        payload: data?["type"],
       );
     }
   }
