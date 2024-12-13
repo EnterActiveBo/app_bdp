@@ -24,175 +24,181 @@ class SupportView extends GetView<SupportController> {
     TextEditingController message = TextEditingController();
     FocusNode messageFocus = FocusNode();
     FocusNode submitFocusNode = FocusNode();
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: HeaderBdpView(
-        primary: true,
-        title: "Soporte en Línea",
-        iconAction: Icons.refresh_outlined,
-        action: () {
-          controller.reloadSupport();
-        },
-      ),
-      body: Obx(
-        () {
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 15,
-                ),
-                child: Stack(
-                  children: [
-                    containerBdp(
-                      pv: 10,
-                      ph: 10,
-                      child: Column(
-                        children: [
-                          titleBdp(
-                            controller.support.value?.user.chatUser() ?? "",
-                            weight: FontWeight.normal,
-                            size: 14,
-                            textHeight: 0,
+    return PopScope(
+      onPopInvokedWithResult: (didPop, result) {
+        controller.returnSupport();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: HeaderBdpView(
+          primary: true,
+          title: "Soporte en Línea",
+          iconAction: Icons.refresh_outlined,
+          action: () {
+            controller.reloadSupport();
+          },
+        ),
+        body: Obx(
+          () {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 15,
+                  ),
+                  child: Stack(
+                    children: [
+                      containerBdp(
+                        pv: 10,
+                        ph: 10,
+                        child: Column(
+                          children: [
+                            titleBdp(
+                              controller.support.value?.user.chatUser() ?? "",
+                              weight: FontWeight.normal,
+                              size: 14,
+                              textHeight: 0,
+                            ),
+                            titleBdp(
+                              controller.support.value?.title ?? "",
+                              textHeight: 0,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: controller.user.value?.isClient() == false &&
+                            controller.support.value?.isActive() == true,
+                        child: Positioned(
+                          top: 5,
+                          right: 5,
+                          child: iconButton(
+                            Icons.close,
+                            pd: 5,
+                            size: 15,
+                            color: appColorYellow,
+                            action: () {
+                              controller.closeSupport();
+                            },
                           ),
-                          titleBdp(
-                            controller.support.value?.title ?? "",
-                            textHeight: 0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: controller.loading.value,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 200),
+                    child: loadingBdp(),
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: RawScrollbar(
+                        thumbVisibility: true,
+                        controller: controller.scrollController.value,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 7.5,
+                        ),
+                        radius: const Radius.circular(10),
+                        thumbColor: appColorPrimary,
+                        child: ListView.separated(
+                          controller: controller.scrollController.value,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                          ),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          reverse: true,
+                          itemBuilder: (_, index) {
+                            return chatItem(
+                              controller.support.value!.messages.reversed
+                                  .toList()[index],
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const Divider(
+                              color: Colors.transparent,
+                              height: 10,
+                            );
+                          },
+                          itemCount:
+                              controller.support.value?.messages.length ?? 0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height:
+                      controller.support.value?.isActive() == false ? 10 : 0,
+                ),
+                Visibility(
+                  visible: controller.support.value?.isActive() == true,
+                  child: Form(
+                    key: formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: textFieldBdp(
+                              hintText: "Escribe tu mensaje ...",
+                              textEditingController: message,
+                              textType: TextFieldType.MULTILINE,
+                              focusNode: messageFocus,
+                              nextNode: submitFocusNode,
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 10,
+                              ),
+                              fillColor: appBackgroundOpacity,
+                              borderColor: appColorTransparent,
+                              borderRadius: 30,
+                              isRequired: false,
+                              minLines: 1,
+                              maxLines: 2,
+                              suffixIcon: iconButton(
+                                Icons.attach_file,
+                                color: appColorTransparent,
+                                iconColor: appColorThird,
+                                action: () {
+                                  controller.uploadFile();
+                                },
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          iconButton(
+                            Icons.send_outlined,
+                            color: appColorThird,
+                            action: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              if (formKey.currentState!.validate()) {
+                                controller.storeMessage({
+                                  "message": message.text,
+                                });
+                                message.text = "";
+                              }
+                            },
                           ),
                         ],
                       ),
                     ),
-                    Visibility(
-                      visible: controller.user.value?.isClient() == false &&
-                          controller.support.value?.isActive() == true,
-                      child: Positioned(
-                        top: 5,
-                        right: 5,
-                        child: iconButton(
-                          Icons.close,
-                          pd: 5,
-                          size: 15,
-                          color: appColorYellow,
-                          action: () {
-                            controller.closeSupport();
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Visibility(
-                visible: controller.loading.value,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 200),
-                  child: loadingBdp(),
-                ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  },
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: RawScrollbar(
-                      thumbVisibility: true,
-                      controller: controller.scrollController.value,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 7.5,
-                      ),
-                      radius: const Radius.circular(10),
-                      thumbColor: appColorPrimary,
-                      child: ListView.separated(
-                        controller: controller.scrollController.value,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                        ),
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        reverse: true,
-                        itemBuilder: (_, index) {
-                          return chatItem(
-                            controller.support.value!.messages.reversed
-                                .toList()[index],
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const Divider(
-                            color: Colors.transparent,
-                            height: 10,
-                          );
-                        },
-                        itemCount:
-                            controller.support.value?.messages.length ?? 0,
-                      ),
-                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: controller.support.value?.isActive() == false ? 10 : 0,
-              ),
-              Visibility(
-                visible: controller.support.value?.isActive() == true,
-                child: Form(
-                  key: formKey,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: textFieldBdp(
-                            hintText: "Escribe tu mensaje ...",
-                            textEditingController: message,
-                            textType: TextFieldType.MULTILINE,
-                            focusNode: messageFocus,
-                            nextNode: submitFocusNode,
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 10,
-                            ),
-                            fillColor: appBackgroundOpacity,
-                            borderColor: appColorTransparent,
-                            borderRadius: 30,
-                            isRequired: false,
-                            minLines: 1,
-                            maxLines: 2,
-                            suffixIcon: iconButton(
-                              Icons.attach_file,
-                              color: appColorTransparent,
-                              iconColor: appColorThird,
-                              action: () {
-                                controller.uploadFile();
-                              },
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        iconButton(
-                          Icons.send_outlined,
-                          color: appColorThird,
-                          action: () {
-                            FocusManager.instance.primaryFocus?.unfocus();
-                            if (formKey.currentState!.validate()) {
-                              controller.storeMessage({
-                                "message": message.text,
-                              });
-                              message.text = "";
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }

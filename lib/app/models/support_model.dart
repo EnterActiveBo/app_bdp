@@ -80,9 +80,9 @@ class SupportModel {
       case 'new':
         return appColorThirdOpacity;
       case 'open':
-        return appBackgroundOpacity;
-      case 'closed':
         return appColorSecondary.withOpacity(0.1);
+      case 'closed':
+        return appBackgroundOpacity;
       default:
         return appBackgroundOpacity;
     }
@@ -91,11 +91,26 @@ class SupportModel {
   bool isActive() {
     return status == 'open' || status == 'new';
   }
+
+  List<MessageSupportModel> messagesNotViews(String? userId) {
+    return messages.where(
+      (x) {
+        bool isView = x.view;
+        if (x.system ||
+            x.user?.id == userId ||
+            (x.user == null && user.id == userId)) {
+          isView = true;
+        }
+        return !isView;
+      },
+    ).toList();
+  }
 }
 
 class MessageSupportModel {
   String id;
   bool system;
+  bool view;
   String? message;
   FileModel? source;
   DateTime createdAt;
@@ -105,6 +120,7 @@ class MessageSupportModel {
   MessageSupportModel({
     required this.id,
     required this.system,
+    required this.view,
     this.message,
     this.source,
     required this.createdAt,
@@ -116,6 +132,7 @@ class MessageSupportModel {
     return MessageSupportModel(
       id: json['id'],
       system: json['system'] == 1,
+      view: json['meta']['view'] == 1,
       message: json['message'],
       source:
           json['source'] != null ? FileModel.fromJson(json['source']) : null,
@@ -129,6 +146,9 @@ class MessageSupportModel {
     final data = <String, dynamic>{};
     data['id'] = id;
     data['system'] = system ? 1 : 0;
+    final meta = <String, dynamic>{};
+    meta['view'] = view ? 1 : 0;
+    data['meta'] = meta;
     data['message'] = message;
     data['createdAt'] = createdAt.toString();
     data['updatedAt'] = updatedAt.toString();

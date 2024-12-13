@@ -13,6 +13,7 @@ import 'package:get_storage/get_storage.dart';
 
 class SupportsController extends GetxController {
   GetStorage box = GetStorage('App');
+  String supportReturnKey = 'support-return';
   final UserProvider userProvider = Get.find();
   final SupportController supportController = Get.find();
   String userKey = 'user';
@@ -44,6 +45,16 @@ class SupportsController extends GetxController {
   initData() {
     initUser();
     initSupports();
+    box.listenKey(
+      supportReturnKey,
+      (value) {
+        if (value is bool && value == true) {
+          debugPrint("retornando a listado");
+          currentPage.value = 1;
+          getSupports();
+        }
+      },
+    );
   }
 
   initSupports() async {
@@ -66,6 +77,10 @@ class SupportsController extends GetxController {
       supports.refresh();
       meta.value = response.meta;
     }
+    box.write(
+      supportReturnKey,
+      false,
+    );
   }
 
   Map<String, dynamic> getQuery() {

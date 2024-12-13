@@ -12,8 +12,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SupportController extends GetxController {
+  GetStorage box = GetStorage('App');
+  String supportReturnKey = 'support-return';
   final SupportProvider supportProvider = Get.find();
   final Rx<ScrollController> scrollController = ScrollController().obs;
   final Rx<UserModel?> user = (null as UserModel?).obs;
@@ -56,6 +59,15 @@ class SupportController extends GetxController {
     if (supportResponse is SupportModel) {
       support.value = supportResponse;
       support.refresh();
+      List<MessageSupportModel> notViews = supportResponse.messagesNotViews(
+        user.value?.id,
+      );
+      if (notViews.isNotEmpty) {
+        await supportProvider.readMessages(
+          support.value!.id,
+          notViews,
+        );
+      }
     }
     scrollController.value.animateTo(
       0,
@@ -296,5 +308,12 @@ class SupportController extends GetxController {
     if (Get.isDialogOpen == true || Get.isBottomSheetOpen == true) {
       Get.back();
     }
+  }
+
+  returnSupport() async {
+    box.write(
+      supportReturnKey,
+      true,
+    );
   }
 }

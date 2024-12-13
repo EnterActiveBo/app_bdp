@@ -1227,7 +1227,9 @@ Widget supportItem(
                 children: [
                   titleBdp(
                     support.statusText(),
-                    color: appColorThird,
+                    color: support.status == 'closed'
+                        ? appTextLight
+                        : appColorThird,
                     size: 14,
                     align: TextAlign.left,
                   ),
@@ -1235,7 +1237,7 @@ Widget supportItem(
                     "Cliente: ${support.user.getName()}",
                     size: 12,
                     weight: FontWeight.normal,
-                    color: support.status == 'close' ? appTextNormal : null,
+                    color: support.status == 'closed' ? appTextLight : null,
                     align: TextAlign.left,
                   ),
                   titleBdp(
@@ -1243,7 +1245,7 @@ Widget supportItem(
                     textHeight: 0,
                     max: 2,
                     overflow: TextOverflow.ellipsis,
-                    color: support.status == 'close' ? appTextNormal : null,
+                    color: support.status == 'closed' ? appTextNormal : null,
                     align: TextAlign.left,
                   ),
                   const SizedBox(
@@ -1254,6 +1256,7 @@ Widget supportItem(
                       support.updatedAt,
                       format: "dd/MM/yyyy HH:mm",
                     )}",
+                    color: support.status == 'closed' ? appTextLight : null,
                     size: 12,
                     weight: FontWeight.normal,
                     align: TextAlign.left,

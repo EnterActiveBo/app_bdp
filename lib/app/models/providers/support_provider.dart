@@ -55,4 +55,17 @@ class SupportProvider extends GetConnect {
     final response = await delete("$supportId/messages/$messageId");
     return response.isOk;
   }
+
+  Future<bool> readMessages(
+    String supportId,
+    List<MessageSupportModel> messages,
+  ) async {
+    final response = await post(
+      "$supportId/view-messages",
+      {
+        'viewed': messages.map((x) => x.id).toList(),
+      },
+    );
+    return response.isOk;
+  }
 }
