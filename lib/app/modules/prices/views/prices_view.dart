@@ -22,7 +22,7 @@ class PricesView extends GetView<PricesController> {
     return Scaffold(
       appBar: const HeaderBdpView(
         primary: true,
-        title: "Mapa de Complejidades",
+        title: "Información de Precios",
       ),
       body: Obx(
         () => SingleChildScrollView(
